@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Status{
+  IN
+  OUT 
+  RETURNED
+}
+
+model Student{
+  id Int @id @default(autoincrement())
+  firstName String
+  lastName String
+  fatherName String
+  motherName String
+  fatherPhoneNumber String
+  motherPhoneNumber String
+  year String
+  classGroup String
+  status String @default("IN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  records DisciplineRecord[]
+}
+
+
+model Staff{
+  id Int @id @default(autoincrement())
+  firstName String
+  lastName String
+  email String @unique
+  password String
+  phoneNumber String
+  role String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model DisciplineRecord{
+  id Int @id @default(autoincrement())
+  studentId Int
+  reason String
+  status String @default("OUT")
+  outDate DateTime @default(now())
+  returnDate DateTime?
+  updatedAt DateTime @updatedAt
+  student Student @relation(fields: [studentId], references: [id])
+}
+
+
