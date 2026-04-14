@@ -7,6 +7,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { DisciplineRecordModule } from './discipline-record/discipline-record.module';
 import { AuthModule } from './auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -19,6 +20,9 @@ import { ThrottlerModule } from '@nestjs/throttler';
       ttl: 60,
       limit: 5,
     }]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
