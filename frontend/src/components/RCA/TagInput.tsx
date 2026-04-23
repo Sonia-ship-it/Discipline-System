@@ -30,7 +30,7 @@ export function TagInput({ tags, onChange, placeholder = 'Type and press Enter..
     : 'bg-muted text-muted-foreground';
 
   return (
-    <div className={cn('flex flex-wrap gap-2 p-2 rounded-lg border bg-background min-h-[42px] focus-within:ring-2 focus-within:ring-ring', className)}>
+    <div className={cn('flex flex-wrap gap-2 p-2 rounded-md border bg-background min-h-[42px] focus-within:ring-2 focus-within:ring-ring', className)}>
       {tags.map((tag) => (
         <span key={tag} className={cn('inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium', pillClass)}>
           {tag}
@@ -49,3 +49,4 @@ export function TagInput({ tags, onChange, placeholder = 'Type and press Enter..
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { LayoutDashboard, Users, FileText, ClipboardList, Settings, Menu, X, ShieldAlert } from 'lucide-react';
@@ -19,19 +19,24 @@ export function AppSidebar() {
   const router = useRouter();
   const { user } = useAuthStore();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const isActive = (path: string) => router.asPath.startsWith(path);
 
   const nav = (
     <div className="flex flex-col h-full">
-      <div className="p-6">
+      <div className="pt-10 px-12 pb-6">
         <Link href="/discipline/dashboard" className="flex items-center gap-2">
           <img src="/rca-logo.jpg" alt="RCA Logo" className="h-8 w-8 rounded-md object-contain bg-white" />
-          <span className="text-xl font-bold text-white uppercase tracking-tight">RCA</span>
+          <span className="text-xl font-bold text-white">RCA</span>
         </Link>
       </div>
 
-      <nav className="flex-1 pl-3 space-y-1">
+      <nav className="flex-1 space-y-1">
         {navItems.map((item) => (
           <Link
             key={item.path}
@@ -50,10 +55,10 @@ export function AppSidebar() {
 
       <div className="p-4 border-t border-white/8">
         <div className="flex items-center gap-3">
-          <Avatar name={user?.name || 'User'} size="sm" />
+          <Avatar name={mounted ? (user?.name || 'User') : 'User'} size="sm" />
           <div className="hidden lg:block min-w-0">
-            <p className="text-sm font-medium text-white truncate">{user?.name}</p>
-            <p className="text-xs text-white/50 truncate">{user?.email}</p>
+            <p className="text-sm font-medium text-white truncate">{mounted ? user?.name : '...'}</p>
+            <p className="text-xs text-white/50 truncate">{mounted ? user?.email : '...'}</p>
           </div>
         </div>
         <Link href="/" className="sidebar-back-link mt-4 block text-center">
@@ -68,7 +73,7 @@ export function AppSidebar() {
       {/* Mobile toggle */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="fixed top-4 left-4 z-50 p-2 rounded-lg bg-card shadow-sm border md:hidden"
+        className="fixed top-4 left-4 z-50 p-2 rounded-md bg-card shadow-sm border md:hidden"
         aria-label="Open menu"
       >
         <Menu className="h-5 w-5" />

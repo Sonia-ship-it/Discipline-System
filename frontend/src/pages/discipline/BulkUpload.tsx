@@ -124,13 +124,13 @@ export default function BulkUpload() {
 
   return (
     <>
-      <AppHeader title="Bulk Import Protocol" />
+      <AppHeader title="Bulk Import Protocol" subtitle="Large-Scale Data Ingestion" />
       <div className="max-w-4xl mx-auto px-6 py-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-        <div className="flex border-b border-slate-200 dark:border-slate-800 mb-8 bg-white dark:bg-slate-900 rounded-2xl p-1 shadow-sm">
+        <div className="flex border-b border-slate-200 dark:border-slate-800 mb-8 bg-white dark:bg-slate-900 rounded-md p-1 shadow-sm">
           <button
             onClick={() => setTab('csv')}
             className={cn(
-              'flex-1 px-6 py-3 text-sm font-bold rounded-xl transition-all',
+              'flex-1 px-6 py-3 text-sm font-bold rounded-md transition-all',
               tab === 'csv' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
             )}
           >
@@ -139,7 +139,7 @@ export default function BulkUpload() {
           <button
             onClick={() => setTab('images')}
             className={cn(
-              'flex-1 px-6 py-3 text-sm font-bold rounded-xl transition-all',
+              'flex-1 px-6 py-3 text-sm font-bold rounded-md transition-all',
               tab === 'images' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
             )}
           >
@@ -158,42 +158,42 @@ export default function BulkUpload() {
             />
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed rounded-[2rem] p-16 text-center cursor-pointer hover:border-brand-500 hover:bg-brand-50/30 dark:hover:bg-brand-950/20 transition-all group bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800"
+              className="border-2 border-dashed rounded-md p-16 text-center cursor-pointer hover:border-brand-500 hover:bg-brand-50/30 dark:hover:bg-brand-950/20 transition-all group bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800"
             >
-              <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-[1.5rem] flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-inner">
+              <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-md flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-inner">
                 <Upload className="h-8 w-8 text-brand-600" />
               </div>
-              <h3 className="text-xl font-black text-slate-900 dark:text-white">DEPLOY STUDENT MATRIX</h3>
+              <h3 className="text-xl font-black text-slate-900 dark:text-white">Deploy Student Matrix</h3>
               <p className="text-sm text-slate-400 mt-2 font-medium">Select a CSV file containing student identities</p>
             </div>
 
             <div className="flex justify-center">
-              <Button onClick={downloadTemplate} variant="ghost" className="text-xs font-black uppercase tracking-widest text-slate-400 hover:text-brand-600">
+              <Button onClick={downloadTemplate} variant="ghost" className="text-xs font-black text-slate-400 hover:text-brand-600">
                 <Download className="h-4 w-4 mr-2" /> Download Specification Template
               </Button>
             </div>
 
             {csvData.length > 0 && (
-              <div className="bg-white dark:bg-slate-900 rounded-[2.5rem] p-8 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-8 animate-in zoom-in-95 duration-500">
+              <div className="bg-white dark:bg-slate-900 rounded-md p-8 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-8 animate-in zoom-in-95 duration-500">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-black text-lg text-slate-900 dark:text-white tracking-tight text-center">DATA PREVIEW</h3>
-                    <p className="text-xs text-slate-400 font-bold uppercase tracking-widest">{csvData.length} Entities Detected</p>
+                    <h3 className="font-black text-lg text-slate-900 dark:text-white text-center">Data Preview</h3>
+                    <p className="text-xs text-slate-400 font-bold">{csvData.length} Entities Detected</p>
                   </div>
                   {isUploading && (
-                    <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-xl border border-slate-100 dark:border-slate-800">
+                    <div className="flex items-center gap-3 bg-slate-50 dark:bg-slate-950 px-4 py-2 rounded-md border border-slate-100 dark:border-slate-800">
                       <Loader2 className="h-4 w-4 animate-spin text-brand-600" />
-                      <span className="text-xs font-black text-slate-600 dark:text-slate-300">{uploadProgress}% SYNCED</span>
+                      <span className="text-xs font-black text-slate-600 dark:text-slate-300">{uploadProgress}% Synced</span>
                     </div>
                   )}
                 </div>
 
-                <div className="overflow-hidden rounded-2xl border border-slate-100 dark:border-slate-800">
+                <div className="overflow-hidden rounded-md border border-slate-100 dark:border-slate-800">
                   <table className="w-full text-left">
                     <thead>
                       <tr className="bg-slate-50 dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800">
                         {['First Name', 'Last Name', 'Class', 'Guardian'].map((h) => (
-                          <th key={h} className="px-5 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">{h}</th>
+                          <th key={h} className="px-5 py-4 text-[10px] font-black text-slate-400">{h}</th>
                         ))}
                       </tr>
                     </thead>
@@ -213,7 +213,7 @@ export default function BulkUpload() {
                 <Button
                   onClick={handleImport}
                   disabled={isUploading}
-                  className="w-full h-14 rounded-2xl bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-black uppercase tracking-widest shadow-2xl hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50"
+                  className="w-full h-14 rounded-md bg-slate-900 dark:bg-white dark:text-slate-900 text-white font-black shadow-2xl hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50"
                 >
                   {isUploading ? <Loader2 className="h-5 w-5 animate-spin mr-3 inline" /> : <Check className="h-5 w-5 mr-3 inline" />}
                   {isUploading ? 'Executing Sync...' : 'Confirm & Execute Import'}
@@ -223,19 +223,19 @@ export default function BulkUpload() {
           </div>
         ) : (
           <div className="space-y-6">
-            <div onClick={handleImageDrop} className="border-2 border-dashed rounded-[2rem] p-20 text-center cursor-pointer hover:border-brand-500 hover:bg-brand-50/30 dark:hover:bg-brand-950/20 transition-all bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
-              <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-[1.5rem] flex items-center justify-center mx-auto mb-6">
+            <div onClick={handleImageDrop} className="border-2 border-dashed rounded-md p-20 text-center cursor-pointer hover:border-brand-500 hover:bg-brand-50/30 dark:hover:bg-brand-950/20 transition-all bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+              <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-md flex items-center justify-center mx-auto mb-6">
                 <Upload className="h-8 w-8 text-brand-600" />
               </div>
-              <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase">Biometric Archive</h3>
+              <h3 className="text-xl font-black text-slate-900 dark:text-white">Biometric Archive</h3>
               <p className="text-sm text-slate-400 mt-2 font-medium">Drop student profile photos for AI matching</p>
             </div>
 
             {images.length > 0 && (
               <div className="space-y-3">
                 {images.map((f) => (
-                  <div key={f.name} className="flex items-center gap-4 bg-white dark:bg-slate-900 rounded-2xl p-4 border border-slate-100 dark:border-slate-800 shadow-sm">
-                    <div className="w-10 h-10 rounded-lg bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+                  <div key={f.name} className="flex items-center gap-4 bg-white dark:bg-slate-900 rounded-md p-4 border border-slate-100 dark:border-slate-800 shadow-sm">
+                    <div className="w-10 h-10 rounded-md bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
                       <FileText className="h-5 w-5 text-brand-600" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -245,7 +245,7 @@ export default function BulkUpload() {
                     {f.status === 'done' ? <Check className="h-5 w-5 text-emerald-500" /> : <Loader2 className="h-5 w-5 text-brand-600 animate-spin" />}
                   </div>
                 ))}
-                <Button className="mt-6 w-full h-14 rounded-2xl bg-indigo-600 text-white font-black uppercase tracking-widest shadow-xl">Process Biometric Data</Button>
+                <Button className="mt-6 w-full h-14 rounded-md bg-indigo-600 text-white font-black shadow-xl">Process Biometric Data</Button>
               </div>
             )}
           </div>
@@ -254,3 +254,4 @@ export default function BulkUpload() {
     </>
   );
 }
+

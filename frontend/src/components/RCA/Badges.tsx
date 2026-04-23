@@ -15,7 +15,7 @@ export function StatusBadge({ status, className }: { status: string; className?:
   };
 
   return (
-    <span className={cn('inline-flex items-center px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider border transition-all', styles[status] || 'bg-slate-50 text-slate-500 border-slate-100', className)}>
+    <span className={cn('inline-flex items-center px-3 py-1 rounded-md text-[10px] font-bold border transition-all', styles[status] || 'bg-slate-50 text-slate-500 border-slate-100', className)}>
       {status}
     </span>
   );
@@ -28,3 +28,4 @@ export function TypeBadge({ type, className }: { type: string; className?: strin
     </span>
   );
 }
+

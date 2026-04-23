@@ -117,12 +117,12 @@ export default function RecordDetail() {
   if (!record) return (
     <div className="min-h-screen bg-white flex items-center justify-center text-[#0A0E2E]">
       <div className="text-center space-y-6 max-w-sm px-6">
-        <div className="w-20 h-20 bg-[#0A0E2E] rounded-3xl flex items-center justify-center mx-auto shadow-xl">
+        <div className="w-20 h-20 bg-[#0A0E2E] rounded-md flex items-center justify-center mx-auto shadow-xl">
           <Shield className="w-10 h-10 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-[#0A0E2E]">Record Not Found</h2>
         <p className="text-sm text-[#0A0E2E]/65 font-medium leading-relaxed">The requested record could not be found. It may have been deleted or moved.</p>
-        <Button onClick={() => router.push('/discipline/records')} className="w-full rounded-2xl bg-[#0A0E2E] text-white shadow-xl font-bold py-6">
+        <Button onClick={() => router.push('/discipline/records')} className="w-full rounded-md bg-[#0A0E2E] text-white shadow-xl font-bold py-6">
           Back to Records
         </Button>
       </div>
@@ -131,7 +131,7 @@ export default function RecordDetail() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-[#0A0E2E]">
-      <AppHeader title={`Exit Record: ${record.student.firstName} ${record.student.lastName}`} />
+      <AppHeader title={`Exit Record: ${record.student.firstName} ${record.student.lastName}`} subtitle="Detailed Intelligence Analysis" />
       <div className="max-w-6xl mx-auto px-6 py-8 animate-in zoom-in-95 duration-500">
         <div className="mb-8 flex justify-between items-center">
           <button
@@ -147,28 +147,28 @@ export default function RecordDetail() {
           </Button>
         </div>
 
-        <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-[#0A0E2E]/5 border border-[#0A0E2E]/15 overflow-hidden relative">
+        <div className="bg-white rounded-md shadow-2xl shadow-[#0A0E2E]/5 border border-[#0A0E2E]/15 overflow-hidden relative">
 
           {/* Masthead */}
           <div className="bg-[#0A0E2E] p-10 text-white relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[120px] rounded-full" />
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
               <div className="flex items-center gap-6">
-                <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 text-white text-2xl font-black">
+                <div className="flex h-20 w-20 items-center justify-center rounded-md bg-white/10 backdrop-blur-xl border border-white/20 text-white text-2xl font-black">
                   {record.student.firstName?.[0]}{record.student.lastName?.[0]}
                 </div>
                 <div>
-                  <h2 className="text-4xl font-black tracking-tight">{record.student.firstName} {record.student.lastName}</h2>
-                  <div className="flex items-center gap-2 mt-2 font-bold text-[10px] uppercase tracking-[0.2em] text-white/60">
+                  <h2 className="text-4xl font-black">{record.student.firstName} {record.student.lastName}</h2>
+                  <div className="flex items-center gap-2 mt-2 font-bold text-[10px] text-white/60">
                     <User size={12} className="text-blue-400" />
                     Year {record.student.year} {record.student.classGroup} — UID: {record.student.id.toString().padStart(4, '0')}
                   </div>
                 </div>
               </div>
               <div className="flex flex-col md:items-end gap-3">
-                <StatusBadge status={record.status} className="px-6 py-2.5 text-xs font-black rounded-xl bg-white text-[#0A0E2E] border-none shadow-xl" />
-                <div className="px-4 py-2 bg-white/5 rounded-xl border border-white/10 backdrop-blur-sm">
-                  <p className="text-[9px] text-white/40 uppercase font-black tracking-widest text-right">Reference ID</p>
+                <StatusBadge status={record.status} className="px-6 py-2.5 text-xs font-black rounded-md bg-white text-[#0A0E2E] border-none shadow-xl" />
+                <div className="px-4 py-2 bg-white/5 rounded-md border border-white/10 backdrop-blur-sm">
+                  <p className="text-[9px] text-white/40 font-black text-right">Reference ID</p>
                   <p className="text-xs font-bold text-white text-right">ORD-{record.id.toString().padStart(5, '0')}</p>
                 </div>
               </div>
@@ -192,7 +192,7 @@ export default function RecordDetail() {
                 <div key={i} className="space-y-3 group">
                   <div className="flex items-center gap-2">
                     <item.icon className="h-4 w-4 text-[#0A0E2E]/50" />
-                    <p className="text-[10px] font-bold text-[#0A0E2E]/60 uppercase tracking-wider">{item.label}</p>
+                    <p className="text-[10px] font-bold text-[#0A0E2E]/60 ">{item.label}</p>
                   </div>
                   <p className="text-sm font-bold text-[#0A0E2E]">{item.value}</p>
                 </div>
@@ -204,21 +204,21 @@ export default function RecordDetail() {
             {/* Strategic Details */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
               <div className="space-y-6">
-                <h3 className="font-bold text-lg text-[#0A0E2E] tracking-tight flex items-center gap-3">
+                <h3 className="font-bold text-lg text-[#0A0E2E] flex items-center gap-3">
                   <Phone className="w-5 h-5 text-[#0A0E2E]/50" />
                   Guardian Information
                 </h3>
-                <div className="bg-white p-8 rounded-[2rem] border border-[#0A0E2E]/15 space-y-6 shadow-sm">
+                <div className="bg-white p-8 rounded-md border border-[#0A0E2E]/15 space-y-6 shadow-sm">
                   <div className="flex justify-between items-center text-sm border-b border-[#0A0E2E]/10 pb-4">
-                    <span className="text-[#0A0E2E]/60 font-semibold uppercase text-[10px]">Contact Person</span>
+                    <span className="text-[#0A0E2E]/60 font-semibold text-[10px]">Contact Person</span>
                     <span className="font-bold text-[#0A0E2E]">{record.student.fatherName || record.student.motherName}</span>
                   </div>
                   <div className="flex justify-between items-center text-sm border-b border-[#0A0E2E]/10 pb-4">
-                    <span className="text-[#0A0E2E]/60 font-semibold uppercase text-[10px]">Phone Number</span>
+                    <span className="text-[#0A0E2E]/60 font-semibold text-[10px]">Phone Number</span>
                     <span className="font-bold text-[#0A0E2E]">{record.student.fatherPhoneNumber || record.student.motherPhoneNumber}</span>
                   </div>
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-[#0A0E2E]/60 font-semibold uppercase text-[10px]">District/Sector</span>
+                    <span className="text-[#0A0E2E]/60 font-semibold text-[10px]">District/Sector</span>
                     <div className="flex items-center gap-2">
                       <MapPin size={14} className="text-[#0A0E2E]/40" />
                       <span className="font-bold text-[#0A0E2E] text-xs">Kicukiro District</span>
@@ -228,20 +228,20 @@ export default function RecordDetail() {
               </div>
 
               <div className="space-y-6">
-                <h3 className="font-bold text-lg text-[#0A0E2E] tracking-tight flex items-center gap-3">
+                <h3 className="font-bold text-lg text-[#0A0E2E] flex items-center gap-3">
                   <Activity className="w-5 h-5 text-[#0A0E2E]/50" />
                   Student Summary
                 </h3>
-                <div className="bg-white p-8 rounded-[2rem] border border-[#0A0E2E]/15 space-y-6 shadow-sm">
+                <div className="bg-white p-8 rounded-md border border-[#0A0E2E]/15 space-y-6 shadow-sm">
                   <div className="flex justify-between items-center text-sm border-b border-[#0A0E2E]/10 pb-4">
-                    <span className="text-[#0A0E2E]/60 font-semibold uppercase text-[10px]">Total Exits</span>
+                    <span className="text-[#0A0E2E]/60 font-semibold text-[10px]">Total Exits</span>
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-[#0A0E2E] text-lg">{record.student.records?.length || 0}</span>
-                      <span className="text-[10px] font-bold text-[#0A0E2E]/40 uppercase">Times</span>
+                      <span className="text-[10px] font-bold text-[#0A0E2E]/40">Times</span>
                     </div>
                   </div>
                   <div className="flex justify-between items-center text-sm border-b border-[#0A0E2E]/10 pb-4">
-                    <span className="text-[#0A0E2E]/60 font-semibold uppercase text-[10px]">Compliance Rating</span>
+                    <span className="text-[#0A0E2E]/60 font-semibold text-[10px]">Compliance Rating</span>
                     <div className="flex items-center gap-2">
                       <div className="w-24 h-1.5 bg-[#0A0E2E]/10 rounded-full overflow-hidden">
                         <div className="h-full bg-[#0A0E2E] w-[95%]" />
@@ -250,8 +250,8 @@ export default function RecordDetail() {
                     </div>
                   </div>
                   <div className="flex justify-between items-center text-sm">
-                    <span className="text-[#0A0E2E]/60 font-semibold uppercase text-[10px]">Status</span>
-                    <span className="px-3 py-1 bg-[#0A0E2E]/10 rounded-lg font-bold text-[#0A0E2E] text-[10px] uppercase">Record Active</span>
+                    <span className="text-[#0A0E2E]/60 font-semibold text-[10px]">Status</span>
+                    <span className="px-3 py-1 bg-[#0A0E2E]/10 rounded-md font-bold text-[#0A0E2E] text-[10px]">Record Active</span>
                   </div>
                 </div>
               </div>
@@ -262,25 +262,25 @@ export default function RecordDetail() {
                 {record.status === 'OUT' ? (
                   <Button
                     onClick={handleReturn}
-                    className="flex-1 rounded-2xl bg-[#0A0E2E] hover:bg-[#0A0E2E]/90 text-white font-bold uppercase text-xs py-7 shadow-xl shadow-[#0A0E2E]/20 transition-all hover:-translate-y-1"
+                    className="flex-1 rounded-md bg-[#0A0E2E] hover:bg-[#0A0E2E]/90 text-white font-bold text-xs py-7 shadow-xl shadow-[#0A0E2E]/20 transition-all hover:-translate-y-1"
                   >
                     <CheckCircle2 className="mr-2 h-4 w-4" /> Confirm Return
                   </Button>
                 ) : (
-                  <Button className="flex-1 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 font-bold uppercase text-xs py-7 pointer-events-none">
+                  <Button className="flex-1 rounded-md bg-emerald-50 text-emerald-600 border border-emerald-100 font-bold text-xs py-7 pointer-events-none">
                     <CheckCircle2 className="mr-2 h-4 w-4" /> Already Returned
                   </Button>
                 )}
                 <Button
                   variant="outline"
-                  className="flex-1 rounded-2xl border-[#0A0E2E]/20 bg-white font-bold uppercase text-xs py-7 text-[#0A0E2E] transition-all hover:bg-[#0A0E2E] hover:text-white hover:-translate-y-1 shadow-sm hover:shadow-lg hover:shadow-[#0A0E2E]/10"
+                  className="flex-1 rounded-md border-[#0A0E2E]/20 bg-white font-bold text-xs py-7 text-[#0A0E2E] transition-all hover:bg-[#0A0E2E] hover:text-white hover:-translate-y-1 shadow-sm hover:shadow-lg hover:shadow-[#0A0E2E]/10"
                 >
                   <Printer className="mr-2 h-4 w-4" /> Print Record
                 </Button>
               </div>
               <Button
                 variant="ghost"
-                className="rounded-2xl px-10 flex items-center justify-center font-bold uppercase text-xs py-7 text-[#0A0E2E]/60 border border-transparent hover:border-[#0A0E2E]/10 hover:bg-[#0A0E2E]/5 transition-all hover:-translate-y-1"
+                className="rounded-md px-10 flex items-center justify-center font-bold text-xs py-7 text-[#0A0E2E]/60 border border-transparent hover:border-[#0A0E2E]/10 hover:bg-[#0A0E2E]/5 transition-all hover:-translate-y-1"
               >
                 <Share2 className="mr-2 h-4 w-4" /> Contact Parent
               </Button>
@@ -298,3 +298,4 @@ export default function RecordDetail() {
     </div>
   );
 }
+

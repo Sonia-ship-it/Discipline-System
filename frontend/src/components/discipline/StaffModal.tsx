@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { apiFetch } from '@/lib/api';
 import { toast } from 'sonner';
-import { User, Mail, Phone, ShieldCheck } from 'lucide-react';
+import { User, Mail, Phone, ShieldCheck, Lock } from 'lucide-react';
 
 interface StaffModalProps {
     isOpen: boolean;
@@ -28,7 +28,8 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
         email: '',
         phoneNumber: '',
         role: 'STAFF',
-        status: 'ACTIVE'
+        status: 'ACTIVE',
+        password: ''
     });
 
     useEffect(() => {
@@ -39,7 +40,8 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
                 email: staffMember.email,
                 phoneNumber: staffMember.phoneNumber,
                 role: staffMember.role,
-                status: staffMember.status
+                status: staffMember.status,
+                password: ''
             });
         } else {
             setFormData({
@@ -48,7 +50,8 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
                 email: '',
                 phoneNumber: '',
                 role: 'STAFF',
-                status: 'ACTIVE'
+                status: 'ACTIVE',
+                password: ''
             });
         }
     }, [staffMember, isOpen]);
@@ -57,22 +60,27 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
         e.preventDefault();
         setLoading(true);
         try {
-            if (staffMember && !staffMember.id) {
-                throw new Error('Staff ID is missing. Cannot update.');
-            }
             const url = staffMember ? `/staff/${staffMember.id}` : '/staff';
             const method = staffMember ? 'PATCH' : 'POST';
 
+            // Clean data to send
+            const payload: any = { ...formData };
+            if (staffMember) {
+                // Remove password from payload if updating and empty
+                if (!payload.password) delete payload.password;
+            }
+
             await apiFetch(url, {
                 method,
-                body: JSON.stringify(formData)
+                body: JSON.stringify(payload)
             });
 
-            toast.success(staffMember ? 'Staff updated' : 'Staff joined successfully');
+            toast.success(staffMember ? 'Staff details synchronized' : 'Staff registered successfully');
             onSuccess();
             onClose();
-        } catch (error) {
-            toast.error('Operation failed. Please try again.');
+        } catch (error: any) {
+            console.error('Staff Operation Error:', error);
+            toast.error(error.message || 'Operation failed. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -80,12 +88,12 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="max-w-md rounded-3xl border-none bg-white p-0 overflow-hidden shadow-2xl">
+            <DialogContent className="max-w-md rounded-md border-none bg-white p-0 overflow-hidden shadow-2xl">
                 <div className="bg-[#0A0E2E] p-8 text-white relative overflow-hidden">
                     {/* Subtle glow */}
                     <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl rounded-full" />
                     <DialogHeader>
-                        <DialogTitle className="text-2xl font-bold tracking-tight">
+                        <DialogTitle className="text-2xl font-bold">
                             {staffMember ? 'Edit Staff Member' : 'Register New Staff'}
                         </DialogTitle>
                         <p className="text-white/60 text-sm font-medium mt-1">
@@ -97,7 +105,7 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
                 <form onSubmit={handleSubmit} className="p-8 space-y-6">
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">First Name</Label>
+                            <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">First Name</Label>
                             <div className="relative group">
                                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#0A0E2E]/30 group-focus-within:text-[#0A0E2E] transition-colors" />
                                 <Input
@@ -105,12 +113,12 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
                                     placeholder="Jean"
                                     value={formData.firstName}
                                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                                    className="rounded-xl pl-10 border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                                    className="rounded-md pl-10 border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
                                 />
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Last Name</Label>
+                            <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Last Name</Label>
                             <div className="relative group">
                                 <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#0A0E2E]/30 group-focus-within:text-[#0A0E2E] transition-colors" />
                                 <Input
@@ -118,14 +126,14 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
                                     placeholder="Kabera"
                                     value={formData.lastName}
                                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                                    className="rounded-xl pl-10 border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                                    className="rounded-md pl-10 border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
                                 />
                             </div>
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Email Address</Label>
+                        <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Email Address</Label>
                         <div className="relative group">
                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#0A0E2E]/30 group-focus-within:text-[#0A0E2E] transition-colors" />
                             <Input
@@ -134,13 +142,13 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
                                 placeholder="jean@rca.ac.rw"
                                 value={formData.email}
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className="rounded-xl pl-10 border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                                className="rounded-md pl-10 border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
                             />
                         </div>
                     </div>
 
                     <div className="space-y-2">
-                        <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Phone Number</Label>
+                        <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Phone Number</Label>
                         <div className="relative group">
                             <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#0A0E2E]/30 group-focus-within:text-[#0A0E2E] transition-colors" />
                             <Input
@@ -148,19 +156,36 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
                                 placeholder="+250 788 000 000"
                                 value={formData.phoneNumber}
                                 onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
-                                className="rounded-xl pl-10 border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                                className="rounded-md pl-10 border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">
+                            {staffMember ? 'New Password (Optional)' : 'Password'}
+                        </Label>
+                        <div className="relative group">
+                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#0A0E2E]/30 group-focus-within:text-[#0A0E2E] transition-colors" />
+                            <Input
+                                required={!staffMember}
+                                type="password"
+                                placeholder="••••••••"
+                                value={formData.password}
+                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                className="rounded-md pl-10 border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
                             />
                         </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Role</Label>
+                            <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Role</Label>
                             <Select
                                 value={formData.role}
                                 onValueChange={(val) => setFormData({ ...formData, role: val })}
                             >
-                                <SelectTrigger className="rounded-xl border-[#0A0E2E]/10 bg-slate-50 h-12 text-sm font-bold">
+                                <SelectTrigger className="rounded-md border-[#0A0E2E]/10 bg-slate-50 h-12 text-sm font-bold">
                                     <SelectValue placeholder="Select role" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -171,12 +196,12 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
                             </Select>
                         </div>
                         <div className="space-y-2">
-                            <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Status</Label>
+                            <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Status</Label>
                             <Select
                                 value={formData.status}
                                 onValueChange={(val) => setFormData({ ...formData, status: val })}
                             >
-                                <SelectTrigger className="rounded-xl border-[#0A0E2E]/10 bg-slate-50 h-12 text-sm font-bold">
+                                <SelectTrigger className="rounded-md border-[#0A0E2E]/10 bg-slate-50 h-12 text-sm font-bold">
                                     <SelectValue placeholder="Select status" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -191,7 +216,7 @@ export function StaffModal({ isOpen, onClose, onSuccess, staffMember }: StaffMod
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="w-full h-12 rounded-xl bg-[#0A0E2E] hover:bg-[#1a264a] text-white font-bold text-sm uppercase tracking-widest shadow-xl shadow-[#0A0E2E]/20 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                            className="w-full h-12 rounded-md bg-[#0A0E2E] hover:bg-[#1a264a] text-white font-bold text-sm shadow-xl shadow-[#0A0E2E]/20 transition-all hover:scale-[1.01] active:scale-[0.99]"
                         >
                             {loading ? (staffMember ? 'Updating...' : 'Registering...') : (staffMember ? 'Save Changes' : 'Register Member')}
                         </Button>

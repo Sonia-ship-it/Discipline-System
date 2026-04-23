@@ -86,12 +86,12 @@ export function NewStudentModal({ isOpen, onClose, onSuccess, student }: NewStud
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="max-w-2xl rounded-3xl border-none bg-white p-0 overflow-hidden shadow-2xl">
+            <DialogContent className="max-w-2xl rounded-md border-none bg-white p-0 overflow-hidden shadow-2xl">
                 <div className="bg-[#0A0E2E] p-8 text-white relative overflow-hidden">
                     {/* Subtle glow */}
                     <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 blur-[100px] rounded-full" />
                     <DialogHeader>
-                        <DialogTitle className="text-2xl font-bold tracking-tight">
+                        <DialogTitle className="text-2xl font-bold">
                             {student ? 'Edit Student Profile' : 'Register New Student'}
                         </DialogTitle>
                         <p className="text-white/60 text-sm font-medium mt-1">
@@ -103,40 +103,40 @@ export function NewStudentModal({ isOpen, onClose, onSuccess, student }: NewStud
                 <form onSubmit={handleSubmit} className="p-8 space-y-6">
                     <div className="grid grid-cols-2 gap-6">
                         <div className="space-y-4">
-                            <h3 className="text-sm font-bold text-[#0A0E2E] uppercase tracking-widest flex items-center gap-2">
+                            <h3 className="text-sm font-bold text-[#0A0E2E] flex items-center gap-2">
                                 <User className="h-4 w-4" /> Personal Details
                             </h3>
 
                             <div className="space-y-2">
-                                <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">First Name</Label>
+                                <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">First Name</Label>
                                 <Input
                                     required
                                     placeholder="Jean"
                                     value={formData.firstName}
                                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                                    className="rounded-xl border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                                    className="rounded-md border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Last Name</Label>
+                                <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Last Name</Label>
                                 <Input
                                     required
                                     placeholder="Kabera"
                                     value={formData.lastName}
                                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                                    className="rounded-xl border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                                    className="rounded-md border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
                                 />
                             </div>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Year</Label>
+                                    <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Year</Label>
                                     <Select
                                         value={formData.year}
                                         onValueChange={(val) => setFormData({ ...formData, year: val })}
                                     >
-                                        <SelectTrigger className="rounded-xl border-[#0A0E2E]/10 bg-slate-50 h-12 text-sm font-bold">
+                                        <SelectTrigger className="rounded-md border-[#0A0E2E]/10 bg-slate-50 h-12 text-sm font-bold">
                                             <SelectValue placeholder="Select" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -147,12 +147,12 @@ export function NewStudentModal({ isOpen, onClose, onSuccess, student }: NewStud
                                     </Select>
                                 </div>
                                 <div className="space-y-2">
-                                    <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Class</Label>
+                                    <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Class</Label>
                                     <Select
                                         value={formData.classGroup}
                                         onValueChange={(val) => setFormData({ ...formData, classGroup: val })}
                                     >
-                                        <SelectTrigger className="rounded-xl border-[#0A0E2E]/10 bg-slate-50 h-12 text-sm font-bold">
+                                        <SelectTrigger className="rounded-md border-[#0A0E2E]/10 bg-slate-50 h-12 text-sm font-bold">
                                             <SelectValue placeholder="Group" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -167,37 +167,47 @@ export function NewStudentModal({ isOpen, onClose, onSuccess, student }: NewStud
                         </div>
 
                         <div className="space-y-4">
-                            <h3 className="text-sm font-bold text-[#0A0E2E] uppercase tracking-widest flex items-center gap-2">
+                            <h3 className="text-sm font-bold text-[#0A0E2E] flex items-center gap-2">
                                 <ShieldCheck className="h-4 w-4" /> Guardian Info
                             </h3>
 
                             <div className="space-y-2">
-                                <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Father's Name</Label>
+                                <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Father's Name</Label>
                                 <Input
                                     placeholder="Father's Full Name"
                                     value={formData.fatherName}
                                     onChange={(e) => setFormData({ ...formData, fatherName: e.target.value })}
-                                    className="rounded-xl border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                                    className="rounded-md border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Father's Phone</Label>
+                                <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Father's Phone</Label>
                                 <Input
                                     placeholder="+250 788 000 000"
                                     value={formData.fatherPhoneNumber}
                                     onChange={(e) => setFormData({ ...formData, fatherPhoneNumber: e.target.value })}
-                                    className="rounded-xl border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                                    className="rounded-md border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <Label className="text-xs font-bold text-[#0A0E2E]/60 uppercase ml-1">Mother's Name</Label>
+                                <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Mother's Name</Label>
                                 <Input
                                     placeholder="Mother's Full Name"
                                     value={formData.motherName}
                                     onChange={(e) => setFormData({ ...formData, motherName: e.target.value })}
-                                    className="rounded-xl border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                                    className="rounded-md border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label className="text-xs font-bold text-[#0A0E2E]/60 ml-1">Mother's Phone</Label>
+                                <Input
+                                    placeholder="+250 788 000 000"
+                                    value={formData.motherPhoneNumber}
+                                    onChange={(e) => setFormData({ ...formData, motherPhoneNumber: e.target.value })}
+                                    className="rounded-md border-[#0A0E2E]/10 bg-slate-50 focus:bg-white h-12 text-sm font-bold"
                                 />
                             </div>
                         </div>
@@ -207,7 +217,7 @@ export function NewStudentModal({ isOpen, onClose, onSuccess, student }: NewStud
                         <Button
                             type="submit"
                             disabled={loading}
-                            className="w-full h-14 rounded-2xl bg-[#0A0E2E] hover:bg-[#1a264a] text-white font-bold text-sm uppercase tracking-widest shadow-xl shadow-[#0A0E2E]/20 transition-all hover:scale-[1.01] active:scale-[0.99]"
+                            className="w-full h-14 rounded-md bg-[#0A0E2E] hover:bg-[#1a264a] text-white font-bold text-sm shadow-xl shadow-[#0A0E2E]/20 transition-all hover:scale-[1.01] active:scale-[0.99]"
                         >
                             {loading ? 'Processing...' : (student ? 'Save Changes' : 'Register Student')}
                         </Button>

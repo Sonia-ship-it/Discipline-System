@@ -11,7 +11,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Search, Filter, History, User, MapPin, Trash2, Users, UserCheck, AlertTriangle, Layers3, Pencil, Phone } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Search, Filter, History, User, MapPin, Trash2, Users, UserCheck, AlertTriangle, Layers3, Pencil, Phone, UserPlus, Eye } from 'lucide-react';
 import { apiFetch } from '@/lib/api';
 import { toast } from 'sonner';
 import { NewStudentModal } from '@/components/discipline/NewStudentModal';
@@ -62,6 +69,16 @@ export default function StudentsList() {
   useEffect(() => {
     fetchStudents();
   }, []);
+
+  useEffect(() => {
+    if (router.isReady && router.query.edit && students.length > 0) {
+      const student = students.find(s => s.id === parseInt(router.query.edit as string));
+      if (student) {
+        setStudentToEdit(student);
+        setIsModalOpen(true);
+      }
+    }
+  }, [router.isReady, router.query.edit, students]);
 
   const filtered = students.filter((s) => {
     const className = `Year ${s.year} ${s.classGroup}`;
@@ -114,10 +131,10 @@ export default function StudentsList() {
 
   return (
     <div className="min-h-screen bg-white text-[#0A0E2E]">
-      <AppHeader title="Students List" />
+      <AppHeader title="Students List" subtitle="Student Records Management" />
 
       <div className="mx-auto max-w-7xl px-6 py-8 animate-in fade-in duration-700">
-        <div className="mb-6 rounded-3xl border border-[#0A0E2E]/15 bg-white p-6 shadow-sm">
+        <div className="mb-6 rounded-md border border-[#0A0E2E]/15 bg-white p-6 shadow-sm">
           <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-2xl font-bold text-[#0A0E2E]">Students</h2>
@@ -125,31 +142,31 @@ export default function StudentsList() {
             </div>
             <Button
               onClick={handleNew}
-              className="rounded-xl bg-[#0A0E2E] text-white shadow-lg shadow-[#0A0E2E]/20 hover:bg-[#1a264a] transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="rounded-md bg-[#0A0E2E] text-white shadow-lg shadow-[#0A0E2E]/20 hover:bg-[#1a264a] transition-all hover:scale-[1.02] active:scale-[0.98]"
             >
-              New Student
+              <UserPlus className="h-4 w-4 mr-2" /> New Student
             </Button>
           </div>
 
           <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <div className="rounded-2xl border border-[#0A0E2E]/15 bg-white p-4">
-              <div className="mb-2 inline-flex rounded-lg bg-[#0A0E2E] p-2 text-white"><Users className="h-4 w-4" /></div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#0A0E2E]/65">Total Students</p>
+            <div className="rounded-md border border-[#0A0E2E]/15 bg-white p-4">
+              <div className="mb-2 inline-flex rounded-md bg-[#0A0E2E] p-2 text-white"><Users className="h-4 w-4" /></div>
+              <p className="text-xs font-semibold text-[#0A0E2E]/65">Total Students</p>
               <p className="text-2xl font-extrabold text-[#0A0E2E]">{students.length}</p>
             </div>
-            <div className="rounded-2xl border border-[#0A0E2E]/15 bg-white p-4">
-              <div className="mb-2 inline-flex rounded-lg bg-[#0A0E2E] p-2 text-white"><UserCheck className="h-4 w-4" /></div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#0A0E2E]/65">In Campus</p>
+            <div className="rounded-md border border-[#0A0E2E]/15 bg-white p-4">
+              <div className="mb-2 inline-flex rounded-md bg-[#0A0E2E] p-2 text-white"><UserCheck className="h-4 w-4" /></div>
+              <p className="text-xs font-semibold text-[#0A0E2E]/65">In Campus</p>
               <p className="text-2xl font-extrabold text-[#0A0E2E]">{inCampusCount}</p>
             </div>
-            <div className="rounded-2xl border border-[#0A0E2E]/15 bg-white p-4">
-              <div className="mb-2 inline-flex rounded-lg bg-[#0A0E2E] p-2 text-white"><AlertTriangle className="h-4 w-4" /></div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#0A0E2E]/65">Out of Campus</p>
+            <div className="rounded-md border border-[#0A0E2E]/15 bg-white p-4">
+              <div className="mb-2 inline-flex rounded-md bg-[#0A0E2E] p-2 text-white"><AlertTriangle className="h-4 w-4" /></div>
+              <p className="text-xs font-semibold text-[#0A0E2E]/65">Out of Campus</p>
               <p className="text-2xl font-extrabold text-[#0A0E2E]">{outsideCount}</p>
             </div>
-            <div className="rounded-2xl border border-[#0A0E2E]/15 bg-white p-4">
-              <div className="mb-2 inline-flex rounded-lg bg-[#0A0E2E] p-2 text-white"><Layers3 className="h-4 w-4" /></div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-[#0A0E2E]/65">Visible Results</p>
+            <div className="rounded-md border border-[#0A0E2E]/15 bg-white p-4">
+              <div className="mb-2 inline-flex rounded-md bg-[#0A0E2E] p-2 text-white"><Layers3 className="h-4 w-4" /></div>
+              <p className="text-xs font-semibold text-[#0A0E2E]/65">Visible Results</p>
               <p className="text-2xl font-extrabold text-[#0A0E2E]">{filteredCount}</p>
             </div>
           </div>
@@ -161,27 +178,34 @@ export default function StudentsList() {
                 value={searchFilter}
                 onChange={(e) => setSearchFilter(e.target.value)}
                 placeholder="Search by student name..."
-                className="w-full rounded-xl border border-[#0A0E2E]/15 bg-white py-2.5 pl-10 pr-4 text-sm font-medium outline-none transition-all focus:ring-2 focus:ring-[#0A0E2E]/15"
+                className="w-full rounded-md border border-[#0A0E2E]/15 bg-white py-2.5 pl-10 pr-4 text-sm font-medium outline-none transition-all focus:ring-2 focus:ring-[#0A0E2E]/15"
               />
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 rounded-xl border border-[#0A0E2E]/15 bg-white px-3 py-2">
-                <Filter className="h-4 w-4 text-[#0A0E2E]/50" />
-                <select
-                  value={classFilter}
-                  onChange={(e) => setClassFilter(e.target.value)}
-                  className="min-w-[120px] bg-transparent text-sm font-semibold text-[#0A0E2E] outline-none"
-                >
-                  <option value="All">All Classes</option>
-                  {classes.map((c) => <option key={c} value={c}>{c}</option>)}
-                </select>
-              </div>
+              <Select value={classFilter} onValueChange={setClassFilter}>
+                <SelectTrigger className="h-10 min-w-[160px] rounded-md border border-[#0A0E2E]/15 bg-white px-3 py-2 text-sm font-semibold text-[#0A0E2E] focus:ring-2 focus:ring-[#0A0E2E]/10 transition-all">
+                  <div className="flex items-center gap-2">
+                    <Filter className="h-4 w-4 text-[#0A0E2E]/50" />
+                    <SelectValue placeholder="All Classes" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent className="bg-[#0A0E2E] border-white/10 text-white shadow-2xl">
+                  <SelectItem value="All" className="hover:bg-white/10 focus:bg-white/10 focus:text-white cursor-pointer">
+                    All Classes
+                  </SelectItem>
+                  {classes.map((c) => (
+                    <SelectItem key={c} value={c} className="hover:bg-white/10 focus:bg-white/10 focus:text-white cursor-pointer">
+                      {c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-3xl border border-[#0A0E2E]/15 bg-white shadow-xl shadow-[#0A0E2E]/5">
+        <div className="overflow-hidden rounded-md border border-[#0A0E2E]/15 bg-white shadow-xl shadow-[#0A0E2E]/5">
           {loading ? (
             <div className="p-20 text-center space-y-4">
               <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-[#0A0E2E] border-t-transparent" />
@@ -204,7 +228,7 @@ export default function StudentsList() {
                   <TableRow key={s.id} className="group border-[#0A0E2E]/10 transition-colors hover:bg-[#0A0E2E]/5">
                     <TableCell className="py-4 px-6">
                       <div className="flex items-center gap-3">
-                        <div className={`flex h-10 w-10 items-center justify-center rounded-xl text-white font-bold shadow-lg ${getAvatarColor(s.firstName)} transition-transform group-hover:scale-110`}>
+                        <div className={`flex h-10 w-10 items-center justify-center rounded-md text-white font-bold shadow-lg ${getAvatarColor(s.firstName)} transition-transform group-hover:scale-110`}>
                           {s.firstName[0]}{s.lastName[0]}
                         </div>
                         <div>
@@ -217,12 +241,12 @@ export default function StudentsList() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-2">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0A0E2E] text-white">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#0A0E2E] text-white">
                           <MapPin className="h-4 w-4" />
                         </div>
                         <div>
                           <p className="text-sm font-semibold text-[#0A0E2E]">Year {s.year}</p>
-                          <p className="text-[11px] font-bold uppercase tracking-tighter text-[#0A0E2E]/60">{s.classGroup}</p>
+                          <p className="text-[11px] font-bold text-[#0A0E2E]/60">{s.classGroup}</p>
                         </div>
                       </div>
                     </TableCell>
@@ -238,10 +262,10 @@ export default function StudentsList() {
                     <TableCell className="text-center">
                       <button
                         onClick={() => router.push(`/discipline/records?studentId=${s.id}`)}
-                        className="inline-flex items-center gap-2 rounded-lg border border-[#0A0E2E]/20 bg-white px-3 py-1.5 text-[11px] font-bold text-[#0A0E2E] transition-all hover:bg-[#0A0E2E] hover:text-white"
+                        className="inline-flex items-center gap-2 rounded-md border border-[#0A0E2E]/20 bg-white px-3 py-1.5 text-[11px] font-bold text-[#0A0E2E] transition-all hover:bg-[#0A0E2E] hover:text-white"
                       >
                         <History className="h-3.5 w-3.5" />
-                        {s.records?.length || 0} LOGS
+                        {s.records?.length || 0} logs
                       </button>
                     </TableCell>
                     <TableCell>
@@ -250,14 +274,20 @@ export default function StudentsList() {
                     <TableCell className="text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button
+                          onClick={() => router.push(`/discipline/students/${s.id}`)}
+                          className="flex h-8 w-8 items-center justify-center rounded-md text-[#0A0E2E]/70 hover:bg-[#0A0E2E] hover:text-white transition-all hover:scale-110"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </button>
+                        <button
                           onClick={() => handleEdit(s)}
-                          className="flex h-8 w-8 items-center justify-center rounded-xl text-[#0A0E2E]/70 hover:bg-[#0A0E2E] hover:text-white transition-all hover:scale-110"
+                          className="flex h-8 w-8 items-center justify-center rounded-md text-[#0A0E2E]/70 hover:bg-[#0A0E2E] hover:text-white transition-all hover:scale-110"
                         >
                           <Pencil className="w-4 h-4" />
                         </button>
                         <button
                           onClick={() => handleDelete(s.id)}
-                          className="group/del flex h-8 w-8 items-center justify-center rounded-xl text-[#0A0E2E]/70 hover:bg-[#0A0E2E] hover:text-white transition-all hover:scale-110"
+                          className="group/del flex h-8 w-8 items-center justify-center rounded-md text-[#0A0E2E]/70 hover:bg-[#0A0E2E] hover:text-white transition-all hover:scale-110"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>

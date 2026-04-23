@@ -57,19 +57,19 @@ export default function RegisterPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative z-10 w-full max-w-lg"
         >
-          <div className="bg-white/5 backdrop-blur-2xl rounded-[3rem] border border-white/10 p-16 flex flex-col items-center text-center shadow-2xl shadow-black/50">
+          <div className="bg-white/5 backdrop-blur-2xl rounded-md border border-white/10 p-16 flex flex-col items-center text-center shadow-2xl shadow-black/50">
             <div className="relative mb-8 flex items-center justify-center">
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="bg-white p-2.5 rounded-2xl shadow-xl"
+                className="bg-white p-2.5 rounded-md shadow-xl"
               >
-                <img src="/rca-logo.jpg" alt="RCA Logo" className="w-24 h-24 object-contain rounded-xl" />
+                <img src="/rca-logo.jpg" alt="RCA Logo" className="w-24 h-24 object-contain rounded-md" />
               </motion.div>
             </div>
 
-            <h1 className="text-4xl xl:text-5xl font-bold text-white mb-6 leading-tight tracking-tight">
+            <h1 className="text-4xl xl:text-5xl font-bold text-white mb-6 leading-tight">
               Create an Account.
             </h1>
 
@@ -78,7 +78,7 @@ export default function RegisterPage() {
             </p>
 
             <div className="pt-8 border-t border-white/10 w-full">
-              <p className="text-white/30 text-xs uppercase tracking-[0.3em] font-bold">
+              <p className="text-white/30 text-xs font-bold">
                 Student Tracking Platform
               </p>
             </div>
@@ -98,15 +98,15 @@ export default function RegisterPage() {
         >
           {/* Back link */}
           <Link href="/login" className="flex items-center gap-2 mb-12 group">
-            <div className="w-10 h-10 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center text-[#0A0E2E] transition-all group-hover:bg-[#0A0E2E] group-hover:text-white">
+            <div className="w-10 h-10 bg-slate-50 border border-slate-100 rounded-md flex items-center justify-center text-[#0A0E2E] transition-all group-hover:bg-[#0A0E2E] group-hover:text-white">
               <ArrowLeft size={18} />
             </div>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Back to Sign In</span>
+            <span className="text-xs font-bold text-slate-400">Back to Sign In</span>
           </Link>
 
           <div className="mb-10 text-center">
-            <h3 className="text-3xl font-bold text-[#0A0E2E] mb-2 tracking-tight">Staff Registration</h3>
-            <p className="text-slate-400 font-medium tracking-wide">Create an account to manage student discipline.</p>
+            <h3 className="text-3xl font-bold text-[#0A0E2E] mb-2">Staff Registration</h3>
+            <p className="text-slate-400 font-medium">Create an account to manage student discipline.</p>
           </div>
 
           <AnimatePresence mode="wait">
@@ -115,7 +115,7 @@ export default function RegisterPage() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="mb-6 p-4 bg-red-50 text-red-500 text-xs rounded-xl border border-red-100 font-bold uppercase tracking-widest text-center"
+                className="mb-6 p-4 bg-red-50 text-red-500 text-xs rounded-md border border-red-100 font-bold text-center"
               >
                 {error}
               </motion.div>
@@ -134,7 +134,7 @@ export default function RegisterPage() {
                     required
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full bg-slate-50 border-none rounded-2xl px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
+                    className="w-full bg-slate-50 border-none rounded-md px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
                     placeholder="John"
                   />
                 </div>
@@ -149,7 +149,7 @@ export default function RegisterPage() {
                     required
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="w-full bg-slate-50 border-none rounded-2xl px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
+                    className="w-full bg-slate-50 border-none rounded-md px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
                     placeholder="Doe"
                   />
                 </div>
@@ -167,7 +167,7 @@ export default function RegisterPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-50 border-none rounded-2xl px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
+                  className="w-full bg-slate-50 border-none rounded-md px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
                   placeholder="example@gmail.com"
                 />
               </div>
@@ -184,7 +184,7 @@ export default function RegisterPage() {
                   type="tel"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="w-full bg-slate-50 border-none rounded-2xl px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
+                  className="w-full bg-slate-50 border-none rounded-md px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
                   placeholder="+250 788 000 000"
                 />
               </div>
@@ -202,7 +202,7 @@ export default function RegisterPage() {
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-slate-50 border-none rounded-2xl px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
+                    className="w-full bg-slate-50 border-none rounded-md px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
                     placeholder="••••••••"
                   />
                 </div>
@@ -218,7 +218,7 @@ export default function RegisterPage() {
                     type={showPassword ? 'text' : 'password'}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full bg-slate-50 border-none rounded-2xl px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
+                    className="w-full bg-slate-50 border-none rounded-md px-12 py-3.5 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
                     placeholder="••••••••"
                   />
                 </div>
@@ -228,9 +228,9 @@ export default function RegisterPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full h-14 bg-[#0A0E2E] hover:bg-[#151a44] text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-xl shadow-[#0A0E2E]/20 transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 mt-4"
+              className="w-full h-14 bg-[#0A0E2E] hover:bg-[#151a44] text-white rounded-md font-bold text-lg font-['Urbanist'] shadow-xl shadow-[#0A0E2E]/20 transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 mt-4"
             >
-              {loading ? 'Registering...' : 'REGISTER'}
+              {loading ? 'Registering...' : 'Register'}
             </Button>
           </form>
 
@@ -239,7 +239,7 @@ export default function RegisterPage() {
           </p>
 
           <div className="mt-16 text-center">
-            <p className="text-[10px] text-slate-300 uppercase tracking-widest font-bold">
+            <p className="text-[10px] text-slate-300 font-bold">
               RCA Discipline Management System
             </p>
           </div>

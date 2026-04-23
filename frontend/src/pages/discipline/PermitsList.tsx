@@ -39,9 +39,9 @@ export default function PermitsList() {
 
   return (
     <div className="min-h-screen bg-white text-[#0A0E2E]">
-      <AppHeader title="Leave Permits" />
+      <AppHeader title="Leave Permits" subtitle="Authorization & Exit Passes" />
       <div className="mx-auto max-w-7xl px-6 py-8 animate-in slide-in-from-bottom-4 duration-500">
-        <div className="mb-8 flex flex-col justify-between gap-4 rounded-3xl border border-[#0A0E2E]/15 bg-white p-6 shadow-sm md:flex-row md:items-center">
+        <div className="mb-8 flex flex-col justify-between gap-4 rounded-md border border-[#0A0E2E]/15 bg-white p-6 shadow-sm md:flex-row md:items-center">
           <div>
             <h2 className="flex items-center gap-3 text-2xl font-bold text-[#0A0E2E]">
               Live Exit Permits
@@ -49,19 +49,19 @@ export default function PermitsList() {
             </h2>
             <p className="mt-1 text-sm font-medium text-[#0A0E2E]/70">Real-time monitoring of students currently outside campus.</p>
           </div>
-          <div className="inline-flex items-center gap-2 rounded-xl border border-[#0A0E2E]/20 bg-white px-4 py-2">
+          <div className="inline-flex items-center gap-2 rounded-md border border-[#0A0E2E]/20 bg-white px-4 py-2">
             <UserCheck className="h-4 w-4 text-[#0A0E2E]" />
-            <span className="text-[11px] font-bold uppercase tracking-wide text-[#0A0E2E]">Authorized and tracked</span>
+            <span className="text-[11px] font-bold text-[#0A0E2E]">Authorized and tracked</span>
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-3xl border border-[#0A0E2E]/15 bg-white shadow-xl shadow-[#0A0E2E]/5">
+        <div className="overflow-hidden rounded-md border border-[#0A0E2E]/15 bg-white shadow-xl shadow-[#0A0E2E]/5">
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead className="border-b border-[#0A0E2E]/10 bg-[#0A0E2E]/5">
                 <tr>
                   {['Student Name', 'Reason', 'Exit Time', 'Approved By', 'Status', 'Actions'].map((h) => (
-                    <th key={h} className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest text-[#0A0E2E]/70">{h}</th>
+                    <th key={h} className="px-6 py-5 text-[10px] font-bold text-[#0A0E2E]/70">{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -80,16 +80,16 @@ export default function PermitsList() {
                   <tr key={permit.id} className="group transition-colors hover:bg-[#0A0E2E]/5">
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0A0E2E]">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#0A0E2E]">
                           <User size={14} className="text-white" />
                         </div>
-                        <p className="text-sm font-bold tracking-tight text-[#0A0E2E]">
+                        <p className="text-sm font-bold text-[#0A0E2E]">
                           {permit.student?.firstName} {permit.student?.lastName}
                         </p>
                       </div>
                     </td>
                     <td className="px-6 py-5">
-                      <span className="rounded-lg border border-[#0A0E2E]/15 bg-white px-2.5 py-1 text-xs font-medium text-[#0A0E2E]/80">
+                      <span className="rounded-md border border-[#0A0E2E]/15 bg-white px-2.5 py-1 text-xs font-medium text-[#0A0E2E]/80">
                         {permit.reason}
                       </span>
                     </td>
@@ -109,8 +109,8 @@ export default function PermitsList() {
                     </td>
                     <td className="px-6 py-5">
                       <Link href={`/discipline/records/${permit.id}`}>
-                        <Button variant="ghost" size="sm" className="rounded-lg border border-[#0A0E2E]/20 bg-white text-[10px] font-bold uppercase tracking-widest text-[#0A0E2E] transition-all hover:bg-[#0A0E2E] hover:text-white">
-                          DETAILS <ExternalLink className="ml-2 h-3 w-3" />
+                        <Button variant="ghost" size="sm" className="rounded-md border border-[#0A0E2E]/20 bg-white text-[10px] font-bold text-[#0A0E2E] transition-all hover:bg-[#0A0E2E] hover:text-white">
+                          Details <ExternalLink className="ml-2 h-3 w-3" />
                         </Button>
                       </Link>
                     </td>
@@ -124,3 +124,4 @@ export default function PermitsList() {
     </div>
   );
 }
+

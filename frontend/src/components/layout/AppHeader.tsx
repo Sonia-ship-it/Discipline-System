@@ -1,18 +1,18 @@
-import { Search, Bell, Moon, Sun, ChevronDown, LogOut, User, Settings, Plus } from 'lucide-react';
+import { Search, ChevronDown, LogOut, User, Settings, Plus } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useTheme } from '@/hooks/useTheme';
 import { useAuthStore } from '@/stores/authStore';
 
-export function AppHeader({ title }: { title: string }) {
-  const { isDark, toggle } = useTheme();
+export function AppHeader({ title, subtitle }: { title: string; subtitle?: string }) {
   const { user, logout } = useAuthStore();
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setMounted(true);
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setDropdownOpen(false);
     };
@@ -20,25 +20,24 @@ export function AppHeader({ title }: { title: string }) {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const initials = (user?.name || 'U').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+  const initials = mounted ? (user?.name || 'U').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 'U';
 
   return (
     <header className="app-header fixed top-0 right-0 left-0 md:left-16 lg:left-60 h-16 z-30 flex items-center justify-between px-6">
-      <h1 className="text-xl font-semibold ml-10 md:ml-0" style={{ color: 'white' }}>{title}</h1>
+      <div className="flex flex-col ml-10 md:ml-0 justify-center">
+        <h1 className="text-xl font-bold" style={{ color: 'white', lineHeight: '1.2' }}>{title}</h1>
+        {subtitle && (
+          <p className="text-[13px] font-medium text-white/70" style={{ fontFamily: 'Urbanist, sans-serif', lineHeight: '1' }}>
+            {subtitle}
+          </p>
+        )}
+      </div>
 
       <div className="flex items-center gap-4">
 
-        <button onClick={toggle} className="theme-toggle p-2 rounded-lg transition-colors" style={{ color: 'white', opacity: 0.7 }} aria-label="Toggle theme">
-          {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-        </button>
-
-        <button className="notification-btn p-2 rounded-lg transition-colors relative" style={{ color: 'white', opacity: 0.7 }} aria-label="Notifications">
-          <Bell className="h-5 w-5" />
-          <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full" style={{ background: '#4B7BFF' }} />
-        </button>
 
         <div className="relative" ref={ref}>
-          <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center gap-2 p-1 rounded-lg hover:bg-white/10 transition-colors">
+          <button onClick={() => setDropdownOpen(!dropdownOpen)} className="flex items-center gap-2 p-1 rounded-md hover:bg-white/10 transition-colors">
             <div className="avatar-circle w-8 h-8 rounded-full flex items-center justify-center text-sm" style={{ background: 'rgba(255,255,255,0.15)', border: '1.5px solid rgba(255,255,255,0.3)' }}>
               <span style={{ color: 'white', fontWeight: 600 }}>{initials}</span>
             </div>
@@ -46,7 +45,7 @@ export function AppHeader({ title }: { title: string }) {
           </button>
 
           {dropdownOpen && (
-            <div className="absolute right-0 mt-3 w-48 bg-[#0A0E2E] rounded-xl shadow-2xl border border-white/10 py-2 animate-fade-in text-white/90">
+            <div className="absolute right-0 mt-3 w-48 bg-[#0A0E2E] rounded-md shadow-2xl border border-white/10 py-2 animate-fade-in text-white/90">
               <button onClick={() => { setDropdownOpen(false); router.push('/discipline/settings'); }} className="flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-white/10 transition-colors">
                 <User className="h-4 w-4" /> Profile
               </button>

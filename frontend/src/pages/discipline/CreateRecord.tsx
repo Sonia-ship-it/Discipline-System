@@ -30,6 +30,7 @@ export default function CreateRecord() {
     studentId: '',
     reason: '',
     outDate: '',
+    expectedReturnDate: '',
     description: '',
   });
 
@@ -59,6 +60,7 @@ export default function CreateRecord() {
           studentId: parseInt(form.studentId),
           reason: form.reason,
           outDate: form.outDate ? new Date(form.outDate).toISOString() : new Date().toISOString(),
+          returnDate: form.expectedReturnDate ? new Date(form.expectedReturnDate).toISOString() : null,
           status: 'OUT'
         }),
       });
@@ -77,7 +79,7 @@ export default function CreateRecord() {
 
   return (
     <div className="min-h-screen bg-white text-[#0A0E2E]">
-      <AppHeader title="Record New Exit" />
+      <AppHeader title="Record New Exit" subtitle="Student Movement Logging" />
       <div className="max-w-5xl mx-auto px-6 py-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
         <button
@@ -90,9 +92,9 @@ export default function CreateRecord() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
-            <section className="bg-white rounded-3xl p-8 border border-[#0A0E2E]/15 shadow-sm space-y-8">
+            <section className="bg-white rounded-md p-8 border border-[#0A0E2E]/15 shadow-sm space-y-8">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#0A0E2E] flex items-center justify-center border border-[#0A0E2E]/15">
+                <div className="w-10 h-10 rounded-md bg-[#0A0E2E] flex items-center justify-center border border-[#0A0E2E]/15">
                   <Shield className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -110,7 +112,7 @@ export default function CreateRecord() {
                     value={form.studentId}
                     onChange={(e) => update('studentId', e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); outDateRef.current?.focus(); } }}
-                    className="w-full rounded-2xl border border-[#0A0E2E]/15 bg-white px-4 py-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all appearance-none text-[#0A0E2E]"
+                    className="w-full rounded-md border border-[#0A0E2E]/15 bg-white px-4 py-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all appearance-none text-[#0A0E2E]"
                   >
                     <option value="">Select student...</option>
                     {students.map((s) => (
@@ -131,7 +133,7 @@ export default function CreateRecord() {
                       value={form.outDate}
                       onChange={(e) => update('outDate', e.target.value)}
                       onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); reasonRef.current?.focus(); } }}
-                      className="w-full rounded-2xl border border-[#0A0E2E]/15 bg-white pl-11 pr-4 py-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all text-[#0A0E2E]"
+                      className="w-full rounded-md border border-[#0A0E2E]/15 bg-white pl-11 pr-4 py-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all text-[#0A0E2E]"
                     />
                   </div>
                 </div>
@@ -142,16 +144,29 @@ export default function CreateRecord() {
                     ref={reasonRef}
                     value={form.reason}
                     onChange={(e) => update('reason', e.target.value)}
-                    className="w-full rounded-2xl border border-[#0A0E2E]/15 bg-white px-4 py-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all appearance-none text-[#0A0E2E]"
+                    className="w-full rounded-md border border-[#0A0E2E]/15 bg-white px-4 py-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all appearance-none text-[#0A0E2E]"
                   >
                     <option value="">Select a reason...</option>
                     {['Medical Checkup', 'Family Emergency', 'School Event', 'Official Errand', 'Holiday'].map((r) => <option key={r} value={r}>{r}</option>)}
                   </select>
                 </div>
+
+                <div className="space-y-2">
+                  <label className="text-xs font-semibold text-slate-500 px-1">Expected Date and Time of Return</label>
+                  <div className="relative">
+                    <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0A0E2E]/50" />
+                    <input
+                      type="datetime-local"
+                      value={form.expectedReturnDate}
+                      onChange={(e) => update('expectedReturnDate', e.target.value)}
+                      className="w-full rounded-md border border-[#0A0E2E]/15 bg-white pl-11 pr-4 py-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all text-[#0A0E2E]"
+                    />
+                  </div>
+                </div>
               </div>
             </section>
 
-            <section className="bg-white rounded-3xl p-8 border border-[#0A0E2E]/15 shadow-sm space-y-4">
+            <section className="bg-white rounded-md p-8 border border-[#0A0E2E]/15 shadow-sm space-y-4">
               <div className="flex items-center gap-3">
                 <FileText className="w-5 h-5 text-[#0A0E2E]/50" />
                 <h3 className="font-bold text-xl text-[#0A0E2E]">Notes</h3>
@@ -160,14 +175,14 @@ export default function CreateRecord() {
                 value={form.description}
                 onChange={(e) => update('description', e.target.value)}
                 rows={4}
-                className="w-full rounded-2xl border border-[#0A0E2E]/15 bg-white px-4 py-4 text-sm font-medium outline-none resize-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all placeholder:text-[#0A0E2E]/40 text-[#0A0E2E]"
+                className="w-full rounded-md border border-[#0A0E2E]/15 bg-white px-4 py-4 text-sm font-medium outline-none resize-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all placeholder:text-[#0A0E2E]/40 text-[#0A0E2E]"
                 placeholder="Provide any additional details about the exit..."
               />
             </section>
           </div>
 
           <div className="space-y-6">
-            <div className="bg-[#0A0E2E] rounded-3xl shadow-xl p-8 space-y-6 text-white border border-[#0A0E2E]/15 relative overflow-hidden">
+            <div className="bg-[#0A0E2E] rounded-md shadow-xl p-8 space-y-6 text-white border border-[#0A0E2E]/15 relative overflow-hidden">
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
 
               <div className="relative z-10">
@@ -186,6 +201,12 @@ export default function CreateRecord() {
                       {form.reason || 'Not selected'}
                     </span>
                   </div>
+                  <div className="flex justify-between items-start">
+                    <span className="text-xs font-semibold text-white/60">Exp. Return:</span>
+                    <span className={cn('text-sm font-bold text-right', form.expectedReturnDate ? 'text-white' : 'text-white/40 italic')}>
+                      {form.expectedReturnDate ? new Date(form.expectedReturnDate).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Not specified'}
+                    </span>
+                  </div>
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold text-white/60">Status:</span>
                     <StatusBadge status="OUT" className="scale-90 origin-right border-white/20 bg-white/10 text-white" />
@@ -194,7 +215,7 @@ export default function CreateRecord() {
 
                 <div className="mt-10 space-y-3">
                   <Button
-                    className="w-full rounded-2xl py-6 bg-white hover:bg-white/90 text-[#0A0E2E] font-bold shadow-xl transition-all duration-300 disabled:opacity-50 group"
+                    className="w-full rounded-md py-6 bg-white hover:bg-white/90 text-[#0A0E2E] font-bold shadow-xl transition-all duration-300 disabled:opacity-50 group"
                     onClick={handleSubmit}
                     disabled={!form.studentId || !form.reason || submitting}
                   >
@@ -203,7 +224,7 @@ export default function CreateRecord() {
                   </Button>
                   <Button
                     variant="ghost"
-                    className="w-full rounded-2xl py-6 text-white/50 hover:text-white hover:bg-white/10 font-semibold text-sm transition-colors"
+                    className="w-full rounded-md py-6 text-white/50 hover:text-white hover:bg-white/10 font-semibold text-sm transition-colors"
                     onClick={() => router.push('/discipline/records')}
                   >
                     Cancel
@@ -212,7 +233,7 @@ export default function CreateRecord() {
               </div>
             </div>
 
-            <div className="bg-amber-50 border border-amber-200 rounded-3xl p-6 flex gap-3">
+            <div className="bg-amber-50 border border-amber-200 rounded-md p-6 flex gap-3">
               <AlertCircle className="w-5 h-5 text-amber-600 shrink-0" />
               <p className="text-sm font-medium text-amber-800 leading-relaxed">
                 Warning: Recording this exit will update the student's status. Please make sure the student's guardians have been notified.

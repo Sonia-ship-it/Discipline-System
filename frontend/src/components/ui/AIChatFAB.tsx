@@ -77,7 +77,7 @@ export function AIChatFAB() {
         className={cn(
           'fixed z-[999] transition-all duration-300 ease-out',
           'bottom-24 right-6 w-[360px] max-h-[480px]',
-          'bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col',
+          'bg-white rounded-md shadow-2xl border border-slate-200 overflow-hidden flex flex-col',
           open
             ? 'opacity-100 translate-y-0 pointer-events-auto'
             : 'opacity-0 translate-y-4 pointer-events-none'
@@ -86,7 +86,7 @@ export function AIChatFAB() {
         {/* Header */}
         <div className="bg-brand-900 px-4 py-3 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-[#0F1547] flex items-center justify-center">
+            <div className="w-7 h-7 rounded-md bg-[#0F1547] flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <div>
@@ -119,7 +119,7 @@ export function AIChatFAB() {
               )}
               <div
                 className={cn(
-                  'max-w-[260px] px-3 py-2 rounded-xl text-[13px] leading-relaxed',
+                  'max-w-[260px] px-3 py-2 rounded-md text-[13px] leading-relaxed',
                   msg.role === 'ai'
                     ? 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm'
                     : 'bg-[#0F1547] text-white rounded-tr-sm shadow-sm'
@@ -147,7 +147,7 @@ export function AIChatFAB() {
               <div className="w-6 h-6 rounded-md bg-brand-50 border border-brand-100 flex items-center justify-center shrink-0 mt-0.5">
                 <Sparkles className="w-3.5 h-3.5 text-brand-500" />
               </div>
-              <div className="bg-white border border-slate-200 rounded-xl rounded-tl-sm px-3 py-2 text-[13px] text-slate-400">
+              <div className="bg-white border border-slate-200 rounded-md rounded-tl-sm px-3 py-2 text-[13px] text-slate-400">
                 <span className="animate-pulse">Thinking...</span>
               </div>
             </div>
@@ -170,7 +170,7 @@ export function AIChatFAB() {
 
         {/* Input */}
         <div className="px-3 pb-3 pt-1 bg-white shrink-0">
-          <div className="flex items-center gap-2 bg-slate-100 border border-slate-200 rounded-xl px-3 py-2">
+          <div className="flex items-center gap-2 bg-slate-100 border border-slate-200 rounded-md px-3 py-2">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -213,14 +213,15 @@ export function AIChatFAB() {
 
       {/* Tooltip badge when closed */}
       {!open && (
-        <div className="fixed bottom-[84px] right-6 z-[999] bg-brand-900 text-white text-[10px] font-medium px-2.5 py-1 rounded-lg shadow-md pointer-events-none animate-fade-in">
+        <div className="fixed bottom-[84px] right-6 z-[999] bg-brand-900 text-white text-[10px] font-medium px-2.5 py-1 rounded-md shadow-md pointer-events-none animate-fade-in">
           AI Assistant
           <div className="absolute bottom-[-4px] right-5 w-2 h-2 bg-brand-900 rotate-45" />
         </div>
       )}
 
       {/* Inject pulse keyframe */}
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes fabPulse {
           0%, 100% { box-shadow: 0 4px 14px rgba(45,61,181,0.4); }
           50% { box-shadow: 0 4px 28px rgba(45,61,181,0.7); }
@@ -229,3 +230,4 @@ export function AIChatFAB() {
     </>
   );
 }
+
