@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Mail, Lock, Eye, EyeOff, Star, Crown, ChevronRight } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/stores/authStore';
@@ -54,7 +54,7 @@ export default function LoginPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative z-10 w-full max-w-lg"
         >
-          <div className="bg-white/5 backdrop-blur-2xl rounded-md border border-white/10 p-16 flex flex-col items-center text-center shadow-2xl shadow-black/50">
+          <div className="bg-white/5 backdrop-blur-2xl rounded-[2rem] border border-white/10 p-16 flex flex-col items-center text-center shadow-2xl shadow-black/50">
             <div className="relative mb-8 flex items-center justify-center">
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
@@ -75,13 +75,11 @@ export default function LoginPage() {
             </p>
 
             <div className="pt-8 border-t border-white/10 w-full">
-              <p className="text-white/30 text-xs font-bold">
+              <p className="text-white/60 text-md font-medium">
                 Student Tracking Platform
               </p>
             </div>
           </div>
-
-
         </motion.div>
       </div>
 
@@ -105,7 +103,7 @@ export default function LoginPage() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="mb-6 p-4 bg-red-50 text-red-500 text-xs rounded-md border border-red-100 font-bold text-center"
+                className="mb-6 p-4 bg-red-50 text-red-500 text-xs rounded-md border border-red-100 font-bold uppercase tracking-widest text-center"
               >
                 {error}
               </motion.div>
@@ -124,7 +122,7 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-50 border-none rounded-md px-12 py-4 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300"
+                  className="w-full bg-slate-50 border-none rounded-md px-12 py-4 text-sm font-medium text-[#0A0E2E] outline-none ring-1 ring-transparent focus:ring-black transition-all placeholder:text-slate-300"
                   placeholder="example@gmail.com"
                 />
               </div>
@@ -144,7 +142,7 @@ export default function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-50 border-none rounded-md px-12 py-4 text-sm font-bold text-[#0A0E2E] outline-none ring-2 ring-transparent focus:ring-[#0A0E2E]/5 transition-all placeholder:text-slate-300 pr-12"
+                  className="w-full bg-slate-50 border-none rounded-md px-12 py-4 text-sm font-medium text-[#0A0E2E] outline-none ring-1 ring-transparent focus:ring-black transition-all placeholder:text-slate-300 pr-12"
                   placeholder="••••••••"
                 />
                 <button
@@ -164,29 +162,27 @@ export default function LoginPage() {
               >
                 {rememberMe && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
               </div>
-              <span className="text-xs font-bold text-slate-400">Stay signed in for today</span>
+              <span className="text-xs font-semibold text-slate-400">Stay signed in for today</span>
             </div>
 
-            <div className="w-full flex justify-center">
-              <Button
-                type="submit"
-                disabled={loading}
-                className="w-11/12 h-14 bg-[#0A0E2E] hover:bg-[#151a44] text-white rounded-md font-bold text-lg font-['Urbanist'] shadow-xl shadow-[#0A0E2E]/20 transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50"
-              >
-                {loading ? (
-                  <div className="flex items-center gap-2">
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full"
-                    />
-                    <span>Logging in...</span>
-                  </div>
-                ) : (
-                  <span className="flex items-center gap-2">Login <ChevronRight size={16} strokeWidth={3} /></span>
-                )}
-              </Button>
-            </div>
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full h-14 bg-[#0A0E2E] hover:bg-[#151a44] text-white rounded-md font-bold text-md shadow-xl shadow-[#0A0E2E]/20 transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50"
+            >
+              {loading ? (
+                <div className="flex items-center gap-2 justify-center">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full"
+                  />
+                  <span>Logging in...</span>
+                </div>
+              ) : (
+                <span className="flex items-center gap-2 justify-center">Login <ChevronRight size={16} strokeWidth={3} /></span>
+              )}
+            </Button>
           </form>
 
           <p className="mt-12 text-center text-[13px] text-slate-400 font-medium">
@@ -208,4 +204,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
