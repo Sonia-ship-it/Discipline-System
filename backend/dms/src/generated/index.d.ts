@@ -1126,6 +1126,8 @@ export namespace Prisma {
     motherPhoneNumber: string | null
     year: string | null
     classGroup: string | null
+    location: string | null
+    transportStatus: string | null
     status: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1141,6 +1143,8 @@ export namespace Prisma {
     motherPhoneNumber: string | null
     year: string | null
     classGroup: string | null
+    location: string | null
+    transportStatus: string | null
     status: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1156,6 +1160,8 @@ export namespace Prisma {
     motherPhoneNumber: number
     year: number
     classGroup: number
+    location: number
+    transportStatus: number
     status: number
     createdAt: number
     updatedAt: number
@@ -1181,6 +1187,8 @@ export namespace Prisma {
     motherPhoneNumber?: true
     year?: true
     classGroup?: true
+    location?: true
+    transportStatus?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -1196,6 +1204,8 @@ export namespace Prisma {
     motherPhoneNumber?: true
     year?: true
     classGroup?: true
+    location?: true
+    transportStatus?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -1211,6 +1221,8 @@ export namespace Prisma {
     motherPhoneNumber?: true
     year?: true
     classGroup?: true
+    location?: true
+    transportStatus?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -1313,6 +1325,8 @@ export namespace Prisma {
     motherPhoneNumber: string
     year: string
     classGroup: string
+    location: string | null
+    transportStatus: string
     status: string
     createdAt: Date
     updatedAt: Date
@@ -1347,6 +1361,8 @@ export namespace Prisma {
     motherPhoneNumber?: boolean
     year?: boolean
     classGroup?: boolean
+    location?: boolean
+    transportStatus?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1364,6 +1380,8 @@ export namespace Prisma {
     motherPhoneNumber?: boolean
     year?: boolean
     classGroup?: boolean
+    location?: boolean
+    transportStatus?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1379,6 +1397,8 @@ export namespace Prisma {
     motherPhoneNumber?: boolean
     year?: boolean
     classGroup?: boolean
+    location?: boolean
+    transportStatus?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1394,12 +1414,14 @@ export namespace Prisma {
     motherPhoneNumber?: boolean
     year?: boolean
     classGroup?: boolean
+    location?: boolean
+    transportStatus?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "fatherName" | "motherName" | "fatherPhoneNumber" | "motherPhoneNumber" | "year" | "classGroup" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
+  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "fatherName" | "motherName" | "fatherPhoneNumber" | "motherPhoneNumber" | "year" | "classGroup" | "location" | "transportStatus" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
   export type StudentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     records?: boolean | Student$recordsArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
@@ -1422,6 +1444,8 @@ export namespace Prisma {
       motherPhoneNumber: string
       year: string
       classGroup: string
+      location: string | null
+      transportStatus: string
       status: string
       createdAt: Date
       updatedAt: Date
@@ -1858,6 +1882,8 @@ export namespace Prisma {
     readonly motherPhoneNumber: FieldRef<"Student", 'String'>
     readonly year: FieldRef<"Student", 'String'>
     readonly classGroup: FieldRef<"Student", 'String'>
+    readonly location: FieldRef<"Student", 'String'>
+    readonly transportStatus: FieldRef<"Student", 'String'>
     readonly status: FieldRef<"Student", 'String'>
     readonly createdAt: FieldRef<"Student", 'DateTime'>
     readonly updatedAt: FieldRef<"Student", 'DateTime'>
@@ -3408,6 +3434,7 @@ export namespace Prisma {
     id: number | null
     studentId: number | null
     reason: string | null
+    location: string | null
     status: string | null
     outDate: Date | null
     returnDate: Date | null
@@ -3418,6 +3445,7 @@ export namespace Prisma {
     id: number | null
     studentId: number | null
     reason: string | null
+    location: string | null
     status: string | null
     outDate: Date | null
     returnDate: Date | null
@@ -3428,6 +3456,7 @@ export namespace Prisma {
     id: number
     studentId: number
     reason: number
+    location: number
     status: number
     outDate: number
     returnDate: number
@@ -3450,6 +3479,7 @@ export namespace Prisma {
     id?: true
     studentId?: true
     reason?: true
+    location?: true
     status?: true
     outDate?: true
     returnDate?: true
@@ -3460,6 +3490,7 @@ export namespace Prisma {
     id?: true
     studentId?: true
     reason?: true
+    location?: true
     status?: true
     outDate?: true
     returnDate?: true
@@ -3470,6 +3501,7 @@ export namespace Prisma {
     id?: true
     studentId?: true
     reason?: true
+    location?: true
     status?: true
     outDate?: true
     returnDate?: true
@@ -3567,6 +3599,7 @@ export namespace Prisma {
     id: number
     studentId: number
     reason: string
+    location: string | null
     status: string
     outDate: Date
     returnDate: Date | null
@@ -3596,6 +3629,7 @@ export namespace Prisma {
     id?: boolean
     studentId?: boolean
     reason?: boolean
+    location?: boolean
     status?: boolean
     outDate?: boolean
     returnDate?: boolean
@@ -3607,6 +3641,7 @@ export namespace Prisma {
     id?: boolean
     studentId?: boolean
     reason?: boolean
+    location?: boolean
     status?: boolean
     outDate?: boolean
     returnDate?: boolean
@@ -3618,6 +3653,7 @@ export namespace Prisma {
     id?: boolean
     studentId?: boolean
     reason?: boolean
+    location?: boolean
     status?: boolean
     outDate?: boolean
     returnDate?: boolean
@@ -3629,13 +3665,14 @@ export namespace Prisma {
     id?: boolean
     studentId?: boolean
     reason?: boolean
+    location?: boolean
     status?: boolean
     outDate?: boolean
     returnDate?: boolean
     updatedAt?: boolean
   }
 
-  export type DisciplineRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "reason" | "status" | "outDate" | "returnDate" | "updatedAt", ExtArgs["result"]["disciplineRecord"]>
+  export type DisciplineRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "reason" | "location" | "status" | "outDate" | "returnDate" | "updatedAt", ExtArgs["result"]["disciplineRecord"]>
   export type DisciplineRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     student?: boolean | StudentDefaultArgs<ExtArgs>
   }
@@ -3655,6 +3692,7 @@ export namespace Prisma {
       id: number
       studentId: number
       reason: string
+      location: string | null
       status: string
       outDate: Date
       returnDate: Date | null
@@ -4086,6 +4124,7 @@ export namespace Prisma {
     readonly id: FieldRef<"DisciplineRecord", 'Int'>
     readonly studentId: FieldRef<"DisciplineRecord", 'Int'>
     readonly reason: FieldRef<"DisciplineRecord", 'String'>
+    readonly location: FieldRef<"DisciplineRecord", 'String'>
     readonly status: FieldRef<"DisciplineRecord", 'String'>
     readonly outDate: FieldRef<"DisciplineRecord", 'DateTime'>
     readonly returnDate: FieldRef<"DisciplineRecord", 'DateTime'>
@@ -4533,6 +4572,8 @@ export namespace Prisma {
     motherPhoneNumber: 'motherPhoneNumber',
     year: 'year',
     classGroup: 'classGroup',
+    location: 'location',
+    transportStatus: 'transportStatus',
     status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -4560,6 +4601,7 @@ export namespace Prisma {
     id: 'id',
     studentId: 'studentId',
     reason: 'reason',
+    location: 'location',
     status: 'status',
     outDate: 'outDate',
     returnDate: 'returnDate',
@@ -4670,6 +4712,8 @@ export namespace Prisma {
     motherPhoneNumber?: StringFilter<"Student"> | string
     year?: StringFilter<"Student"> | string
     classGroup?: StringFilter<"Student"> | string
+    location?: StringNullableFilter<"Student"> | string | null
+    transportStatus?: StringFilter<"Student"> | string
     status?: StringFilter<"Student"> | string
     createdAt?: DateTimeFilter<"Student"> | Date | string
     updatedAt?: DateTimeFilter<"Student"> | Date | string
@@ -4686,6 +4730,8 @@ export namespace Prisma {
     motherPhoneNumber?: SortOrder
     year?: SortOrder
     classGroup?: SortOrder
+    location?: SortOrderInput | SortOrder
+    transportStatus?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4705,6 +4751,8 @@ export namespace Prisma {
     motherPhoneNumber?: StringFilter<"Student"> | string
     year?: StringFilter<"Student"> | string
     classGroup?: StringFilter<"Student"> | string
+    location?: StringNullableFilter<"Student"> | string | null
+    transportStatus?: StringFilter<"Student"> | string
     status?: StringFilter<"Student"> | string
     createdAt?: DateTimeFilter<"Student"> | Date | string
     updatedAt?: DateTimeFilter<"Student"> | Date | string
@@ -4721,6 +4769,8 @@ export namespace Prisma {
     motherPhoneNumber?: SortOrder
     year?: SortOrder
     classGroup?: SortOrder
+    location?: SortOrderInput | SortOrder
+    transportStatus?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4744,6 +4794,8 @@ export namespace Prisma {
     motherPhoneNumber?: StringWithAggregatesFilter<"Student"> | string
     year?: StringWithAggregatesFilter<"Student"> | string
     classGroup?: StringWithAggregatesFilter<"Student"> | string
+    location?: StringNullableWithAggregatesFilter<"Student"> | string | null
+    transportStatus?: StringWithAggregatesFilter<"Student"> | string
     status?: StringWithAggregatesFilter<"Student"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Student"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Student"> | Date | string
@@ -4830,6 +4882,7 @@ export namespace Prisma {
     id?: IntFilter<"DisciplineRecord"> | number
     studentId?: IntFilter<"DisciplineRecord"> | number
     reason?: StringFilter<"DisciplineRecord"> | string
+    location?: StringNullableFilter<"DisciplineRecord"> | string | null
     status?: StringFilter<"DisciplineRecord"> | string
     outDate?: DateTimeFilter<"DisciplineRecord"> | Date | string
     returnDate?: DateTimeNullableFilter<"DisciplineRecord"> | Date | string | null
@@ -4841,6 +4894,7 @@ export namespace Prisma {
     id?: SortOrder
     studentId?: SortOrder
     reason?: SortOrder
+    location?: SortOrderInput | SortOrder
     status?: SortOrder
     outDate?: SortOrder
     returnDate?: SortOrderInput | SortOrder
@@ -4855,6 +4909,7 @@ export namespace Prisma {
     NOT?: DisciplineRecordWhereInput | DisciplineRecordWhereInput[]
     studentId?: IntFilter<"DisciplineRecord"> | number
     reason?: StringFilter<"DisciplineRecord"> | string
+    location?: StringNullableFilter<"DisciplineRecord"> | string | null
     status?: StringFilter<"DisciplineRecord"> | string
     outDate?: DateTimeFilter<"DisciplineRecord"> | Date | string
     returnDate?: DateTimeNullableFilter<"DisciplineRecord"> | Date | string | null
@@ -4866,6 +4921,7 @@ export namespace Prisma {
     id?: SortOrder
     studentId?: SortOrder
     reason?: SortOrder
+    location?: SortOrderInput | SortOrder
     status?: SortOrder
     outDate?: SortOrder
     returnDate?: SortOrderInput | SortOrder
@@ -4884,6 +4940,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"DisciplineRecord"> | number
     studentId?: IntWithAggregatesFilter<"DisciplineRecord"> | number
     reason?: StringWithAggregatesFilter<"DisciplineRecord"> | string
+    location?: StringNullableWithAggregatesFilter<"DisciplineRecord"> | string | null
     status?: StringWithAggregatesFilter<"DisciplineRecord"> | string
     outDate?: DateTimeWithAggregatesFilter<"DisciplineRecord"> | Date | string
     returnDate?: DateTimeNullableWithAggregatesFilter<"DisciplineRecord"> | Date | string | null
@@ -4899,6 +4956,8 @@ export namespace Prisma {
     motherPhoneNumber: string
     year: string
     classGroup: string
+    location?: string | null
+    transportStatus?: string
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4915,6 +4974,8 @@ export namespace Prisma {
     motherPhoneNumber: string
     year: string
     classGroup: string
+    location?: string | null
+    transportStatus?: string
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4930,6 +4991,8 @@ export namespace Prisma {
     motherPhoneNumber?: StringFieldUpdateOperationsInput | string
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    transportStatus?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4946,6 +5009,8 @@ export namespace Prisma {
     motherPhoneNumber?: StringFieldUpdateOperationsInput | string
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    transportStatus?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4962,6 +5027,8 @@ export namespace Prisma {
     motherPhoneNumber: string
     year: string
     classGroup: string
+    location?: string | null
+    transportStatus?: string
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -4976,6 +5043,8 @@ export namespace Prisma {
     motherPhoneNumber?: StringFieldUpdateOperationsInput | string
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    transportStatus?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -4991,6 +5060,8 @@ export namespace Prisma {
     motherPhoneNumber?: StringFieldUpdateOperationsInput | string
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    transportStatus?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5079,6 +5150,7 @@ export namespace Prisma {
 
   export type DisciplineRecordCreateInput = {
     reason: string
+    location?: string | null
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
@@ -5090,6 +5162,7 @@ export namespace Prisma {
     id?: number
     studentId: number
     reason: string
+    location?: string | null
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
@@ -5098,6 +5171,7 @@ export namespace Prisma {
 
   export type DisciplineRecordUpdateInput = {
     reason?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5109,6 +5183,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5119,6 +5194,7 @@ export namespace Prisma {
     id?: number
     studentId: number
     reason: string
+    location?: string | null
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
@@ -5127,6 +5203,7 @@ export namespace Prisma {
 
   export type DisciplineRecordUpdateManyMutationInput = {
     reason?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5137,6 +5214,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5169,6 +5247,21 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5186,6 +5279,11 @@ export namespace Prisma {
     none?: DisciplineRecordWhereInput
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type DisciplineRecordOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -5200,6 +5298,8 @@ export namespace Prisma {
     motherPhoneNumber?: SortOrder
     year?: SortOrder
     classGroup?: SortOrder
+    location?: SortOrder
+    transportStatus?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5219,6 +5319,8 @@ export namespace Prisma {
     motherPhoneNumber?: SortOrder
     year?: SortOrder
     classGroup?: SortOrder
+    location?: SortOrder
+    transportStatus?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5234,6 +5336,8 @@ export namespace Prisma {
     motherPhoneNumber?: SortOrder
     year?: SortOrder
     classGroup?: SortOrder
+    location?: SortOrder
+    transportStatus?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5275,6 +5379,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -5351,15 +5473,11 @@ export namespace Prisma {
     isNot?: StudentWhereInput
   }
 
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
   export type DisciplineRecordCountOrderByAggregateInput = {
     id?: SortOrder
     studentId?: SortOrder
     reason?: SortOrder
+    location?: SortOrder
     status?: SortOrder
     outDate?: SortOrder
     returnDate?: SortOrder
@@ -5375,6 +5493,7 @@ export namespace Prisma {
     id?: SortOrder
     studentId?: SortOrder
     reason?: SortOrder
+    location?: SortOrder
     status?: SortOrder
     outDate?: SortOrder
     returnDate?: SortOrder
@@ -5385,6 +5504,7 @@ export namespace Prisma {
     id?: SortOrder
     studentId?: SortOrder
     reason?: SortOrder
+    location?: SortOrder
     status?: SortOrder
     outDate?: SortOrder
     returnDate?: SortOrder
@@ -5426,6 +5546,10 @@ export namespace Prisma {
 
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -5511,6 +5635,20 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5566,6 +5704,34 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5605,19 +5771,9 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type DisciplineRecordCreateWithoutStudentInput = {
     reason: string
+    location?: string | null
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
@@ -5627,6 +5783,7 @@ export namespace Prisma {
   export type DisciplineRecordUncheckedCreateWithoutStudentInput = {
     id?: number
     reason: string
+    location?: string | null
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
@@ -5666,6 +5823,7 @@ export namespace Prisma {
     id?: IntFilter<"DisciplineRecord"> | number
     studentId?: IntFilter<"DisciplineRecord"> | number
     reason?: StringFilter<"DisciplineRecord"> | string
+    location?: StringNullableFilter<"DisciplineRecord"> | string | null
     status?: StringFilter<"DisciplineRecord"> | string
     outDate?: DateTimeFilter<"DisciplineRecord"> | Date | string
     returnDate?: DateTimeNullableFilter<"DisciplineRecord"> | Date | string | null
@@ -5681,6 +5839,8 @@ export namespace Prisma {
     motherPhoneNumber: string
     year: string
     classGroup: string
+    location?: string | null
+    transportStatus?: string
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5696,6 +5856,8 @@ export namespace Prisma {
     motherPhoneNumber: string
     year: string
     classGroup: string
+    location?: string | null
+    transportStatus?: string
     status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -5726,6 +5888,8 @@ export namespace Prisma {
     motherPhoneNumber?: StringFieldUpdateOperationsInput | string
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    transportStatus?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5741,6 +5905,8 @@ export namespace Prisma {
     motherPhoneNumber?: StringFieldUpdateOperationsInput | string
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    transportStatus?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -5749,6 +5915,7 @@ export namespace Prisma {
   export type DisciplineRecordCreateManyStudentInput = {
     id?: number
     reason: string
+    location?: string | null
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
@@ -5757,6 +5924,7 @@ export namespace Prisma {
 
   export type DisciplineRecordUpdateWithoutStudentInput = {
     reason?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5766,6 +5934,7 @@ export namespace Prisma {
   export type DisciplineRecordUncheckedUpdateWithoutStudentInput = {
     id?: IntFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -5775,6 +5944,7 @@ export namespace Prisma {
   export type DisciplineRecordUncheckedUpdateManyWithoutStudentInput = {
     id?: IntFieldUpdateOperationsInput | number
     reason?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

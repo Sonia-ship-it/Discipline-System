@@ -8,6 +8,7 @@ import { DisciplineRecordModule } from './discipline-record/discipline-record.mo
 import { AuthModule } from './auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule } from '@nestjs/config';
+import { TransportModule } from './transport/transport.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    TransportModule,
   ],
   controllers: [AppController],
   providers: [AppService],

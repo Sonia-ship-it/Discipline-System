@@ -9,5 +9,7 @@ export class CreateStudentDto {
   @IsString() @IsNotEmpty() motherPhoneNumber: string;
   @IsString() @IsNotEmpty() year: string;
   @IsString() @IsNotEmpty() classGroup: string;
+  @IsOptional() @IsString() location?: string;
+  @IsOptional() @IsString() transportStatus?: string;
   @IsOptional() @IsString() status?: string;
 }

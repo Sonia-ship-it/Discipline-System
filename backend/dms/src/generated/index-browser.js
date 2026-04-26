@@ -130,6 +130,8 @@ exports.Prisma.StudentScalarFieldEnum = {
   motherPhoneNumber: 'motherPhoneNumber',
   year: 'year',
   classGroup: 'classGroup',
+  location: 'location',
+  transportStatus: 'transportStatus',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -151,6 +153,7 @@ exports.Prisma.DisciplineRecordScalarFieldEnum = {
   id: 'id',
   studentId: 'studentId',
   reason: 'reason',
+  location: 'location',
   status: 'status',
   outDate: 'outDate',
   returnDate: 'returnDate',

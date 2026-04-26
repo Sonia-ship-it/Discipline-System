@@ -6,14 +6,17 @@ import { UpdateStudentDto } from './dto/update-student.dto';
 
 @Injectable()
 export class StudentService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(data: CreateStudentDto) {
     return this.prisma.student.create({ data });
   }
 
-  async findAll() {
-    return this.prisma.student.findMany({ include: { records: true } });
+  async findAll(location?: string) {
+    return this.prisma.student.findMany({
+      where: location ? { location } : {},
+      include: { records: true },
+    });
   }
 
   async findOne(id: number) {

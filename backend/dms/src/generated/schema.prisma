@@ -17,6 +17,8 @@ model Student {
   motherPhoneNumber String
   year              String
   classGroup        String
+  location          String?
+  transportStatus   String             @default("NOT_PAID")
   status            String             @default("IN")
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
@@ -39,6 +41,7 @@ model DisciplineRecord {
   id         Int       @id @default(autoincrement())
   studentId  Int
   reason     String
+  location   String?
   status     String    @default("OUT")
   outDate    DateTime  @default(now())
   returnDate DateTime?
