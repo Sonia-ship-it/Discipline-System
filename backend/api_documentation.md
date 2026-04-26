@@ -47,11 +47,15 @@ Default: `http://localhost:2008`
   - `motherPhoneNumber` (string): Required.
   - `year` (string): Required.
   - `classGroup` (string): Required.
+  - `location` (string): Optional.
+  - `transportStatus` (string): Optional.
   - `status` (string): Optional.
 
 ### Get All Students
 - **Endpoint:** `/students`
 - **Method:** `GET`
+- **Query Params:**
+  - `location` (string): Optional. Filter by location.
 
 ### Get Student by ID
 - **Endpoint:** `/students/:id`
@@ -101,6 +105,36 @@ Default: `http://localhost:2008`
 
 ---
 
+## Transport Endpoints
+
+### Create Transport
+- **Endpoint:** `/transport`
+- **Method:** `POST`
+- **Payload:**
+  - `firstName` (string): Required.
+  - `lastName` (string): Required.
+  - `location` (string): Required.
+  - `status` (string): Required.
+
+### Get All Transports
+- **Endpoint:** `/transport`
+- **Method:** `GET`
+
+### Get Transport by ID
+- **Endpoint:** `/transport/:id`
+- **Method:** `GET`
+
+### Update Transport
+- **Endpoint:** `/transport/:id`
+- **Method:** `PATCH`
+- **Payload:** All "Create Transport" fields are optional.
+
+### Delete Transport
+- **Endpoint:** `/transport/:id`
+- **Method:** `DELETE`
+
+---
+
 ## Discipline Record Endpoints
 
 ### Create Record
@@ -109,6 +143,7 @@ Default: `http://localhost:2008`
 - **Payload:**
   - `studentId` (number): Required.
   - `reason` (string): Required.
+  - `location` (string): Optional.
   - `status` (string): Optional.
   - `outDate` (date-string): Optional.
   - `returnDate` (date-string): Optional.
