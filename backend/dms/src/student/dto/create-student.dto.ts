@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsOptional, IsEnum } from 'class-validator';
-import { Status } from '@prisma/client';
+import { Status } from '../../generated';
 
 
 export class CreateStudentDto {
