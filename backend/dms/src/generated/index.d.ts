@@ -28,12 +28,31 @@ export type Staff = $Result.DefaultSelection<Prisma.$StaffPayload>
  * 
  */
 export type DisciplineRecord = $Result.DefaultSelection<Prisma.$DisciplineRecordPayload>
+/**
+ * Model Transport
+ * 
+ */
+export type Transport = $Result.DefaultSelection<Prisma.$TransportPayload>
+/**
+ * Model TransportAssignment
+ * 
+ */
+export type TransportAssignment = $Result.DefaultSelection<Prisma.$TransportAssignmentPayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const Status: {
+  export const TransportStatus: {
+  PAID: 'PAID',
+  NOT_PAID: 'NOT_PAID',
+  OUT: 'OUT'
+};
+
+export type TransportStatus = (typeof TransportStatus)[keyof typeof TransportStatus]
+
+
+export const Status: {
   IN: 'IN',
   OUT: 'OUT',
   RETURNED: 'RETURNED'
@@ -42,6 +61,10 @@ export namespace $Enums {
 export type Status = (typeof Status)[keyof typeof Status]
 
 }
+
+export type TransportStatus = $Enums.TransportStatus
+
+export const TransportStatus: typeof $Enums.TransportStatus
 
 export type Status = $Enums.Status
 
@@ -197,6 +220,26 @@ export class PrismaClient<
     * ```
     */
   get disciplineRecord(): Prisma.DisciplineRecordDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.transport`: Exposes CRUD operations for the **Transport** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Transports
+    * const transports = await prisma.transport.findMany()
+    * ```
+    */
+  get transport(): Prisma.TransportDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.transportAssignment`: Exposes CRUD operations for the **TransportAssignment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TransportAssignments
+    * const transportAssignments = await prisma.transportAssignment.findMany()
+    * ```
+    */
+  get transportAssignment(): Prisma.TransportAssignmentDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -633,7 +676,9 @@ export namespace Prisma {
   export const ModelName: {
     Student: 'Student',
     Staff: 'Staff',
-    DisciplineRecord: 'DisciplineRecord'
+    DisciplineRecord: 'DisciplineRecord',
+    Transport: 'Transport',
+    TransportAssignment: 'TransportAssignment'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -649,7 +694,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "student" | "staff" | "disciplineRecord"
+      modelProps: "student" | "staff" | "disciplineRecord" | "transport" | "transportAssignment"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -875,6 +920,154 @@ export namespace Prisma {
           }
         }
       }
+      Transport: {
+        payload: Prisma.$TransportPayload<ExtArgs>
+        fields: Prisma.TransportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TransportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TransportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload>
+          }
+          findFirst: {
+            args: Prisma.TransportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TransportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload>
+          }
+          findMany: {
+            args: Prisma.TransportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload>[]
+          }
+          create: {
+            args: Prisma.TransportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload>
+          }
+          createMany: {
+            args: Prisma.TransportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TransportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload>[]
+          }
+          delete: {
+            args: Prisma.TransportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload>
+          }
+          update: {
+            args: Prisma.TransportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload>
+          }
+          deleteMany: {
+            args: Prisma.TransportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TransportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TransportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload>[]
+          }
+          upsert: {
+            args: Prisma.TransportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportPayload>
+          }
+          aggregate: {
+            args: Prisma.TransportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTransport>
+          }
+          groupBy: {
+            args: Prisma.TransportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TransportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TransportCountArgs<ExtArgs>
+            result: $Utils.Optional<TransportCountAggregateOutputType> | number
+          }
+        }
+      }
+      TransportAssignment: {
+        payload: Prisma.$TransportAssignmentPayload<ExtArgs>
+        fields: Prisma.TransportAssignmentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TransportAssignmentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TransportAssignmentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload>
+          }
+          findFirst: {
+            args: Prisma.TransportAssignmentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TransportAssignmentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload>
+          }
+          findMany: {
+            args: Prisma.TransportAssignmentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload>[]
+          }
+          create: {
+            args: Prisma.TransportAssignmentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload>
+          }
+          createMany: {
+            args: Prisma.TransportAssignmentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TransportAssignmentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload>[]
+          }
+          delete: {
+            args: Prisma.TransportAssignmentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload>
+          }
+          update: {
+            args: Prisma.TransportAssignmentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload>
+          }
+          deleteMany: {
+            args: Prisma.TransportAssignmentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TransportAssignmentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TransportAssignmentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload>[]
+          }
+          upsert: {
+            args: Prisma.TransportAssignmentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TransportAssignmentPayload>
+          }
+          aggregate: {
+            args: Prisma.TransportAssignmentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTransportAssignment>
+          }
+          groupBy: {
+            args: Prisma.TransportAssignmentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TransportAssignmentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TransportAssignmentCountArgs<ExtArgs>
+            result: $Utils.Optional<TransportAssignmentCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -986,6 +1179,8 @@ export namespace Prisma {
     student?: StudentOmit
     staff?: StaffOmit
     disciplineRecord?: DisciplineRecordOmit
+    transport?: TransportOmit
+    transportAssignment?: TransportAssignmentOmit
   }
 
   /* Types for Logging */
@@ -1067,10 +1262,12 @@ export namespace Prisma {
 
   export type StudentCountOutputType = {
     records: number
+    transportAssignments: number
   }
 
   export type StudentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     records?: boolean | StudentCountOutputTypeCountRecordsArgs
+    transportAssignments?: boolean | StudentCountOutputTypeCountTransportAssignmentsArgs
   }
 
   // Custom InputTypes
@@ -1089,6 +1286,44 @@ export namespace Prisma {
    */
   export type StudentCountOutputTypeCountRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DisciplineRecordWhereInput
+  }
+
+  /**
+   * StudentCountOutputType without action
+   */
+  export type StudentCountOutputTypeCountTransportAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransportAssignmentWhereInput
+  }
+
+
+  /**
+   * Count Type TransportCountOutputType
+   */
+
+  export type TransportCountOutputType = {
+    assignments: number
+  }
+
+  export type TransportCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assignments?: boolean | TransportCountOutputTypeCountAssignmentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TransportCountOutputType without action
+   */
+  export type TransportCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportCountOutputType
+     */
+    select?: TransportCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TransportCountOutputType without action
+   */
+  export type TransportCountOutputTypeCountAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransportAssignmentWhereInput
   }
 
 
@@ -1127,8 +1362,7 @@ export namespace Prisma {
     year: string | null
     classGroup: string | null
     location: string | null
-    transportStatus: string | null
-    status: string | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1144,8 +1378,7 @@ export namespace Prisma {
     year: string | null
     classGroup: string | null
     location: string | null
-    transportStatus: string | null
-    status: string | null
+    status: $Enums.Status | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1161,7 +1394,6 @@ export namespace Prisma {
     year: number
     classGroup: number
     location: number
-    transportStatus: number
     status: number
     createdAt: number
     updatedAt: number
@@ -1188,7 +1420,6 @@ export namespace Prisma {
     year?: true
     classGroup?: true
     location?: true
-    transportStatus?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -1205,7 +1436,6 @@ export namespace Prisma {
     year?: true
     classGroup?: true
     location?: true
-    transportStatus?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -1222,7 +1452,6 @@ export namespace Prisma {
     year?: true
     classGroup?: true
     location?: true
-    transportStatus?: true
     status?: true
     createdAt?: true
     updatedAt?: true
@@ -1326,8 +1555,7 @@ export namespace Prisma {
     year: string
     classGroup: string
     location: string | null
-    transportStatus: string
-    status: string
+    status: $Enums.Status
     createdAt: Date
     updatedAt: Date
     _count: StudentCountAggregateOutputType | null
@@ -1362,11 +1590,11 @@ export namespace Prisma {
     year?: boolean
     classGroup?: boolean
     location?: boolean
-    transportStatus?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     records?: boolean | Student$recordsArgs<ExtArgs>
+    transportAssignments?: boolean | Student$transportAssignmentsArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["student"]>
 
@@ -1381,7 +1609,6 @@ export namespace Prisma {
     year?: boolean
     classGroup?: boolean
     location?: boolean
-    transportStatus?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1398,7 +1625,6 @@ export namespace Prisma {
     year?: boolean
     classGroup?: boolean
     location?: boolean
-    transportStatus?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -1415,15 +1641,15 @@ export namespace Prisma {
     year?: boolean
     classGroup?: boolean
     location?: boolean
-    transportStatus?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "fatherName" | "motherName" | "fatherPhoneNumber" | "motherPhoneNumber" | "year" | "classGroup" | "location" | "transportStatus" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
+  export type StudentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "fatherName" | "motherName" | "fatherPhoneNumber" | "motherPhoneNumber" | "year" | "classGroup" | "location" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
   export type StudentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     records?: boolean | Student$recordsArgs<ExtArgs>
+    transportAssignments?: boolean | Student$transportAssignmentsArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StudentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1433,6 +1659,7 @@ export namespace Prisma {
     name: "Student"
     objects: {
       records: Prisma.$DisciplineRecordPayload<ExtArgs>[]
+      transportAssignments: Prisma.$TransportAssignmentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1445,8 +1672,7 @@ export namespace Prisma {
       year: string
       classGroup: string
       location: string | null
-      transportStatus: string
-      status: string
+      status: $Enums.Status
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["student"]>
@@ -1844,6 +2070,7 @@ export namespace Prisma {
   export interface Prisma__StudentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     records<T extends Student$recordsArgs<ExtArgs> = {}>(args?: Subset<T, Student$recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DisciplineRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    transportAssignments<T extends Student$transportAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, Student$transportAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1883,8 +2110,7 @@ export namespace Prisma {
     readonly year: FieldRef<"Student", 'String'>
     readonly classGroup: FieldRef<"Student", 'String'>
     readonly location: FieldRef<"Student", 'String'>
-    readonly transportStatus: FieldRef<"Student", 'String'>
-    readonly status: FieldRef<"Student", 'String'>
+    readonly status: FieldRef<"Student", 'Status'>
     readonly createdAt: FieldRef<"Student", 'DateTime'>
     readonly updatedAt: FieldRef<"Student", 'DateTime'>
   }
@@ -2304,6 +2530,30 @@ export namespace Prisma {
   }
 
   /**
+   * Student.transportAssignments
+   */
+  export type Student$transportAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    where?: TransportAssignmentWhereInput
+    orderBy?: TransportAssignmentOrderByWithRelationInput | TransportAssignmentOrderByWithRelationInput[]
+    cursor?: TransportAssignmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TransportAssignmentScalarFieldEnum | TransportAssignmentScalarFieldEnum[]
+  }
+
+  /**
    * Student without action
    */
   export type StudentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2349,7 +2599,6 @@ export namespace Prisma {
     email: string | null
     password: string | null
     phoneNumber: string | null
-    role: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2361,7 +2610,6 @@ export namespace Prisma {
     email: string | null
     password: string | null
     phoneNumber: string | null
-    role: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2373,7 +2621,6 @@ export namespace Prisma {
     email: number
     password: number
     phoneNumber: number
-    role: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2395,7 +2642,6 @@ export namespace Prisma {
     email?: true
     password?: true
     phoneNumber?: true
-    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2407,7 +2653,6 @@ export namespace Prisma {
     email?: true
     password?: true
     phoneNumber?: true
-    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2419,7 +2664,6 @@ export namespace Prisma {
     email?: true
     password?: true
     phoneNumber?: true
-    role?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2518,7 +2762,6 @@ export namespace Prisma {
     email: string
     password: string
     phoneNumber: string
-    role: string
     createdAt: Date
     updatedAt: Date
     _count: StaffCountAggregateOutputType | null
@@ -2549,7 +2792,6 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phoneNumber?: boolean
-    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["staff"]>
@@ -2561,7 +2803,6 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phoneNumber?: boolean
-    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["staff"]>
@@ -2573,7 +2814,6 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phoneNumber?: boolean
-    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["staff"]>
@@ -2585,12 +2825,11 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phoneNumber?: boolean
-    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type StaffOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "password" | "phoneNumber" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
+  export type StaffOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "password" | "phoneNumber" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
 
   export type $StaffPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Staff"
@@ -2602,7 +2841,6 @@ export namespace Prisma {
       email: string
       password: string
       phoneNumber: string
-      role: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["staff"]>
@@ -3034,7 +3272,6 @@ export namespace Prisma {
     readonly email: FieldRef<"Staff", 'String'>
     readonly password: FieldRef<"Staff", 'String'>
     readonly phoneNumber: FieldRef<"Staff", 'String'>
-    readonly role: FieldRef<"Staff", 'String'>
     readonly createdAt: FieldRef<"Staff", 'DateTime'>
     readonly updatedAt: FieldRef<"Staff", 'DateTime'>
   }
@@ -4549,6 +4786,2245 @@ export namespace Prisma {
 
 
   /**
+   * Model Transport
+   */
+
+  export type AggregateTransport = {
+    _count: TransportCountAggregateOutputType | null
+    _avg: TransportAvgAggregateOutputType | null
+    _sum: TransportSumAggregateOutputType | null
+    _min: TransportMinAggregateOutputType | null
+    _max: TransportMaxAggregateOutputType | null
+  }
+
+  export type TransportAvgAggregateOutputType = {
+    id: number | null
+    price: number | null
+  }
+
+  export type TransportSumAggregateOutputType = {
+    id: number | null
+    price: number | null
+  }
+
+  export type TransportMinAggregateOutputType = {
+    id: number | null
+    location: string | null
+    price: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TransportMaxAggregateOutputType = {
+    id: number | null
+    location: string | null
+    price: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TransportCountAggregateOutputType = {
+    id: number
+    location: number
+    price: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TransportAvgAggregateInputType = {
+    id?: true
+    price?: true
+  }
+
+  export type TransportSumAggregateInputType = {
+    id?: true
+    price?: true
+  }
+
+  export type TransportMinAggregateInputType = {
+    id?: true
+    location?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TransportMaxAggregateInputType = {
+    id?: true
+    location?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TransportCountAggregateInputType = {
+    id?: true
+    location?: true
+    price?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TransportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Transport to aggregate.
+     */
+    where?: TransportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Transports to fetch.
+     */
+    orderBy?: TransportOrderByWithRelationInput | TransportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TransportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Transports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Transports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Transports
+    **/
+    _count?: true | TransportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TransportAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TransportSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TransportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TransportMaxAggregateInputType
+  }
+
+  export type GetTransportAggregateType<T extends TransportAggregateArgs> = {
+        [P in keyof T & keyof AggregateTransport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTransport[P]>
+      : GetScalarType<T[P], AggregateTransport[P]>
+  }
+
+
+
+
+  export type TransportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransportWhereInput
+    orderBy?: TransportOrderByWithAggregationInput | TransportOrderByWithAggregationInput[]
+    by: TransportScalarFieldEnum[] | TransportScalarFieldEnum
+    having?: TransportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TransportCountAggregateInputType | true
+    _avg?: TransportAvgAggregateInputType
+    _sum?: TransportSumAggregateInputType
+    _min?: TransportMinAggregateInputType
+    _max?: TransportMaxAggregateInputType
+  }
+
+  export type TransportGroupByOutputType = {
+    id: number
+    location: string
+    price: number
+    createdAt: Date
+    updatedAt: Date
+    _count: TransportCountAggregateOutputType | null
+    _avg: TransportAvgAggregateOutputType | null
+    _sum: TransportSumAggregateOutputType | null
+    _min: TransportMinAggregateOutputType | null
+    _max: TransportMaxAggregateOutputType | null
+  }
+
+  type GetTransportGroupByPayload<T extends TransportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TransportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TransportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TransportGroupByOutputType[P]>
+            : GetScalarType<T[P], TransportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TransportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    location?: boolean
+    price?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    assignments?: boolean | Transport$assignmentsArgs<ExtArgs>
+    _count?: boolean | TransportCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transport"]>
+
+  export type TransportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    location?: boolean
+    price?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["transport"]>
+
+  export type TransportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    location?: boolean
+    price?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["transport"]>
+
+  export type TransportSelectScalar = {
+    id?: boolean
+    location?: boolean
+    price?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TransportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "location" | "price" | "createdAt" | "updatedAt", ExtArgs["result"]["transport"]>
+  export type TransportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    assignments?: boolean | Transport$assignmentsArgs<ExtArgs>
+    _count?: boolean | TransportCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TransportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TransportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $TransportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Transport"
+    objects: {
+      assignments: Prisma.$TransportAssignmentPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      location: string
+      price: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["transport"]>
+    composites: {}
+  }
+
+  type TransportGetPayload<S extends boolean | null | undefined | TransportDefaultArgs> = $Result.GetResult<Prisma.$TransportPayload, S>
+
+  type TransportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TransportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TransportCountAggregateInputType | true
+    }
+
+  export interface TransportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Transport'], meta: { name: 'Transport' } }
+    /**
+     * Find zero or one Transport that matches the filter.
+     * @param {TransportFindUniqueArgs} args - Arguments to find a Transport
+     * @example
+     * // Get one Transport
+     * const transport = await prisma.transport.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TransportFindUniqueArgs>(args: SelectSubset<T, TransportFindUniqueArgs<ExtArgs>>): Prisma__TransportClient<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Transport that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TransportFindUniqueOrThrowArgs} args - Arguments to find a Transport
+     * @example
+     * // Get one Transport
+     * const transport = await prisma.transport.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TransportFindUniqueOrThrowArgs>(args: SelectSubset<T, TransportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TransportClient<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Transport that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportFindFirstArgs} args - Arguments to find a Transport
+     * @example
+     * // Get one Transport
+     * const transport = await prisma.transport.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TransportFindFirstArgs>(args?: SelectSubset<T, TransportFindFirstArgs<ExtArgs>>): Prisma__TransportClient<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Transport that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportFindFirstOrThrowArgs} args - Arguments to find a Transport
+     * @example
+     * // Get one Transport
+     * const transport = await prisma.transport.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TransportFindFirstOrThrowArgs>(args?: SelectSubset<T, TransportFindFirstOrThrowArgs<ExtArgs>>): Prisma__TransportClient<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Transports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Transports
+     * const transports = await prisma.transport.findMany()
+     * 
+     * // Get first 10 Transports
+     * const transports = await prisma.transport.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const transportWithIdOnly = await prisma.transport.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TransportFindManyArgs>(args?: SelectSubset<T, TransportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Transport.
+     * @param {TransportCreateArgs} args - Arguments to create a Transport.
+     * @example
+     * // Create one Transport
+     * const Transport = await prisma.transport.create({
+     *   data: {
+     *     // ... data to create a Transport
+     *   }
+     * })
+     * 
+     */
+    create<T extends TransportCreateArgs>(args: SelectSubset<T, TransportCreateArgs<ExtArgs>>): Prisma__TransportClient<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Transports.
+     * @param {TransportCreateManyArgs} args - Arguments to create many Transports.
+     * @example
+     * // Create many Transports
+     * const transport = await prisma.transport.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TransportCreateManyArgs>(args?: SelectSubset<T, TransportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Transports and returns the data saved in the database.
+     * @param {TransportCreateManyAndReturnArgs} args - Arguments to create many Transports.
+     * @example
+     * // Create many Transports
+     * const transport = await prisma.transport.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Transports and only return the `id`
+     * const transportWithIdOnly = await prisma.transport.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TransportCreateManyAndReturnArgs>(args?: SelectSubset<T, TransportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Transport.
+     * @param {TransportDeleteArgs} args - Arguments to delete one Transport.
+     * @example
+     * // Delete one Transport
+     * const Transport = await prisma.transport.delete({
+     *   where: {
+     *     // ... filter to delete one Transport
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TransportDeleteArgs>(args: SelectSubset<T, TransportDeleteArgs<ExtArgs>>): Prisma__TransportClient<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Transport.
+     * @param {TransportUpdateArgs} args - Arguments to update one Transport.
+     * @example
+     * // Update one Transport
+     * const transport = await prisma.transport.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TransportUpdateArgs>(args: SelectSubset<T, TransportUpdateArgs<ExtArgs>>): Prisma__TransportClient<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Transports.
+     * @param {TransportDeleteManyArgs} args - Arguments to filter Transports to delete.
+     * @example
+     * // Delete a few Transports
+     * const { count } = await prisma.transport.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TransportDeleteManyArgs>(args?: SelectSubset<T, TransportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Transports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Transports
+     * const transport = await prisma.transport.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TransportUpdateManyArgs>(args: SelectSubset<T, TransportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Transports and returns the data updated in the database.
+     * @param {TransportUpdateManyAndReturnArgs} args - Arguments to update many Transports.
+     * @example
+     * // Update many Transports
+     * const transport = await prisma.transport.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Transports and only return the `id`
+     * const transportWithIdOnly = await prisma.transport.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TransportUpdateManyAndReturnArgs>(args: SelectSubset<T, TransportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Transport.
+     * @param {TransportUpsertArgs} args - Arguments to update or create a Transport.
+     * @example
+     * // Update or create a Transport
+     * const transport = await prisma.transport.upsert({
+     *   create: {
+     *     // ... data to create a Transport
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Transport we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TransportUpsertArgs>(args: SelectSubset<T, TransportUpsertArgs<ExtArgs>>): Prisma__TransportClient<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Transports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportCountArgs} args - Arguments to filter Transports to count.
+     * @example
+     * // Count the number of Transports
+     * const count = await prisma.transport.count({
+     *   where: {
+     *     // ... the filter for the Transports we want to count
+     *   }
+     * })
+    **/
+    count<T extends TransportCountArgs>(
+      args?: Subset<T, TransportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TransportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Transport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TransportAggregateArgs>(args: Subset<T, TransportAggregateArgs>): Prisma.PrismaPromise<GetTransportAggregateType<T>>
+
+    /**
+     * Group by Transport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TransportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TransportGroupByArgs['orderBy'] }
+        : { orderBy?: TransportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TransportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTransportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Transport model
+   */
+  readonly fields: TransportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Transport.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TransportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    assignments<T extends Transport$assignmentsArgs<ExtArgs> = {}>(args?: Subset<T, Transport$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Transport model
+   */
+  interface TransportFieldRefs {
+    readonly id: FieldRef<"Transport", 'Int'>
+    readonly location: FieldRef<"Transport", 'String'>
+    readonly price: FieldRef<"Transport", 'Float'>
+    readonly createdAt: FieldRef<"Transport", 'DateTime'>
+    readonly updatedAt: FieldRef<"Transport", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Transport findUnique
+   */
+  export type TransportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportInclude<ExtArgs> | null
+    /**
+     * Filter, which Transport to fetch.
+     */
+    where: TransportWhereUniqueInput
+  }
+
+  /**
+   * Transport findUniqueOrThrow
+   */
+  export type TransportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportInclude<ExtArgs> | null
+    /**
+     * Filter, which Transport to fetch.
+     */
+    where: TransportWhereUniqueInput
+  }
+
+  /**
+   * Transport findFirst
+   */
+  export type TransportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportInclude<ExtArgs> | null
+    /**
+     * Filter, which Transport to fetch.
+     */
+    where?: TransportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Transports to fetch.
+     */
+    orderBy?: TransportOrderByWithRelationInput | TransportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Transports.
+     */
+    cursor?: TransportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Transports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Transports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Transports.
+     */
+    distinct?: TransportScalarFieldEnum | TransportScalarFieldEnum[]
+  }
+
+  /**
+   * Transport findFirstOrThrow
+   */
+  export type TransportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportInclude<ExtArgs> | null
+    /**
+     * Filter, which Transport to fetch.
+     */
+    where?: TransportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Transports to fetch.
+     */
+    orderBy?: TransportOrderByWithRelationInput | TransportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Transports.
+     */
+    cursor?: TransportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Transports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Transports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Transports.
+     */
+    distinct?: TransportScalarFieldEnum | TransportScalarFieldEnum[]
+  }
+
+  /**
+   * Transport findMany
+   */
+  export type TransportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportInclude<ExtArgs> | null
+    /**
+     * Filter, which Transports to fetch.
+     */
+    where?: TransportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Transports to fetch.
+     */
+    orderBy?: TransportOrderByWithRelationInput | TransportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Transports.
+     */
+    cursor?: TransportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Transports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Transports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Transports.
+     */
+    distinct?: TransportScalarFieldEnum | TransportScalarFieldEnum[]
+  }
+
+  /**
+   * Transport create
+   */
+  export type TransportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Transport.
+     */
+    data: XOR<TransportCreateInput, TransportUncheckedCreateInput>
+  }
+
+  /**
+   * Transport createMany
+   */
+  export type TransportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Transports.
+     */
+    data: TransportCreateManyInput | TransportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Transport createManyAndReturn
+   */
+  export type TransportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * The data used to create many Transports.
+     */
+    data: TransportCreateManyInput | TransportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Transport update
+   */
+  export type TransportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Transport.
+     */
+    data: XOR<TransportUpdateInput, TransportUncheckedUpdateInput>
+    /**
+     * Choose, which Transport to update.
+     */
+    where: TransportWhereUniqueInput
+  }
+
+  /**
+   * Transport updateMany
+   */
+  export type TransportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Transports.
+     */
+    data: XOR<TransportUpdateManyMutationInput, TransportUncheckedUpdateManyInput>
+    /**
+     * Filter which Transports to update
+     */
+    where?: TransportWhereInput
+    /**
+     * Limit how many Transports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Transport updateManyAndReturn
+   */
+  export type TransportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * The data used to update Transports.
+     */
+    data: XOR<TransportUpdateManyMutationInput, TransportUncheckedUpdateManyInput>
+    /**
+     * Filter which Transports to update
+     */
+    where?: TransportWhereInput
+    /**
+     * Limit how many Transports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Transport upsert
+   */
+  export type TransportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Transport to update in case it exists.
+     */
+    where: TransportWhereUniqueInput
+    /**
+     * In case the Transport found by the `where` argument doesn't exist, create a new Transport with this data.
+     */
+    create: XOR<TransportCreateInput, TransportUncheckedCreateInput>
+    /**
+     * In case the Transport was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TransportUpdateInput, TransportUncheckedUpdateInput>
+  }
+
+  /**
+   * Transport delete
+   */
+  export type TransportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportInclude<ExtArgs> | null
+    /**
+     * Filter which Transport to delete.
+     */
+    where: TransportWhereUniqueInput
+  }
+
+  /**
+   * Transport deleteMany
+   */
+  export type TransportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Transports to delete
+     */
+    where?: TransportWhereInput
+    /**
+     * Limit how many Transports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Transport.assignments
+   */
+  export type Transport$assignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    where?: TransportAssignmentWhereInput
+    orderBy?: TransportAssignmentOrderByWithRelationInput | TransportAssignmentOrderByWithRelationInput[]
+    cursor?: TransportAssignmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TransportAssignmentScalarFieldEnum | TransportAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * Transport without action
+   */
+  export type TransportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transport
+     */
+    select?: TransportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transport
+     */
+    omit?: TransportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TransportAssignment
+   */
+
+  export type AggregateTransportAssignment = {
+    _count: TransportAssignmentCountAggregateOutputType | null
+    _avg: TransportAssignmentAvgAggregateOutputType | null
+    _sum: TransportAssignmentSumAggregateOutputType | null
+    _min: TransportAssignmentMinAggregateOutputType | null
+    _max: TransportAssignmentMaxAggregateOutputType | null
+  }
+
+  export type TransportAssignmentAvgAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    transportId: number | null
+  }
+
+  export type TransportAssignmentSumAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    transportId: number | null
+  }
+
+  export type TransportAssignmentMinAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    transportId: number | null
+    status: $Enums.TransportStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TransportAssignmentMaxAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    transportId: number | null
+    status: $Enums.TransportStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TransportAssignmentCountAggregateOutputType = {
+    id: number
+    studentId: number
+    transportId: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TransportAssignmentAvgAggregateInputType = {
+    id?: true
+    studentId?: true
+    transportId?: true
+  }
+
+  export type TransportAssignmentSumAggregateInputType = {
+    id?: true
+    studentId?: true
+    transportId?: true
+  }
+
+  export type TransportAssignmentMinAggregateInputType = {
+    id?: true
+    studentId?: true
+    transportId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TransportAssignmentMaxAggregateInputType = {
+    id?: true
+    studentId?: true
+    transportId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TransportAssignmentCountAggregateInputType = {
+    id?: true
+    studentId?: true
+    transportId?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TransportAssignmentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TransportAssignment to aggregate.
+     */
+    where?: TransportAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TransportAssignments to fetch.
+     */
+    orderBy?: TransportAssignmentOrderByWithRelationInput | TransportAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TransportAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TransportAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TransportAssignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TransportAssignments
+    **/
+    _count?: true | TransportAssignmentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TransportAssignmentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TransportAssignmentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TransportAssignmentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TransportAssignmentMaxAggregateInputType
+  }
+
+  export type GetTransportAssignmentAggregateType<T extends TransportAssignmentAggregateArgs> = {
+        [P in keyof T & keyof AggregateTransportAssignment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTransportAssignment[P]>
+      : GetScalarType<T[P], AggregateTransportAssignment[P]>
+  }
+
+
+
+
+  export type TransportAssignmentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransportAssignmentWhereInput
+    orderBy?: TransportAssignmentOrderByWithAggregationInput | TransportAssignmentOrderByWithAggregationInput[]
+    by: TransportAssignmentScalarFieldEnum[] | TransportAssignmentScalarFieldEnum
+    having?: TransportAssignmentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TransportAssignmentCountAggregateInputType | true
+    _avg?: TransportAssignmentAvgAggregateInputType
+    _sum?: TransportAssignmentSumAggregateInputType
+    _min?: TransportAssignmentMinAggregateInputType
+    _max?: TransportAssignmentMaxAggregateInputType
+  }
+
+  export type TransportAssignmentGroupByOutputType = {
+    id: number
+    studentId: number
+    transportId: number
+    status: $Enums.TransportStatus
+    createdAt: Date
+    updatedAt: Date
+    _count: TransportAssignmentCountAggregateOutputType | null
+    _avg: TransportAssignmentAvgAggregateOutputType | null
+    _sum: TransportAssignmentSumAggregateOutputType | null
+    _min: TransportAssignmentMinAggregateOutputType | null
+    _max: TransportAssignmentMaxAggregateOutputType | null
+  }
+
+  type GetTransportAssignmentGroupByPayload<T extends TransportAssignmentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TransportAssignmentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TransportAssignmentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TransportAssignmentGroupByOutputType[P]>
+            : GetScalarType<T[P], TransportAssignmentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TransportAssignmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    transportId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    transport?: boolean | TransportDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transportAssignment"]>
+
+  export type TransportAssignmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    transportId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    transport?: boolean | TransportDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transportAssignment"]>
+
+  export type TransportAssignmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    transportId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    transport?: boolean | TransportDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["transportAssignment"]>
+
+  export type TransportAssignmentSelectScalar = {
+    id?: boolean
+    studentId?: boolean
+    transportId?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TransportAssignmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "transportId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["transportAssignment"]>
+  export type TransportAssignmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    transport?: boolean | TransportDefaultArgs<ExtArgs>
+  }
+  export type TransportAssignmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    transport?: boolean | TransportDefaultArgs<ExtArgs>
+  }
+  export type TransportAssignmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+    transport?: boolean | TransportDefaultArgs<ExtArgs>
+  }
+
+  export type $TransportAssignmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TransportAssignment"
+    objects: {
+      student: Prisma.$StudentPayload<ExtArgs>
+      transport: Prisma.$TransportPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      studentId: number
+      transportId: number
+      status: $Enums.TransportStatus
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["transportAssignment"]>
+    composites: {}
+  }
+
+  type TransportAssignmentGetPayload<S extends boolean | null | undefined | TransportAssignmentDefaultArgs> = $Result.GetResult<Prisma.$TransportAssignmentPayload, S>
+
+  type TransportAssignmentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TransportAssignmentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TransportAssignmentCountAggregateInputType | true
+    }
+
+  export interface TransportAssignmentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TransportAssignment'], meta: { name: 'TransportAssignment' } }
+    /**
+     * Find zero or one TransportAssignment that matches the filter.
+     * @param {TransportAssignmentFindUniqueArgs} args - Arguments to find a TransportAssignment
+     * @example
+     * // Get one TransportAssignment
+     * const transportAssignment = await prisma.transportAssignment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TransportAssignmentFindUniqueArgs>(args: SelectSubset<T, TransportAssignmentFindUniqueArgs<ExtArgs>>): Prisma__TransportAssignmentClient<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TransportAssignment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TransportAssignmentFindUniqueOrThrowArgs} args - Arguments to find a TransportAssignment
+     * @example
+     * // Get one TransportAssignment
+     * const transportAssignment = await prisma.transportAssignment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TransportAssignmentFindUniqueOrThrowArgs>(args: SelectSubset<T, TransportAssignmentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TransportAssignmentClient<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TransportAssignment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportAssignmentFindFirstArgs} args - Arguments to find a TransportAssignment
+     * @example
+     * // Get one TransportAssignment
+     * const transportAssignment = await prisma.transportAssignment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TransportAssignmentFindFirstArgs>(args?: SelectSubset<T, TransportAssignmentFindFirstArgs<ExtArgs>>): Prisma__TransportAssignmentClient<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TransportAssignment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportAssignmentFindFirstOrThrowArgs} args - Arguments to find a TransportAssignment
+     * @example
+     * // Get one TransportAssignment
+     * const transportAssignment = await prisma.transportAssignment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TransportAssignmentFindFirstOrThrowArgs>(args?: SelectSubset<T, TransportAssignmentFindFirstOrThrowArgs<ExtArgs>>): Prisma__TransportAssignmentClient<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TransportAssignments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportAssignmentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TransportAssignments
+     * const transportAssignments = await prisma.transportAssignment.findMany()
+     * 
+     * // Get first 10 TransportAssignments
+     * const transportAssignments = await prisma.transportAssignment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const transportAssignmentWithIdOnly = await prisma.transportAssignment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TransportAssignmentFindManyArgs>(args?: SelectSubset<T, TransportAssignmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TransportAssignment.
+     * @param {TransportAssignmentCreateArgs} args - Arguments to create a TransportAssignment.
+     * @example
+     * // Create one TransportAssignment
+     * const TransportAssignment = await prisma.transportAssignment.create({
+     *   data: {
+     *     // ... data to create a TransportAssignment
+     *   }
+     * })
+     * 
+     */
+    create<T extends TransportAssignmentCreateArgs>(args: SelectSubset<T, TransportAssignmentCreateArgs<ExtArgs>>): Prisma__TransportAssignmentClient<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TransportAssignments.
+     * @param {TransportAssignmentCreateManyArgs} args - Arguments to create many TransportAssignments.
+     * @example
+     * // Create many TransportAssignments
+     * const transportAssignment = await prisma.transportAssignment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TransportAssignmentCreateManyArgs>(args?: SelectSubset<T, TransportAssignmentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TransportAssignments and returns the data saved in the database.
+     * @param {TransportAssignmentCreateManyAndReturnArgs} args - Arguments to create many TransportAssignments.
+     * @example
+     * // Create many TransportAssignments
+     * const transportAssignment = await prisma.transportAssignment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TransportAssignments and only return the `id`
+     * const transportAssignmentWithIdOnly = await prisma.transportAssignment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TransportAssignmentCreateManyAndReturnArgs>(args?: SelectSubset<T, TransportAssignmentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TransportAssignment.
+     * @param {TransportAssignmentDeleteArgs} args - Arguments to delete one TransportAssignment.
+     * @example
+     * // Delete one TransportAssignment
+     * const TransportAssignment = await prisma.transportAssignment.delete({
+     *   where: {
+     *     // ... filter to delete one TransportAssignment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TransportAssignmentDeleteArgs>(args: SelectSubset<T, TransportAssignmentDeleteArgs<ExtArgs>>): Prisma__TransportAssignmentClient<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TransportAssignment.
+     * @param {TransportAssignmentUpdateArgs} args - Arguments to update one TransportAssignment.
+     * @example
+     * // Update one TransportAssignment
+     * const transportAssignment = await prisma.transportAssignment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TransportAssignmentUpdateArgs>(args: SelectSubset<T, TransportAssignmentUpdateArgs<ExtArgs>>): Prisma__TransportAssignmentClient<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TransportAssignments.
+     * @param {TransportAssignmentDeleteManyArgs} args - Arguments to filter TransportAssignments to delete.
+     * @example
+     * // Delete a few TransportAssignments
+     * const { count } = await prisma.transportAssignment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TransportAssignmentDeleteManyArgs>(args?: SelectSubset<T, TransportAssignmentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TransportAssignments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportAssignmentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TransportAssignments
+     * const transportAssignment = await prisma.transportAssignment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TransportAssignmentUpdateManyArgs>(args: SelectSubset<T, TransportAssignmentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TransportAssignments and returns the data updated in the database.
+     * @param {TransportAssignmentUpdateManyAndReturnArgs} args - Arguments to update many TransportAssignments.
+     * @example
+     * // Update many TransportAssignments
+     * const transportAssignment = await prisma.transportAssignment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TransportAssignments and only return the `id`
+     * const transportAssignmentWithIdOnly = await prisma.transportAssignment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TransportAssignmentUpdateManyAndReturnArgs>(args: SelectSubset<T, TransportAssignmentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TransportAssignment.
+     * @param {TransportAssignmentUpsertArgs} args - Arguments to update or create a TransportAssignment.
+     * @example
+     * // Update or create a TransportAssignment
+     * const transportAssignment = await prisma.transportAssignment.upsert({
+     *   create: {
+     *     // ... data to create a TransportAssignment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TransportAssignment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TransportAssignmentUpsertArgs>(args: SelectSubset<T, TransportAssignmentUpsertArgs<ExtArgs>>): Prisma__TransportAssignmentClient<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TransportAssignments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportAssignmentCountArgs} args - Arguments to filter TransportAssignments to count.
+     * @example
+     * // Count the number of TransportAssignments
+     * const count = await prisma.transportAssignment.count({
+     *   where: {
+     *     // ... the filter for the TransportAssignments we want to count
+     *   }
+     * })
+    **/
+    count<T extends TransportAssignmentCountArgs>(
+      args?: Subset<T, TransportAssignmentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TransportAssignmentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TransportAssignment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportAssignmentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TransportAssignmentAggregateArgs>(args: Subset<T, TransportAssignmentAggregateArgs>): Prisma.PrismaPromise<GetTransportAssignmentAggregateType<T>>
+
+    /**
+     * Group by TransportAssignment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TransportAssignmentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TransportAssignmentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TransportAssignmentGroupByArgs['orderBy'] }
+        : { orderBy?: TransportAssignmentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TransportAssignmentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTransportAssignmentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TransportAssignment model
+   */
+  readonly fields: TransportAssignmentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TransportAssignment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TransportAssignmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    transport<T extends TransportDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TransportDefaultArgs<ExtArgs>>): Prisma__TransportClient<$Result.GetResult<Prisma.$TransportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TransportAssignment model
+   */
+  interface TransportAssignmentFieldRefs {
+    readonly id: FieldRef<"TransportAssignment", 'Int'>
+    readonly studentId: FieldRef<"TransportAssignment", 'Int'>
+    readonly transportId: FieldRef<"TransportAssignment", 'Int'>
+    readonly status: FieldRef<"TransportAssignment", 'TransportStatus'>
+    readonly createdAt: FieldRef<"TransportAssignment", 'DateTime'>
+    readonly updatedAt: FieldRef<"TransportAssignment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TransportAssignment findUnique
+   */
+  export type TransportAssignmentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which TransportAssignment to fetch.
+     */
+    where: TransportAssignmentWhereUniqueInput
+  }
+
+  /**
+   * TransportAssignment findUniqueOrThrow
+   */
+  export type TransportAssignmentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which TransportAssignment to fetch.
+     */
+    where: TransportAssignmentWhereUniqueInput
+  }
+
+  /**
+   * TransportAssignment findFirst
+   */
+  export type TransportAssignmentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which TransportAssignment to fetch.
+     */
+    where?: TransportAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TransportAssignments to fetch.
+     */
+    orderBy?: TransportAssignmentOrderByWithRelationInput | TransportAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TransportAssignments.
+     */
+    cursor?: TransportAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TransportAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TransportAssignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TransportAssignments.
+     */
+    distinct?: TransportAssignmentScalarFieldEnum | TransportAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * TransportAssignment findFirstOrThrow
+   */
+  export type TransportAssignmentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which TransportAssignment to fetch.
+     */
+    where?: TransportAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TransportAssignments to fetch.
+     */
+    orderBy?: TransportAssignmentOrderByWithRelationInput | TransportAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TransportAssignments.
+     */
+    cursor?: TransportAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TransportAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TransportAssignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TransportAssignments.
+     */
+    distinct?: TransportAssignmentScalarFieldEnum | TransportAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * TransportAssignment findMany
+   */
+  export type TransportAssignmentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which TransportAssignments to fetch.
+     */
+    where?: TransportAssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TransportAssignments to fetch.
+     */
+    orderBy?: TransportAssignmentOrderByWithRelationInput | TransportAssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TransportAssignments.
+     */
+    cursor?: TransportAssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TransportAssignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TransportAssignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TransportAssignments.
+     */
+    distinct?: TransportAssignmentScalarFieldEnum | TransportAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * TransportAssignment create
+   */
+  export type TransportAssignmentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TransportAssignment.
+     */
+    data: XOR<TransportAssignmentCreateInput, TransportAssignmentUncheckedCreateInput>
+  }
+
+  /**
+   * TransportAssignment createMany
+   */
+  export type TransportAssignmentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TransportAssignments.
+     */
+    data: TransportAssignmentCreateManyInput | TransportAssignmentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TransportAssignment createManyAndReturn
+   */
+  export type TransportAssignmentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * The data used to create many TransportAssignments.
+     */
+    data: TransportAssignmentCreateManyInput | TransportAssignmentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TransportAssignment update
+   */
+  export type TransportAssignmentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TransportAssignment.
+     */
+    data: XOR<TransportAssignmentUpdateInput, TransportAssignmentUncheckedUpdateInput>
+    /**
+     * Choose, which TransportAssignment to update.
+     */
+    where: TransportAssignmentWhereUniqueInput
+  }
+
+  /**
+   * TransportAssignment updateMany
+   */
+  export type TransportAssignmentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TransportAssignments.
+     */
+    data: XOR<TransportAssignmentUpdateManyMutationInput, TransportAssignmentUncheckedUpdateManyInput>
+    /**
+     * Filter which TransportAssignments to update
+     */
+    where?: TransportAssignmentWhereInput
+    /**
+     * Limit how many TransportAssignments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TransportAssignment updateManyAndReturn
+   */
+  export type TransportAssignmentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * The data used to update TransportAssignments.
+     */
+    data: XOR<TransportAssignmentUpdateManyMutationInput, TransportAssignmentUncheckedUpdateManyInput>
+    /**
+     * Filter which TransportAssignments to update
+     */
+    where?: TransportAssignmentWhereInput
+    /**
+     * Limit how many TransportAssignments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TransportAssignment upsert
+   */
+  export type TransportAssignmentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TransportAssignment to update in case it exists.
+     */
+    where: TransportAssignmentWhereUniqueInput
+    /**
+     * In case the TransportAssignment found by the `where` argument doesn't exist, create a new TransportAssignment with this data.
+     */
+    create: XOR<TransportAssignmentCreateInput, TransportAssignmentUncheckedCreateInput>
+    /**
+     * In case the TransportAssignment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TransportAssignmentUpdateInput, TransportAssignmentUncheckedUpdateInput>
+  }
+
+  /**
+   * TransportAssignment delete
+   */
+  export type TransportAssignmentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+    /**
+     * Filter which TransportAssignment to delete.
+     */
+    where: TransportAssignmentWhereUniqueInput
+  }
+
+  /**
+   * TransportAssignment deleteMany
+   */
+  export type TransportAssignmentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TransportAssignments to delete
+     */
+    where?: TransportAssignmentWhereInput
+    /**
+     * Limit how many TransportAssignments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TransportAssignment without action
+   */
+  export type TransportAssignmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TransportAssignment
+     */
+    select?: TransportAssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TransportAssignment
+     */
+    omit?: TransportAssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransportAssignmentInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4573,7 +7049,6 @@ export namespace Prisma {
     year: 'year',
     classGroup: 'classGroup',
     location: 'location',
-    transportStatus: 'transportStatus',
     status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -4589,7 +7064,6 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     phoneNumber: 'phoneNumber',
-    role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -4609,6 +7083,29 @@ export namespace Prisma {
   };
 
   export type DisciplineRecordScalarFieldEnum = (typeof DisciplineRecordScalarFieldEnum)[keyof typeof DisciplineRecordScalarFieldEnum]
+
+
+  export const TransportScalarFieldEnum: {
+    id: 'id',
+    location: 'location',
+    price: 'price',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TransportScalarFieldEnum = (typeof TransportScalarFieldEnum)[keyof typeof TransportScalarFieldEnum]
+
+
+  export const TransportAssignmentScalarFieldEnum: {
+    id: 'id',
+    studentId: 'studentId',
+    transportId: 'transportId',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TransportAssignmentScalarFieldEnum = (typeof TransportAssignmentScalarFieldEnum)[keyof typeof TransportAssignmentScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4669,6 +7166,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Status'
+   */
+  export type EnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status'>
+    
+
+
+  /**
+   * Reference to a field of type 'Status[]'
+   */
+  export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Status[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -4694,6 +7205,20 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
+
+
+  /**
+   * Reference to a field of type 'TransportStatus'
+   */
+  export type EnumTransportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransportStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'TransportStatus[]'
+   */
+  export type ListEnumTransportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransportStatus[]'>
+    
   /**
    * Deep Input Types
    */
@@ -4713,11 +7238,11 @@ export namespace Prisma {
     year?: StringFilter<"Student"> | string
     classGroup?: StringFilter<"Student"> | string
     location?: StringNullableFilter<"Student"> | string | null
-    transportStatus?: StringFilter<"Student"> | string
-    status?: StringFilter<"Student"> | string
+    status?: EnumStatusFilter<"Student"> | $Enums.Status
     createdAt?: DateTimeFilter<"Student"> | Date | string
     updatedAt?: DateTimeFilter<"Student"> | Date | string
     records?: DisciplineRecordListRelationFilter
+    transportAssignments?: TransportAssignmentListRelationFilter
   }
 
   export type StudentOrderByWithRelationInput = {
@@ -4731,11 +7256,11 @@ export namespace Prisma {
     year?: SortOrder
     classGroup?: SortOrder
     location?: SortOrderInput | SortOrder
-    transportStatus?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     records?: DisciplineRecordOrderByRelationAggregateInput
+    transportAssignments?: TransportAssignmentOrderByRelationAggregateInput
   }
 
   export type StudentWhereUniqueInput = Prisma.AtLeast<{
@@ -4752,11 +7277,11 @@ export namespace Prisma {
     year?: StringFilter<"Student"> | string
     classGroup?: StringFilter<"Student"> | string
     location?: StringNullableFilter<"Student"> | string | null
-    transportStatus?: StringFilter<"Student"> | string
-    status?: StringFilter<"Student"> | string
+    status?: EnumStatusFilter<"Student"> | $Enums.Status
     createdAt?: DateTimeFilter<"Student"> | Date | string
     updatedAt?: DateTimeFilter<"Student"> | Date | string
     records?: DisciplineRecordListRelationFilter
+    transportAssignments?: TransportAssignmentListRelationFilter
   }, "id">
 
   export type StudentOrderByWithAggregationInput = {
@@ -4770,7 +7295,6 @@ export namespace Prisma {
     year?: SortOrder
     classGroup?: SortOrder
     location?: SortOrderInput | SortOrder
-    transportStatus?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -4795,8 +7319,7 @@ export namespace Prisma {
     year?: StringWithAggregatesFilter<"Student"> | string
     classGroup?: StringWithAggregatesFilter<"Student"> | string
     location?: StringNullableWithAggregatesFilter<"Student"> | string | null
-    transportStatus?: StringWithAggregatesFilter<"Student"> | string
-    status?: StringWithAggregatesFilter<"Student"> | string
+    status?: EnumStatusWithAggregatesFilter<"Student"> | $Enums.Status
     createdAt?: DateTimeWithAggregatesFilter<"Student"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Student"> | Date | string
   }
@@ -4811,7 +7334,6 @@ export namespace Prisma {
     email?: StringFilter<"Staff"> | string
     password?: StringFilter<"Staff"> | string
     phoneNumber?: StringFilter<"Staff"> | string
-    role?: StringFilter<"Staff"> | string
     createdAt?: DateTimeFilter<"Staff"> | Date | string
     updatedAt?: DateTimeFilter<"Staff"> | Date | string
   }
@@ -4823,7 +7345,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phoneNumber?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4838,7 +7359,6 @@ export namespace Prisma {
     lastName?: StringFilter<"Staff"> | string
     password?: StringFilter<"Staff"> | string
     phoneNumber?: StringFilter<"Staff"> | string
-    role?: StringFilter<"Staff"> | string
     createdAt?: DateTimeFilter<"Staff"> | Date | string
     updatedAt?: DateTimeFilter<"Staff"> | Date | string
   }, "id" | "email">
@@ -4850,7 +7370,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phoneNumber?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: StaffCountOrderByAggregateInput
@@ -4870,7 +7389,6 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Staff"> | string
     password?: StringWithAggregatesFilter<"Staff"> | string
     phoneNumber?: StringWithAggregatesFilter<"Staff"> | string
-    role?: StringWithAggregatesFilter<"Staff"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Staff"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Staff"> | Date | string
   }
@@ -4947,6 +7465,129 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"DisciplineRecord"> | Date | string
   }
 
+  export type TransportWhereInput = {
+    AND?: TransportWhereInput | TransportWhereInput[]
+    OR?: TransportWhereInput[]
+    NOT?: TransportWhereInput | TransportWhereInput[]
+    id?: IntFilter<"Transport"> | number
+    location?: StringFilter<"Transport"> | string
+    price?: FloatFilter<"Transport"> | number
+    createdAt?: DateTimeFilter<"Transport"> | Date | string
+    updatedAt?: DateTimeFilter<"Transport"> | Date | string
+    assignments?: TransportAssignmentListRelationFilter
+  }
+
+  export type TransportOrderByWithRelationInput = {
+    id?: SortOrder
+    location?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    assignments?: TransportAssignmentOrderByRelationAggregateInput
+  }
+
+  export type TransportWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: TransportWhereInput | TransportWhereInput[]
+    OR?: TransportWhereInput[]
+    NOT?: TransportWhereInput | TransportWhereInput[]
+    location?: StringFilter<"Transport"> | string
+    price?: FloatFilter<"Transport"> | number
+    createdAt?: DateTimeFilter<"Transport"> | Date | string
+    updatedAt?: DateTimeFilter<"Transport"> | Date | string
+    assignments?: TransportAssignmentListRelationFilter
+  }, "id">
+
+  export type TransportOrderByWithAggregationInput = {
+    id?: SortOrder
+    location?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TransportCountOrderByAggregateInput
+    _avg?: TransportAvgOrderByAggregateInput
+    _max?: TransportMaxOrderByAggregateInput
+    _min?: TransportMinOrderByAggregateInput
+    _sum?: TransportSumOrderByAggregateInput
+  }
+
+  export type TransportScalarWhereWithAggregatesInput = {
+    AND?: TransportScalarWhereWithAggregatesInput | TransportScalarWhereWithAggregatesInput[]
+    OR?: TransportScalarWhereWithAggregatesInput[]
+    NOT?: TransportScalarWhereWithAggregatesInput | TransportScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Transport"> | number
+    location?: StringWithAggregatesFilter<"Transport"> | string
+    price?: FloatWithAggregatesFilter<"Transport"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Transport"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Transport"> | Date | string
+  }
+
+  export type TransportAssignmentWhereInput = {
+    AND?: TransportAssignmentWhereInput | TransportAssignmentWhereInput[]
+    OR?: TransportAssignmentWhereInput[]
+    NOT?: TransportAssignmentWhereInput | TransportAssignmentWhereInput[]
+    id?: IntFilter<"TransportAssignment"> | number
+    studentId?: IntFilter<"TransportAssignment"> | number
+    transportId?: IntFilter<"TransportAssignment"> | number
+    status?: EnumTransportStatusFilter<"TransportAssignment"> | $Enums.TransportStatus
+    createdAt?: DateTimeFilter<"TransportAssignment"> | Date | string
+    updatedAt?: DateTimeFilter<"TransportAssignment"> | Date | string
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+    transport?: XOR<TransportScalarRelationFilter, TransportWhereInput>
+  }
+
+  export type TransportAssignmentOrderByWithRelationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    transportId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    student?: StudentOrderByWithRelationInput
+    transport?: TransportOrderByWithRelationInput
+  }
+
+  export type TransportAssignmentWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    studentId_transportId?: TransportAssignmentStudentIdTransportIdCompoundUniqueInput
+    AND?: TransportAssignmentWhereInput | TransportAssignmentWhereInput[]
+    OR?: TransportAssignmentWhereInput[]
+    NOT?: TransportAssignmentWhereInput | TransportAssignmentWhereInput[]
+    studentId?: IntFilter<"TransportAssignment"> | number
+    transportId?: IntFilter<"TransportAssignment"> | number
+    status?: EnumTransportStatusFilter<"TransportAssignment"> | $Enums.TransportStatus
+    createdAt?: DateTimeFilter<"TransportAssignment"> | Date | string
+    updatedAt?: DateTimeFilter<"TransportAssignment"> | Date | string
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+    transport?: XOR<TransportScalarRelationFilter, TransportWhereInput>
+  }, "id" | "studentId_transportId">
+
+  export type TransportAssignmentOrderByWithAggregationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    transportId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TransportAssignmentCountOrderByAggregateInput
+    _avg?: TransportAssignmentAvgOrderByAggregateInput
+    _max?: TransportAssignmentMaxOrderByAggregateInput
+    _min?: TransportAssignmentMinOrderByAggregateInput
+    _sum?: TransportAssignmentSumOrderByAggregateInput
+  }
+
+  export type TransportAssignmentScalarWhereWithAggregatesInput = {
+    AND?: TransportAssignmentScalarWhereWithAggregatesInput | TransportAssignmentScalarWhereWithAggregatesInput[]
+    OR?: TransportAssignmentScalarWhereWithAggregatesInput[]
+    NOT?: TransportAssignmentScalarWhereWithAggregatesInput | TransportAssignmentScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"TransportAssignment"> | number
+    studentId?: IntWithAggregatesFilter<"TransportAssignment"> | number
+    transportId?: IntWithAggregatesFilter<"TransportAssignment"> | number
+    status?: EnumTransportStatusWithAggregatesFilter<"TransportAssignment"> | $Enums.TransportStatus
+    createdAt?: DateTimeWithAggregatesFilter<"TransportAssignment"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TransportAssignment"> | Date | string
+  }
+
   export type StudentCreateInput = {
     firstName: string
     lastName: string
@@ -4957,11 +7598,11 @@ export namespace Prisma {
     year: string
     classGroup: string
     location?: string | null
-    transportStatus?: string
-    status?: string
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     records?: DisciplineRecordCreateNestedManyWithoutStudentInput
+    transportAssignments?: TransportAssignmentCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateInput = {
@@ -4975,11 +7616,11 @@ export namespace Prisma {
     year: string
     classGroup: string
     location?: string | null
-    transportStatus?: string
-    status?: string
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
     records?: DisciplineRecordUncheckedCreateNestedManyWithoutStudentInput
+    transportAssignments?: TransportAssignmentUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUpdateInput = {
@@ -4992,11 +7633,11 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
-    transportStatus?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     records?: DisciplineRecordUpdateManyWithoutStudentNestedInput
+    transportAssignments?: TransportAssignmentUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateInput = {
@@ -5010,11 +7651,11 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
-    transportStatus?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     records?: DisciplineRecordUncheckedUpdateManyWithoutStudentNestedInput
+    transportAssignments?: TransportAssignmentUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentCreateManyInput = {
@@ -5028,8 +7669,7 @@ export namespace Prisma {
     year: string
     classGroup: string
     location?: string | null
-    transportStatus?: string
-    status?: string
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5044,8 +7684,7 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
-    transportStatus?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5061,8 +7700,7 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
-    transportStatus?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5073,7 +7711,6 @@ export namespace Prisma {
     email: string
     password: string
     phoneNumber: string
-    role: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5085,7 +7722,6 @@ export namespace Prisma {
     email: string
     password: string
     phoneNumber: string
-    role: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5096,7 +7732,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5108,7 +7743,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5120,7 +7754,6 @@ export namespace Prisma {
     email: string
     password: string
     phoneNumber: string
-    role: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5131,7 +7764,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5143,7 +7775,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5221,6 +7852,121 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TransportCreateInput = {
+    location: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignments?: TransportAssignmentCreateNestedManyWithoutTransportInput
+  }
+
+  export type TransportUncheckedCreateInput = {
+    id?: number
+    location: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    assignments?: TransportAssignmentUncheckedCreateNestedManyWithoutTransportInput
+  }
+
+  export type TransportUpdateInput = {
+    location?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignments?: TransportAssignmentUpdateManyWithoutTransportNestedInput
+  }
+
+  export type TransportUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    location?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignments?: TransportAssignmentUncheckedUpdateManyWithoutTransportNestedInput
+  }
+
+  export type TransportCreateManyInput = {
+    id?: number
+    location: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransportUpdateManyMutationInput = {
+    location?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransportUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    location?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransportAssignmentCreateInput = {
+    status?: $Enums.TransportStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    student: StudentCreateNestedOneWithoutTransportAssignmentsInput
+    transport: TransportCreateNestedOneWithoutAssignmentsInput
+  }
+
+  export type TransportAssignmentUncheckedCreateInput = {
+    id?: number
+    studentId: number
+    transportId: number
+    status?: $Enums.TransportStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransportAssignmentUpdateInput = {
+    status?: EnumTransportStatusFieldUpdateOperationsInput | $Enums.TransportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentUpdateOneRequiredWithoutTransportAssignmentsNestedInput
+    transport?: TransportUpdateOneRequiredWithoutAssignmentsNestedInput
+  }
+
+  export type TransportAssignmentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    transportId?: IntFieldUpdateOperationsInput | number
+    status?: EnumTransportStatusFieldUpdateOperationsInput | $Enums.TransportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransportAssignmentCreateManyInput = {
+    id?: number
+    studentId: number
+    transportId: number
+    status?: $Enums.TransportStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransportAssignmentUpdateManyMutationInput = {
+    status?: EnumTransportStatusFieldUpdateOperationsInput | $Enums.TransportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransportAssignmentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    transportId?: IntFieldUpdateOperationsInput | number
+    status?: EnumTransportStatusFieldUpdateOperationsInput | $Enums.TransportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -5262,6 +8008,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type EnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5279,12 +8032,22 @@ export namespace Prisma {
     none?: DisciplineRecordWhereInput
   }
 
+  export type TransportAssignmentListRelationFilter = {
+    every?: TransportAssignmentWhereInput
+    some?: TransportAssignmentWhereInput
+    none?: TransportAssignmentWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type DisciplineRecordOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TransportAssignmentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5299,7 +8062,6 @@ export namespace Prisma {
     year?: SortOrder
     classGroup?: SortOrder
     location?: SortOrder
-    transportStatus?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5320,7 +8082,6 @@ export namespace Prisma {
     year?: SortOrder
     classGroup?: SortOrder
     location?: SortOrder
-    transportStatus?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5337,7 +8098,6 @@ export namespace Prisma {
     year?: SortOrder
     classGroup?: SortOrder
     location?: SortOrder
-    transportStatus?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -5399,6 +8159,16 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type EnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5420,7 +8190,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phoneNumber?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -5436,7 +8205,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phoneNumber?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -5448,7 +8216,6 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phoneNumber?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -5530,11 +8297,145 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type TransportCountOrderByAggregateInput = {
+    id?: SortOrder
+    location?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TransportAvgOrderByAggregateInput = {
+    id?: SortOrder
+    price?: SortOrder
+  }
+
+  export type TransportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    location?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TransportMinOrderByAggregateInput = {
+    id?: SortOrder
+    location?: SortOrder
+    price?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TransportSumOrderByAggregateInput = {
+    id?: SortOrder
+    price?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type EnumTransportStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TransportStatus | EnumTransportStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TransportStatus[] | ListEnumTransportStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TransportStatus[] | ListEnumTransportStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransportStatusFilter<$PrismaModel> | $Enums.TransportStatus
+  }
+
+  export type TransportScalarRelationFilter = {
+    is?: TransportWhereInput
+    isNot?: TransportWhereInput
+  }
+
+  export type TransportAssignmentStudentIdTransportIdCompoundUniqueInput = {
+    studentId: number
+    transportId: number
+  }
+
+  export type TransportAssignmentCountOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    transportId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TransportAssignmentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    transportId?: SortOrder
+  }
+
+  export type TransportAssignmentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    transportId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TransportAssignmentMinOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    transportId?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TransportAssignmentSumOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    transportId?: SortOrder
+  }
+
+  export type EnumTransportStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TransportStatus | EnumTransportStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TransportStatus[] | ListEnumTransportStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TransportStatus[] | ListEnumTransportStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransportStatusWithAggregatesFilter<$PrismaModel> | $Enums.TransportStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTransportStatusFilter<$PrismaModel>
+    _max?: NestedEnumTransportStatusFilter<$PrismaModel>
+  }
+
   export type DisciplineRecordCreateNestedManyWithoutStudentInput = {
     create?: XOR<DisciplineRecordCreateWithoutStudentInput, DisciplineRecordUncheckedCreateWithoutStudentInput> | DisciplineRecordCreateWithoutStudentInput[] | DisciplineRecordUncheckedCreateWithoutStudentInput[]
     connectOrCreate?: DisciplineRecordCreateOrConnectWithoutStudentInput | DisciplineRecordCreateOrConnectWithoutStudentInput[]
     createMany?: DisciplineRecordCreateManyStudentInputEnvelope
     connect?: DisciplineRecordWhereUniqueInput | DisciplineRecordWhereUniqueInput[]
+  }
+
+  export type TransportAssignmentCreateNestedManyWithoutStudentInput = {
+    create?: XOR<TransportAssignmentCreateWithoutStudentInput, TransportAssignmentUncheckedCreateWithoutStudentInput> | TransportAssignmentCreateWithoutStudentInput[] | TransportAssignmentUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: TransportAssignmentCreateOrConnectWithoutStudentInput | TransportAssignmentCreateOrConnectWithoutStudentInput[]
+    createMany?: TransportAssignmentCreateManyStudentInputEnvelope
+    connect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
   }
 
   export type DisciplineRecordUncheckedCreateNestedManyWithoutStudentInput = {
@@ -5544,12 +8445,23 @@ export namespace Prisma {
     connect?: DisciplineRecordWhereUniqueInput | DisciplineRecordWhereUniqueInput[]
   }
 
+  export type TransportAssignmentUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<TransportAssignmentCreateWithoutStudentInput, TransportAssignmentUncheckedCreateWithoutStudentInput> | TransportAssignmentCreateWithoutStudentInput[] | TransportAssignmentUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: TransportAssignmentCreateOrConnectWithoutStudentInput | TransportAssignmentCreateOrConnectWithoutStudentInput[]
+    createMany?: TransportAssignmentCreateManyStudentInputEnvelope
+    connect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type EnumStatusFieldUpdateOperationsInput = {
+    set?: $Enums.Status
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -5568,6 +8480,20 @@ export namespace Prisma {
     update?: DisciplineRecordUpdateWithWhereUniqueWithoutStudentInput | DisciplineRecordUpdateWithWhereUniqueWithoutStudentInput[]
     updateMany?: DisciplineRecordUpdateManyWithWhereWithoutStudentInput | DisciplineRecordUpdateManyWithWhereWithoutStudentInput[]
     deleteMany?: DisciplineRecordScalarWhereInput | DisciplineRecordScalarWhereInput[]
+  }
+
+  export type TransportAssignmentUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<TransportAssignmentCreateWithoutStudentInput, TransportAssignmentUncheckedCreateWithoutStudentInput> | TransportAssignmentCreateWithoutStudentInput[] | TransportAssignmentUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: TransportAssignmentCreateOrConnectWithoutStudentInput | TransportAssignmentCreateOrConnectWithoutStudentInput[]
+    upsert?: TransportAssignmentUpsertWithWhereUniqueWithoutStudentInput | TransportAssignmentUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: TransportAssignmentCreateManyStudentInputEnvelope
+    set?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    disconnect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    delete?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    connect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    update?: TransportAssignmentUpdateWithWhereUniqueWithoutStudentInput | TransportAssignmentUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: TransportAssignmentUpdateManyWithWhereWithoutStudentInput | TransportAssignmentUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: TransportAssignmentScalarWhereInput | TransportAssignmentScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -5592,6 +8518,20 @@ export namespace Prisma {
     deleteMany?: DisciplineRecordScalarWhereInput | DisciplineRecordScalarWhereInput[]
   }
 
+  export type TransportAssignmentUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<TransportAssignmentCreateWithoutStudentInput, TransportAssignmentUncheckedCreateWithoutStudentInput> | TransportAssignmentCreateWithoutStudentInput[] | TransportAssignmentUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: TransportAssignmentCreateOrConnectWithoutStudentInput | TransportAssignmentCreateOrConnectWithoutStudentInput[]
+    upsert?: TransportAssignmentUpsertWithWhereUniqueWithoutStudentInput | TransportAssignmentUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: TransportAssignmentCreateManyStudentInputEnvelope
+    set?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    disconnect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    delete?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    connect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    update?: TransportAssignmentUpdateWithWhereUniqueWithoutStudentInput | TransportAssignmentUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: TransportAssignmentUpdateManyWithWhereWithoutStudentInput | TransportAssignmentUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: TransportAssignmentScalarWhereInput | TransportAssignmentScalarWhereInput[]
+  }
+
   export type StudentCreateNestedOneWithoutRecordsInput = {
     create?: XOR<StudentCreateWithoutRecordsInput, StudentUncheckedCreateWithoutRecordsInput>
     connectOrCreate?: StudentCreateOrConnectWithoutRecordsInput
@@ -5608,6 +8548,88 @@ export namespace Prisma {
     upsert?: StudentUpsertWithoutRecordsInput
     connect?: StudentWhereUniqueInput
     update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutRecordsInput, StudentUpdateWithoutRecordsInput>, StudentUncheckedUpdateWithoutRecordsInput>
+  }
+
+  export type TransportAssignmentCreateNestedManyWithoutTransportInput = {
+    create?: XOR<TransportAssignmentCreateWithoutTransportInput, TransportAssignmentUncheckedCreateWithoutTransportInput> | TransportAssignmentCreateWithoutTransportInput[] | TransportAssignmentUncheckedCreateWithoutTransportInput[]
+    connectOrCreate?: TransportAssignmentCreateOrConnectWithoutTransportInput | TransportAssignmentCreateOrConnectWithoutTransportInput[]
+    createMany?: TransportAssignmentCreateManyTransportInputEnvelope
+    connect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+  }
+
+  export type TransportAssignmentUncheckedCreateNestedManyWithoutTransportInput = {
+    create?: XOR<TransportAssignmentCreateWithoutTransportInput, TransportAssignmentUncheckedCreateWithoutTransportInput> | TransportAssignmentCreateWithoutTransportInput[] | TransportAssignmentUncheckedCreateWithoutTransportInput[]
+    connectOrCreate?: TransportAssignmentCreateOrConnectWithoutTransportInput | TransportAssignmentCreateOrConnectWithoutTransportInput[]
+    createMany?: TransportAssignmentCreateManyTransportInputEnvelope
+    connect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type TransportAssignmentUpdateManyWithoutTransportNestedInput = {
+    create?: XOR<TransportAssignmentCreateWithoutTransportInput, TransportAssignmentUncheckedCreateWithoutTransportInput> | TransportAssignmentCreateWithoutTransportInput[] | TransportAssignmentUncheckedCreateWithoutTransportInput[]
+    connectOrCreate?: TransportAssignmentCreateOrConnectWithoutTransportInput | TransportAssignmentCreateOrConnectWithoutTransportInput[]
+    upsert?: TransportAssignmentUpsertWithWhereUniqueWithoutTransportInput | TransportAssignmentUpsertWithWhereUniqueWithoutTransportInput[]
+    createMany?: TransportAssignmentCreateManyTransportInputEnvelope
+    set?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    disconnect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    delete?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    connect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    update?: TransportAssignmentUpdateWithWhereUniqueWithoutTransportInput | TransportAssignmentUpdateWithWhereUniqueWithoutTransportInput[]
+    updateMany?: TransportAssignmentUpdateManyWithWhereWithoutTransportInput | TransportAssignmentUpdateManyWithWhereWithoutTransportInput[]
+    deleteMany?: TransportAssignmentScalarWhereInput | TransportAssignmentScalarWhereInput[]
+  }
+
+  export type TransportAssignmentUncheckedUpdateManyWithoutTransportNestedInput = {
+    create?: XOR<TransportAssignmentCreateWithoutTransportInput, TransportAssignmentUncheckedCreateWithoutTransportInput> | TransportAssignmentCreateWithoutTransportInput[] | TransportAssignmentUncheckedCreateWithoutTransportInput[]
+    connectOrCreate?: TransportAssignmentCreateOrConnectWithoutTransportInput | TransportAssignmentCreateOrConnectWithoutTransportInput[]
+    upsert?: TransportAssignmentUpsertWithWhereUniqueWithoutTransportInput | TransportAssignmentUpsertWithWhereUniqueWithoutTransportInput[]
+    createMany?: TransportAssignmentCreateManyTransportInputEnvelope
+    set?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    disconnect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    delete?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    connect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
+    update?: TransportAssignmentUpdateWithWhereUniqueWithoutTransportInput | TransportAssignmentUpdateWithWhereUniqueWithoutTransportInput[]
+    updateMany?: TransportAssignmentUpdateManyWithWhereWithoutTransportInput | TransportAssignmentUpdateManyWithWhereWithoutTransportInput[]
+    deleteMany?: TransportAssignmentScalarWhereInput | TransportAssignmentScalarWhereInput[]
+  }
+
+  export type StudentCreateNestedOneWithoutTransportAssignmentsInput = {
+    create?: XOR<StudentCreateWithoutTransportAssignmentsInput, StudentUncheckedCreateWithoutTransportAssignmentsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutTransportAssignmentsInput
+    connect?: StudentWhereUniqueInput
+  }
+
+  export type TransportCreateNestedOneWithoutAssignmentsInput = {
+    create?: XOR<TransportCreateWithoutAssignmentsInput, TransportUncheckedCreateWithoutAssignmentsInput>
+    connectOrCreate?: TransportCreateOrConnectWithoutAssignmentsInput
+    connect?: TransportWhereUniqueInput
+  }
+
+  export type EnumTransportStatusFieldUpdateOperationsInput = {
+    set?: $Enums.TransportStatus
+  }
+
+  export type StudentUpdateOneRequiredWithoutTransportAssignmentsNestedInput = {
+    create?: XOR<StudentCreateWithoutTransportAssignmentsInput, StudentUncheckedCreateWithoutTransportAssignmentsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutTransportAssignmentsInput
+    upsert?: StudentUpsertWithoutTransportAssignmentsInput
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutTransportAssignmentsInput, StudentUpdateWithoutTransportAssignmentsInput>, StudentUncheckedUpdateWithoutTransportAssignmentsInput>
+  }
+
+  export type TransportUpdateOneRequiredWithoutAssignmentsNestedInput = {
+    create?: XOR<TransportCreateWithoutAssignmentsInput, TransportUncheckedCreateWithoutAssignmentsInput>
+    connectOrCreate?: TransportCreateOrConnectWithoutAssignmentsInput
+    upsert?: TransportUpsertWithoutAssignmentsInput
+    connect?: TransportWhereUniqueInput
+    update?: XOR<XOR<TransportUpdateToOneWithWhereWithoutAssignmentsInput, TransportUpdateWithoutAssignmentsInput>, TransportUncheckedUpdateWithoutAssignmentsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5647,6 +8669,13 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedEnumStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusFilter<$PrismaModel> | $Enums.Status
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -5732,6 +8761,16 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Status | EnumStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Status[] | ListEnumStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumStatusWithAggregatesFilter<$PrismaModel> | $Enums.Status
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStatusFilter<$PrismaModel>
+    _max?: NestedEnumStatusFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5771,6 +8810,39 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTransportStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TransportStatus | EnumTransportStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TransportStatus[] | ListEnumTransportStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TransportStatus[] | ListEnumTransportStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransportStatusFilter<$PrismaModel> | $Enums.TransportStatus
+  }
+
+  export type NestedEnumTransportStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TransportStatus | EnumTransportStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TransportStatus[] | ListEnumTransportStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TransportStatus[] | ListEnumTransportStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumTransportStatusWithAggregatesFilter<$PrismaModel> | $Enums.TransportStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTransportStatusFilter<$PrismaModel>
+    _max?: NestedEnumTransportStatusFilter<$PrismaModel>
+  }
+
   export type DisciplineRecordCreateWithoutStudentInput = {
     reason: string
     location?: string | null
@@ -5797,6 +8869,31 @@ export namespace Prisma {
 
   export type DisciplineRecordCreateManyStudentInputEnvelope = {
     data: DisciplineRecordCreateManyStudentInput | DisciplineRecordCreateManyStudentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TransportAssignmentCreateWithoutStudentInput = {
+    status?: $Enums.TransportStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    transport: TransportCreateNestedOneWithoutAssignmentsInput
+  }
+
+  export type TransportAssignmentUncheckedCreateWithoutStudentInput = {
+    id?: number
+    transportId: number
+    status?: $Enums.TransportStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransportAssignmentCreateOrConnectWithoutStudentInput = {
+    where: TransportAssignmentWhereUniqueInput
+    create: XOR<TransportAssignmentCreateWithoutStudentInput, TransportAssignmentUncheckedCreateWithoutStudentInput>
+  }
+
+  export type TransportAssignmentCreateManyStudentInputEnvelope = {
+    data: TransportAssignmentCreateManyStudentInput | TransportAssignmentCreateManyStudentInput[]
     skipDuplicates?: boolean
   }
 
@@ -5830,6 +8927,34 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"DisciplineRecord"> | Date | string
   }
 
+  export type TransportAssignmentUpsertWithWhereUniqueWithoutStudentInput = {
+    where: TransportAssignmentWhereUniqueInput
+    update: XOR<TransportAssignmentUpdateWithoutStudentInput, TransportAssignmentUncheckedUpdateWithoutStudentInput>
+    create: XOR<TransportAssignmentCreateWithoutStudentInput, TransportAssignmentUncheckedCreateWithoutStudentInput>
+  }
+
+  export type TransportAssignmentUpdateWithWhereUniqueWithoutStudentInput = {
+    where: TransportAssignmentWhereUniqueInput
+    data: XOR<TransportAssignmentUpdateWithoutStudentInput, TransportAssignmentUncheckedUpdateWithoutStudentInput>
+  }
+
+  export type TransportAssignmentUpdateManyWithWhereWithoutStudentInput = {
+    where: TransportAssignmentScalarWhereInput
+    data: XOR<TransportAssignmentUpdateManyMutationInput, TransportAssignmentUncheckedUpdateManyWithoutStudentInput>
+  }
+
+  export type TransportAssignmentScalarWhereInput = {
+    AND?: TransportAssignmentScalarWhereInput | TransportAssignmentScalarWhereInput[]
+    OR?: TransportAssignmentScalarWhereInput[]
+    NOT?: TransportAssignmentScalarWhereInput | TransportAssignmentScalarWhereInput[]
+    id?: IntFilter<"TransportAssignment"> | number
+    studentId?: IntFilter<"TransportAssignment"> | number
+    transportId?: IntFilter<"TransportAssignment"> | number
+    status?: EnumTransportStatusFilter<"TransportAssignment"> | $Enums.TransportStatus
+    createdAt?: DateTimeFilter<"TransportAssignment"> | Date | string
+    updatedAt?: DateTimeFilter<"TransportAssignment"> | Date | string
+  }
+
   export type StudentCreateWithoutRecordsInput = {
     firstName: string
     lastName: string
@@ -5840,10 +8965,10 @@ export namespace Prisma {
     year: string
     classGroup: string
     location?: string | null
-    transportStatus?: string
-    status?: string
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    transportAssignments?: TransportAssignmentCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutRecordsInput = {
@@ -5857,10 +8982,10 @@ export namespace Prisma {
     year: string
     classGroup: string
     location?: string | null
-    transportStatus?: string
-    status?: string
+    status?: $Enums.Status
     createdAt?: Date | string
     updatedAt?: Date | string
+    transportAssignments?: TransportAssignmentUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutRecordsInput = {
@@ -5889,10 +9014,10 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
-    transportStatus?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transportAssignments?: TransportAssignmentUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutRecordsInput = {
@@ -5906,8 +9031,177 @@ export namespace Prisma {
     year?: StringFieldUpdateOperationsInput | string
     classGroup?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
-    transportStatus?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transportAssignments?: TransportAssignmentUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type TransportAssignmentCreateWithoutTransportInput = {
+    status?: $Enums.TransportStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    student: StudentCreateNestedOneWithoutTransportAssignmentsInput
+  }
+
+  export type TransportAssignmentUncheckedCreateWithoutTransportInput = {
+    id?: number
+    studentId: number
+    status?: $Enums.TransportStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransportAssignmentCreateOrConnectWithoutTransportInput = {
+    where: TransportAssignmentWhereUniqueInput
+    create: XOR<TransportAssignmentCreateWithoutTransportInput, TransportAssignmentUncheckedCreateWithoutTransportInput>
+  }
+
+  export type TransportAssignmentCreateManyTransportInputEnvelope = {
+    data: TransportAssignmentCreateManyTransportInput | TransportAssignmentCreateManyTransportInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TransportAssignmentUpsertWithWhereUniqueWithoutTransportInput = {
+    where: TransportAssignmentWhereUniqueInput
+    update: XOR<TransportAssignmentUpdateWithoutTransportInput, TransportAssignmentUncheckedUpdateWithoutTransportInput>
+    create: XOR<TransportAssignmentCreateWithoutTransportInput, TransportAssignmentUncheckedCreateWithoutTransportInput>
+  }
+
+  export type TransportAssignmentUpdateWithWhereUniqueWithoutTransportInput = {
+    where: TransportAssignmentWhereUniqueInput
+    data: XOR<TransportAssignmentUpdateWithoutTransportInput, TransportAssignmentUncheckedUpdateWithoutTransportInput>
+  }
+
+  export type TransportAssignmentUpdateManyWithWhereWithoutTransportInput = {
+    where: TransportAssignmentScalarWhereInput
+    data: XOR<TransportAssignmentUpdateManyMutationInput, TransportAssignmentUncheckedUpdateManyWithoutTransportInput>
+  }
+
+  export type StudentCreateWithoutTransportAssignmentsInput = {
+    firstName: string
+    lastName: string
+    fatherName: string
+    motherName: string
+    fatherPhoneNumber: string
+    motherPhoneNumber: string
+    year: string
+    classGroup: string
+    location?: string | null
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    records?: DisciplineRecordCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentUncheckedCreateWithoutTransportAssignmentsInput = {
+    id?: number
+    firstName: string
+    lastName: string
+    fatherName: string
+    motherName: string
+    fatherPhoneNumber: string
+    motherPhoneNumber: string
+    year: string
+    classGroup: string
+    location?: string | null
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    records?: DisciplineRecordUncheckedCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentCreateOrConnectWithoutTransportAssignmentsInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutTransportAssignmentsInput, StudentUncheckedCreateWithoutTransportAssignmentsInput>
+  }
+
+  export type TransportCreateWithoutAssignmentsInput = {
+    location: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransportUncheckedCreateWithoutAssignmentsInput = {
+    id?: number
+    location: string
+    price: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransportCreateOrConnectWithoutAssignmentsInput = {
+    where: TransportWhereUniqueInput
+    create: XOR<TransportCreateWithoutAssignmentsInput, TransportUncheckedCreateWithoutAssignmentsInput>
+  }
+
+  export type StudentUpsertWithoutTransportAssignmentsInput = {
+    update: XOR<StudentUpdateWithoutTransportAssignmentsInput, StudentUncheckedUpdateWithoutTransportAssignmentsInput>
+    create: XOR<StudentCreateWithoutTransportAssignmentsInput, StudentUncheckedCreateWithoutTransportAssignmentsInput>
+    where?: StudentWhereInput
+  }
+
+  export type StudentUpdateToOneWithWhereWithoutTransportAssignmentsInput = {
+    where?: StudentWhereInput
+    data: XOR<StudentUpdateWithoutTransportAssignmentsInput, StudentUncheckedUpdateWithoutTransportAssignmentsInput>
+  }
+
+  export type StudentUpdateWithoutTransportAssignmentsInput = {
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    fatherName?: StringFieldUpdateOperationsInput | string
+    motherName?: StringFieldUpdateOperationsInput | string
+    fatherPhoneNumber?: StringFieldUpdateOperationsInput | string
+    motherPhoneNumber?: StringFieldUpdateOperationsInput | string
+    year?: StringFieldUpdateOperationsInput | string
+    classGroup?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: DisciplineRecordUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentUncheckedUpdateWithoutTransportAssignmentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    fatherName?: StringFieldUpdateOperationsInput | string
+    motherName?: StringFieldUpdateOperationsInput | string
+    fatherPhoneNumber?: StringFieldUpdateOperationsInput | string
+    motherPhoneNumber?: StringFieldUpdateOperationsInput | string
+    year?: StringFieldUpdateOperationsInput | string
+    classGroup?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: DisciplineRecordUncheckedUpdateManyWithoutStudentNestedInput
+  }
+
+  export type TransportUpsertWithoutAssignmentsInput = {
+    update: XOR<TransportUpdateWithoutAssignmentsInput, TransportUncheckedUpdateWithoutAssignmentsInput>
+    create: XOR<TransportCreateWithoutAssignmentsInput, TransportUncheckedCreateWithoutAssignmentsInput>
+    where?: TransportWhereInput
+  }
+
+  export type TransportUpdateToOneWithWhereWithoutAssignmentsInput = {
+    where?: TransportWhereInput
+    data: XOR<TransportUpdateWithoutAssignmentsInput, TransportUncheckedUpdateWithoutAssignmentsInput>
+  }
+
+  export type TransportUpdateWithoutAssignmentsInput = {
+    location?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransportUncheckedUpdateWithoutAssignmentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    location?: StringFieldUpdateOperationsInput | string
+    price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5919,6 +9213,14 @@ export namespace Prisma {
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
+    updatedAt?: Date | string
+  }
+
+  export type TransportAssignmentCreateManyStudentInput = {
+    id?: number
+    transportId: number
+    status?: $Enums.TransportStatus
+    createdAt?: Date | string
     updatedAt?: Date | string
   }
 
@@ -5948,6 +9250,60 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransportAssignmentUpdateWithoutStudentInput = {
+    status?: EnumTransportStatusFieldUpdateOperationsInput | $Enums.TransportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    transport?: TransportUpdateOneRequiredWithoutAssignmentsNestedInput
+  }
+
+  export type TransportAssignmentUncheckedUpdateWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    transportId?: IntFieldUpdateOperationsInput | number
+    status?: EnumTransportStatusFieldUpdateOperationsInput | $Enums.TransportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransportAssignmentUncheckedUpdateManyWithoutStudentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    transportId?: IntFieldUpdateOperationsInput | number
+    status?: EnumTransportStatusFieldUpdateOperationsInput | $Enums.TransportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransportAssignmentCreateManyTransportInput = {
+    id?: number
+    studentId: number
+    status?: $Enums.TransportStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TransportAssignmentUpdateWithoutTransportInput = {
+    status?: EnumTransportStatusFieldUpdateOperationsInput | $Enums.TransportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentUpdateOneRequiredWithoutTransportAssignmentsNestedInput
+  }
+
+  export type TransportAssignmentUncheckedUpdateWithoutTransportInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    status?: EnumTransportStatusFieldUpdateOperationsInput | $Enums.TransportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TransportAssignmentUncheckedUpdateManyWithoutTransportInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    status?: EnumTransportStatusFieldUpdateOperationsInput | $Enums.TransportStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

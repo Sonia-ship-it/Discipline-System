@@ -131,7 +131,6 @@ exports.Prisma.StudentScalarFieldEnum = {
   year: 'year',
   classGroup: 'classGroup',
   location: 'location',
-  transportStatus: 'transportStatus',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -144,7 +143,6 @@ exports.Prisma.StaffScalarFieldEnum = {
   email: 'email',
   password: 'password',
   phoneNumber: 'phoneNumber',
-  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -157,6 +155,23 @@ exports.Prisma.DisciplineRecordScalarFieldEnum = {
   status: 'status',
   outDate: 'outDate',
   returnDate: 'returnDate',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TransportScalarFieldEnum = {
+  id: 'id',
+  location: 'location',
+  price: 'price',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TransportAssignmentScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  transportId: 'transportId',
+  status: 'status',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
@@ -174,12 +189,24 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Status = exports.$Enums.Status = {
+  IN: 'IN',
+  OUT: 'OUT',
+  RETURNED: 'RETURNED'
+};
 
+exports.TransportStatus = exports.$Enums.TransportStatus = {
+  PAID: 'PAID',
+  NOT_PAID: 'NOT_PAID',
+  OUT: 'OUT'
+};
 
 exports.Prisma.ModelName = {
   Student: 'Student',
   Staff: 'Staff',
-  DisciplineRecord: 'DisciplineRecord'
+  DisciplineRecord: 'DisciplineRecord',
+  Transport: 'Transport',
+  TransportAssignment: 'TransportAssignment'
 };
 
 /**

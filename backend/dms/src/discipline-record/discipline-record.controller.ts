@@ -1,11 +1,13 @@
 // src/discipline-record/discipline-record.controller.ts
-import { Controller, Get, Post, Body, Param, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch, Delete, UseGuards } from '@nestjs/common';
 import { DisciplineRecordService } from './discipline-record.service';
 import { CreateDisciplineRecordDto } from './dto/create-discipline-record.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('records')
 export class DisciplineRecordController {
-  constructor(private readonly recordService: DisciplineRecordService) {}
+  constructor(private readonly recordService: DisciplineRecordService) { }
 
   @Post()
   create(@Body() recordData: CreateDisciplineRecordDto) {

@@ -1,51 +1,108 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTransportDto } from './dto/create-transport.dto';
 import { UpdateTransportDto } from './dto/update-transport.dto';
+import { AssignStudentDto } from './dto/assign-student.dto';
 
 @Injectable()
 export class TransportService {
   constructor(private prisma: PrismaService) { }
 
-  create(createTransportDto: CreateTransportDto) {
-    return 'This action adds a new transport';
+  async create(createTransportDto: CreateTransportDto) {
+    return this.prisma.transport.create({
+      data: {
+        location: createTransportDto.location,
+        price: createTransportDto.price,
+      },
+    });
+  }
+
+  async assignStudent(assignStudentDto: AssignStudentDto) {
+    const student = await this.prisma.student.findUnique({ where: { id: assignStudentDto.studentId } });
+    if (!student) throw new NotFoundException('Student not found');
+
+    const transport = await this.prisma.transport.findUnique({ where: { id: assignStudentDto.transportId } });
+    if (!transport) throw new NotFoundException('Transport route not found');
+
+    const statusValue = assignStudentDto.status || 'NOT_PAID';
+
+    return this.prisma.transportAssignment.create({
+      data: {
+        studentId: assignStudentDto.studentId,
+        transportId: assignStudentDto.transportId,
+        status: statusValue,
+      }
+    });
   }
 
   async findAll() {
-    const students = await this.prisma.student.findMany({
+    return this.prisma.transport.findMany({
       include: {
-        records: {
-          orderBy: { outDate: 'desc' },
-          take: 1,
-        },
-      },
-    });
-
-    return students.map((student) => {
-      let status = student.transportStatus === 'PAID' ? 'Paid' : 'Not Paid';
-
-      const latestRecord = student.records[0];
-      if (latestRecord && latestRecord.status === 'OUT') {
-        status = 'Went Out';
+        assignments: {
+          include: {
+            student: true,
+          }
+        }
       }
-
-      return {
-        name: `${student.firstName} ${student.lastName}`,
-        location: student.location || 'N/A',
-        status: status,
-      };
     });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} transport`;
+  async findOne(id: number) {
+    return this.prisma.transport.findUnique({
+      where: { id },
+      include: {
+        assignments: {
+          include: {
+            student: true,
+          }
+        }
+      }
+    });
   }
 
-  update(id: number, updateTransportDto: UpdateTransportDto) {
-    return `This action updates a #${id} transport`;
+  async update(id: number, updateTransportDto: UpdateTransportDto) {
+    return this.prisma.transport.update({
+      where: { id },
+      data: updateTransportDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} transport`;
+  async remove(id: number) {
+    return this.prisma.transport.delete({
+      where: { id },
+    });
+  }
+
+  async findAllAssignments() {
+    return this.prisma.transportAssignment.findMany({
+      include: {
+        student: true,
+        transport: true,
+      }
+    });
+  }
+
+  async findOneAssignment(id: number) {
+    return this.prisma.transportAssignment.findUnique({
+      where: { id },
+      include: {
+        student: true,
+        transport: true,
+      }
+    });
+  }
+
+  async updateAssignment(id: number, status: string) {
+    const statusValue = status as any;
+    return this.prisma.transportAssignment.update({
+      where: { id },
+      data: { status: statusValue },
+    });
+  }
+
+  async removeAssignment(id: number) {
+    return this.prisma.transportAssignment.delete({
+      where: { id },
+    });
   }
 }

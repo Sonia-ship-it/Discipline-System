@@ -5,6 +5,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Student {
@@ -15,15 +17,21 @@ model Student {
   motherName        String
   fatherPhoneNumber String
   motherPhoneNumber String
+
   year              String
   classGroup        String
-  location          String?
-  transportStatus   String             @default("NOT_PAID")
-  status            String             @default("IN")
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
+
+  location          String?   // transport location
+
+  status            Status @default(IN)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
   records           DisciplineRecord[]
+  transportAssignments TransportAssignment[]
 }
+
 
 model Staff {
   id          Int      @id @default(autoincrement())
@@ -32,7 +40,6 @@ model Staff {
   email       String   @unique
   password    String
   phoneNumber String
-  role        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -47,6 +54,34 @@ model DisciplineRecord {
   returnDate DateTime?
   updatedAt  DateTime  @updatedAt
   student    Student   @relation(fields: [studentId], references: [id])
+}
+
+model Transport {
+  id          Int       @id @default(autoincrement())
+  location    String    
+  price       Float     
+  assignments TransportAssignment[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model TransportAssignment {
+  id          Int             @id @default(autoincrement())
+  studentId   Int
+  transportId Int
+  status      TransportStatus @default(NOT_PAID)
+  student     Student         @relation(fields: [studentId], references: [id])
+  transport   Transport       @relation(fields: [transportId], references: [id])
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@unique([studentId, transportId])
+}
+
+enum TransportStatus {
+  PAID
+  NOT_PAID
+  OUT
 }
 
 enum Status {

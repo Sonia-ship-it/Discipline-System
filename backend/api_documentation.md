@@ -5,6 +5,13 @@ This document provides a comprehensive overview of the available API endpoints f
 ## Base URL
 Default: `http://localhost:2008`
 
+## Authorization (JWT)
+Most endpoints in this system are **protected**. You must include a JWT Bearer Token in the headers of your requests.
+- **Header Key:** `Authorization`
+- **Header Value:** `Bearer <your_token>`
+
+Tokens are obtained via the `/auth/login` endpoint and are valid for **3 days**.
+
 ---
 
 ## Authentication Endpoints
@@ -12,164 +19,115 @@ Default: `http://localhost:2008`
 ### Login
 - **Endpoint:** `/auth/login`
 - **Method:** `POST`
-- **Description:** Authenticates a user and returns a token.
-- **Payload:**
-  - `email` (string): User's email address.
-  - `password` (string): User's password.
-- **Rate Limit:** 5 requests per 60 seconds.
+- **Request Body (JSON):**
+  - `email` (string): **Required**.
+  - `password` (string): **Required**.
 
 ### Register
 - **Endpoint:** `/auth/register`
 - **Method:** `POST`
-- **Description:** Registers a new user/staff member.
-- **Payload:**
-  - `firstName` (string): Required.
-  - `lastName` (string): Required.
-  - `phoneNumber` (string): Required.
-  - `role` (string): Required.
-  - `email` (string): Required, valid email format.
-  - `password` (string): Required, minimum 6 characters.
-  - `status` (string): Optional.
+- **Request Body (JSON):**
+  - `firstName` (string): **Required**.
+  - `lastName` (string): **Required**.
+  - `phoneNumber` (string): **Required**.
+  - `email` (string): **Required**.
+  - `password` (string): **Required** (min 6 chars).
 
 ---
 
-## Student Endpoints
+## Student Endpoints (Protected)
 
 ### Create Student
 - **Endpoint:** `/students`
 - **Method:** `POST`
-- **Payload:**
-  - `firstName` (string): Required.
-  - `lastName` (string): Required.
-  - `fatherName` (string): Required.
-  - `motherName` (string): Required.
-  - `fatherPhoneNumber` (string): Required.
-  - `motherPhoneNumber` (string): Required.
-  - `year` (string): Required.
-  - `classGroup` (string): Required.
+- **Request Body (JSON):**
+  - `firstName` (string): **Required**.
+  - `lastName` (string): **Required**.
+  - `fatherName` (string): **Required**.
+  - `motherName` (string): **Required**.
+  - `fatherPhoneNumber` (string): **Required**.
+  - `motherPhoneNumber` (string): **Required**.
+  - `year` (string): **Required**.
+  - `classGroup` (string): **Required**.
   - `location` (string): Optional.
-  - `transportStatus` (string): Optional.
-  - `status` (string): Optional.
+  - `status` (string): Optional. (Values: `IN`, `OUT`, `RETURNED`)
 
 ### Get All Students
 - **Endpoint:** `/students`
 - **Method:** `GET`
-- **Query Params:**
-  - `location` (string): Optional. Filter by location.
-
-### Get Student by ID
-- **Endpoint:** `/students/:id`
-- **Method:** `GET`
+- **Query Params:** `location` (optional).
 
 ### Update Student
 - **Endpoint:** `/students/:id`
 - **Method:** `PATCH`
-- **Payload:** All "Create Student" fields are optional.
-
-### Delete Student
-- **Endpoint:** `/students/:id`
-- **Method:** `DELETE`
+- **Request Body (JSON):**
+  - Any field from **Create Student** (optional).
 
 ---
 
-## Staff Endpoints
+## Transport Endpoints (Protected)
 
-### Create Staff
-- **Endpoint:** `/staff`
-- **Method:** `POST`
-- **Payload:**
-  - `firstName` (string): Required.
-  - `lastName` (string): Required.
-  - `phoneNumber` (string): Required.
-  - `role` (string): Required.
-  - `email` (string): Required, valid email format.
-  - `password` (string): Required, minimum 6 characters.
-  - `status` (string): Optional.
-
-### Get All Staff
-- **Endpoint:** `/staff`
-- **Method:** `GET`
-
-### Get Staff by ID
-- **Endpoint:** `/staff/:id`
-- **Method:** `GET`
-
-### Update Staff
-- **Endpoint:** `/staff/:id`
-- **Method:** `PATCH`
-- **Payload:** All "Create Staff" fields are optional.
-
-### Delete Staff
-- **Endpoint:** `/staff/:id`
-- **Method:** `DELETE`
-
----
-
-## Transport Endpoints
-
-### Create Transport
+### 1. Route Management
+#### Create Route
 - **Endpoint:** `/transport`
 - **Method:** `POST`
-- **Payload:**
-  - `firstName` (string): Required.
-  - `lastName` (string): Required.
-  - `location` (string): Required.
-  - `status` (string): Required.
+- **Request Body (JSON):**
+  - `location` (string): **Required**.
+  - `price` (number): **Required**.
 
-### Get All Transports
-- **Endpoint:** `/transport`
-- **Method:** `GET`
-
-### Get Transport by ID
-- **Endpoint:** `/transport/:id`
-- **Method:** `GET`
-
-### Update Transport
+#### Update Route
 - **Endpoint:** `/transport/:id`
 - **Method:** `PATCH`
-- **Payload:** All "Create Transport" fields are optional.
+- **Request Body (JSON):**
+  - `location` (string): Optional.
+  - `price` (number): Optional.
 
-### Delete Transport
-- **Endpoint:** `/transport/:id`
-- **Method:** `DELETE`
+### 2. Assignment Management
+#### Assign Student to Route
+- **Endpoint:** `/transport/assign`
+- **Method:** `POST`
+- **Request Body (JSON):**
+  - `studentId` (number): **Required**.
+  - `transportId` (number): **Required**.
+  - `status` (string): Optional. (Values: `PAID`, `NOT_PAID`, `OUT`)
+
+#### Update Assignment Status
+- **Endpoint:** `/transport/assignments/:id`
+- **Method:** `PATCH`
+- **Request Body (JSON):**
+  - `status` (string): **Required**. (Values: `PAID`, `NOT_PAID`, `OUT`)
 
 ---
 
-## Discipline Record Endpoints
+## Discipline Record Endpoints (Protected)
 
 ### Create Record
 - **Endpoint:** `/records`
 - **Method:** `POST`
-- **Payload:**
-  - `studentId` (number): Required.
-  - `reason` (string): Required.
+- **Request Body (JSON):**
+  - `studentId` (number): **Required**.
+  - `reason` (string): **Required**.
   - `location` (string): Optional.
-  - `status` (string): Optional.
-  - `outDate` (date-string): Optional.
-  - `returnDate` (date-string): Optional.
-
-### Get All Records
-- **Endpoint:** `/records`
-- **Method:** `GET`
-
-### Get Record by ID
-- **Endpoint:** `/records/:id`
-- **Method:** `GET`
+  - `status` (string): Optional. Default: `OUT`.
+  - `outDate` (string/date): Optional.
+  - `returnDate` (string/date): Optional.
 
 ### Update Record
 - **Endpoint:** `/records/:id`
 - **Method:** `PATCH`
-- **Payload:** All "Create Record" fields are optional.
-
-### Delete Record
-- **Endpoint:** `/records/:id`
-- **Method:** `DELETE`
+- **Request Body (JSON):**
+  - Any field from **Create Record** (optional).
 
 ---
 
-## Miscellaneous
+## Staff Endpoints (Protected)
 
-### Health Check / Hello
-- **Endpoint:** `/`
-- **Method:** `GET`
-- **Description:** Simple health check returning a greeting.
+### Update Staff
+- **Endpoint:** `/staff/:id`
+- **Method:** `PATCH`
+- **Request Body (JSON):**
+  - `firstName` (string): Optional.
+  - `lastName` (string): Optional.
+  - `phoneNumber` (string): Optional.
+  - `email` (string): Optional.
+  - `password` (string): Optional.
