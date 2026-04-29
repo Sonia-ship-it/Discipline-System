@@ -13,6 +13,7 @@ import {
 import { Search, UserPlus, Mail, Phone, Trash2, Edit, User, ShieldAlert, Users } from 'lucide-react';
 import { apiFetch } from '@/lib/api';
 import { toast } from 'sonner';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { StaffModal } from '@/components/discipline/StaffModal';
 import { DeleteConfirmationModal } from '@/components/discipline/DeleteConfirmationModal';
 
@@ -27,33 +28,20 @@ interface StaffMember {
 }
 
 export default function StaffList() {
-    const [staff, setStaff] = useState<StaffMember[]>([]);
-    const [loading, setLoading] = useState(true);
+    const queryClient = useQueryClient();
     const [search, setSearch] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [selectedStaff, setSelectedStaff] = useState<StaffMember | null>(null);
     const [staffToDelete, setStaffToDelete] = useState<number | null>(null);
 
-    useEffect(() => {
-        fetchStaff();
-    }, []);
+    const { data: staff = [], isLoading: loading } = useQuery<StaffMember[]>({
+        queryKey: ['staff'],
+        queryFn: () => apiFetch('/staff'),
+        staleTime: 1000 * 60 * 10, // 10 minutes
+    });
 
-    const fetchStaff = async () => {
-        setLoading(true);
-        try {
-            const data = await apiFetch('/staff');
-            setStaff(data?.length > 0 ? data : [
-                { id: 1, firstName: 'Sandrine', lastName: 'Utuje', email: 'sandrine@rca.ac.rw', phoneNumber: '+250 788 000 111', role: 'ADMIN', status: 'ACTIVE' },
-                { id: 2, firstName: 'Sonia', lastName: 'Mubarak', email: 'sonia@rca.ac.rw', phoneNumber: '+250 788 222 333', role: 'SECURITY', status: 'ACTIVE' },
-            ]);
-        } catch (error) {
-            console.error('Error fetching staff:', error);
-            toast.error('Failed to load staff list');
-        } finally {
-            setLoading(false);
-        }
-    };
+    const fetchStaff = () => queryClient.invalidateQueries({ queryKey: ['staff'] });
 
     const handleNew = () => {
         setSelectedStaff(null);
