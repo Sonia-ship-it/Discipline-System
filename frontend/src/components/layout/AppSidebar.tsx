@@ -1,6 +1,8 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { LayoutDashboard, Users, FileText, DoorOpen, Settings, Menu, X, UserCheck, Bus, Smartphone, CalendarCheck, CalendarCog } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar } from '@/components/RCA/Avatar';
@@ -21,7 +23,7 @@ const navItems = [
 ];
 
 export function AppSidebar() {
-  const router = useRouter();
+  const pathname = usePathname();
   const queryClient = useQueryClient();
   const { user } = useAuthStore();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -45,7 +47,7 @@ export function AppSidebar() {
     });
   };
 
-  const isActive = (path: string) => router.asPath.startsWith(path);
+  const isActive = (path: string) => pathname.startsWith(path);
 
   const nav = (
     <div className="flex flex-col h-full">

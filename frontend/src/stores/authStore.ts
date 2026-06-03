@@ -8,7 +8,7 @@ interface AuthState {
   token: string | null;
   role: UserRole;
   isAuthenticated: boolean;
-  login: (email: string, password: string, role?: UserRole) => Promise<void>;
+  login: (email: string, password: string, role?: UserRole) => Promise<{ user: any }>;
   register: (firstName: string, lastName: string, email: string, phoneNumber: string, password: string, role: string) => Promise<void>;
   logout: () => void;
   setRole: (role: UserRole) => void;
@@ -27,7 +27,10 @@ const decodeJWT = (token: string) => {
   }
 };
 
-const getStoredToken = () => typeof window !== 'undefined' ? localStorage.getItem('auth-token') : null;
+const getStoredToken = () => {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('auth-token') || localStorage.getItem('access_token');
+};
 const initialToken = getStoredToken();
 const initialUser = initialToken ? decodeJWT(initialToken) : null;
 
@@ -52,8 +55,10 @@ export const useAuthStore = create<AuthState>((set) => ({
 
       const token = data.access_token;
       localStorage.setItem('auth-token', token);
+      localStorage.setItem('access_token', token);
 
       const decoded = decodeJWT(token);
+      const userRole = data.user?.role || decoded?.role || 'DISCIPLINE';
 
       set({
         token,
@@ -63,11 +68,13 @@ export const useAuthStore = create<AuthState>((set) => ({
             (decoded.given_name && decoded.family_name) ? `${decoded.given_name} ${decoded.family_name}` :
               (decoded.name || decoded.fullName || decoded.full_name || decoded.email.split('@')[0]),
           email: decoded.email,
-          role: decoded.role
+          role: userRole
         } : null,
         isAuthenticated: true,
         role: role || 'discipline',
       });
+
+      return { user: decoded ? { ...decoded, role: userRole } : null };
     } catch (error) {
       throw error;
     }
@@ -85,6 +92,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
   logout: () => {
     localStorage.removeItem('auth-token');
+    localStorage.removeItem('access_token');
     set({ user: null, token: null, isAuthenticated: false });
   },
   setRole: (role) => set({ role }),
