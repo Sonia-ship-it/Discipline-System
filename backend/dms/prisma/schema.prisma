@@ -28,6 +28,8 @@ model Student {
 
   records           DisciplineRecord[]
   transportAssignments TransportAssignment[]
+  phoneBorrows      PhoneBorrow[]
+  termAttendances   TermAttendance[]
 }
 
 
@@ -40,6 +42,7 @@ model Staff {
   phoneNumber String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  termAttendances TermAttendance[]
 }
 
 model DisciplineRecord {
@@ -86,4 +89,64 @@ enum Status {
   IN
   OUT
   RETURNED
+}
+
+model PhoneBorrow {
+  id          Int               @id @default(autoincrement())
+  studentId   Int
+  phoneModel  String            @default("Mara Z")
+  borrowedAt  DateTime          @default(now())
+  returnedAt  DateTime?
+  status      PhoneBorrowStatus @default(BORROWED)
+  student     Student           @relation(fields: [studentId], references: [id])
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+enum PhoneBorrowStatus {
+  BORROWED
+  RETURNED
+}
+
+model TermSession {
+  id          Int              @id @default(autoincrement())
+  name        String           // "Term 1", "Term 2", "Term 3"
+  year        Int
+  startDate   DateTime
+  endDate     DateTime
+  openingDate DateTime
+  isActive    Boolean          @default(false)
+  status      TermStatus       @default(UPCOMING)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  attendances TermAttendance[]
+
+  @@unique([name, year])
+}
+
+model TermAttendance {
+  id           Int         @id @default(autoincrement())
+  termId       Int
+  studentId    Int
+  status       AttendanceStatus @default(NOT_REPORTED)
+  arrivalTime  DateTime?
+  recordedById Int?
+  recordedBy   Staff?      @relation(fields: [recordedById], references: [id])
+  student      Student     @relation(fields: [studentId], references: [id])
+  term         TermSession @relation(fields: [termId], references: [id])
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@unique([termId, studentId])
+}
+
+enum AttendanceStatus {
+  REPORTED
+  NOT_REPORTED
+}
+
+enum TermStatus {
+  UPCOMING
+  ACTIVE
+  COMPLETED
 }

@@ -40,7 +40,7 @@ interface RecordBackend {
   };
 }
 
-export default function RecordsList() {
+export default function RecordsList({ hideHeader }: { hideHeader?: boolean }) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
@@ -133,8 +133,8 @@ export default function RecordsList() {
   });
 
   return (
-    <div className="min-h-screen bg-white text-[#0A0E2E]">
-      <AppHeader title="Discipline Records" subtitle="Incident & Discipline Logs" />
+    <div className={hideHeader ? "" : "min-h-screen bg-white text-[#0A0E2E]"}>
+      {!hideHeader && <AppHeader title="Discipline Records" subtitle="Incident & Discipline Logs" />}
       <div className="max-w-7xl mx-auto px-6 py-8 animate-in slide-in-from-bottom-4 duration-500">
         <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
           <div>

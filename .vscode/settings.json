@@ -1,0 +1,5 @@
+{
+    "typescript.autoClosingTags": false,
+    "typescript.tsdk": "backend/dms/node_modules/typescript/lib",
+    "typescript.enablePromptUseWorkspaceTsdk": true
+}

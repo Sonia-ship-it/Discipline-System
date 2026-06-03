@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { LayoutDashboard, Users, FileText, DoorOpen, Settings, Menu, X, UserCheck, Bus } from 'lucide-react';
+import { LayoutDashboard, Users, FileText, DoorOpen, Settings, Menu, X, UserCheck, Bus, Smartphone, CalendarCheck, CalendarCog } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar } from '@/components/RCA/Avatar';
 import { useAuthStore } from '@/stores/authStore';
@@ -13,8 +13,10 @@ const navItems = [
   { label: 'Students', path: '/discipline/students', icon: Users, queryKey: ['students'] },
   { label: 'Staff Management', path: '/discipline/staff', icon: UserCheck, queryKey: ['staff'] },
   { label: 'Transport Management', path: '/discipline/transport', icon: Bus, queryKey: ['transport-routes'] },
-  { label: 'Discipline Records', path: '/discipline/records', icon: FileText, queryKey: ['records'] },
-  { label: 'Leave Permits', path: '/discipline/permits', icon: DoorOpen, queryKey: ['records'] },
+  { label: 'Phone Borrowing', path: '/discipline/phones', icon: Smartphone, queryKey: [] },
+  { label: 'Opening Attendance', path: '/opening-attendance', icon: CalendarCheck, queryKey: ['term-sessions'] },
+  { label: 'Manage Terms', path: '/manage-terms', icon: CalendarCog, queryKey: ['opening-term-sessions'] },
+  { label: 'Records & Permits', path: '/discipline/records', icon: FileText, queryKey: ['records'] },
   { label: 'Settings', path: '/discipline/settings', icon: Settings, queryKey: [] },
 ];
 
@@ -35,6 +37,7 @@ export function AppSidebar() {
         queryKey: [key],
         queryFn: () => {
           if (key === 'transport-routes') return apiFetch('/transport');
+          if (key === 'term-sessions') return apiFetch('/opening-attendance/term-sessions');
           return apiFetch(`/${key}`);
         },
         staleTime: 1000 * 60 * 5,

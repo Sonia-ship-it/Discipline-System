@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.6.0
- * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
+ * Prisma Client JS version: 7.8.0
+ * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
  */
 Prisma.prismaVersion = {
-  client: "7.6.0",
-  engine: "75cbdc1eb7150937890ad5465d861175c6624711"
+  client: "7.8.0",
+  engine: "3c6e192761c0362d496ed980de936e2f3cebcd3a"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -175,6 +175,41 @@ exports.Prisma.TransportAssignmentScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PhoneBorrowScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  phoneModel: 'phoneModel',
+  borrowedAt: 'borrowedAt',
+  returnedAt: 'returnedAt',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TermSessionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  year: 'year',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  openingDate: 'openingDate',
+  isActive: 'isActive',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TermAttendanceScalarFieldEnum = {
+  id: 'id',
+  termId: 'termId',
+  studentId: 'studentId',
+  status: 'status',
+  arrivalTime: 'arrivalTime',
+  recordedById: 'recordedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -201,12 +236,31 @@ exports.TransportStatus = exports.$Enums.TransportStatus = {
   OUT: 'OUT'
 };
 
+exports.PhoneBorrowStatus = exports.$Enums.PhoneBorrowStatus = {
+  BORROWED: 'BORROWED',
+  RETURNED: 'RETURNED'
+};
+
+exports.TermStatus = exports.$Enums.TermStatus = {
+  UPCOMING: 'UPCOMING',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED'
+};
+
+exports.AttendanceStatus = exports.$Enums.AttendanceStatus = {
+  REPORTED: 'REPORTED',
+  NOT_REPORTED: 'NOT_REPORTED'
+};
+
 exports.Prisma.ModelName = {
   Student: 'Student',
   Staff: 'Staff',
   DisciplineRecord: 'DisciplineRecord',
   Transport: 'Transport',
-  TransportAssignment: 'TransportAssignment'
+  TransportAssignment: 'TransportAssignment',
+  PhoneBorrow: 'PhoneBorrow',
+  TermSession: 'TermSession',
+  TermAttendance: 'TermAttendance'
 };
 
 /**
