@@ -9,7 +9,10 @@ import { AuthModule } from './auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule } from '@nestjs/config';
 import { TransportModule } from './transport/transport.module';
-
+import { TermModule } from './term/term.module';
+import { AttendanceModule } from './attendance/attendance.module';
+import { NotificationModule } from './notification/notification.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -26,6 +29,10 @@ import { TransportModule } from './transport/transport.module';
       isGlobal: true,
     }),
     TransportModule,
+    TermModule,
+    AttendanceModule,
+    NotificationModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

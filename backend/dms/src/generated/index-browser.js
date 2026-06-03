@@ -143,6 +143,8 @@ exports.Prisma.StaffScalarFieldEnum = {
   email: 'email',
   password: 'password',
   phoneNumber: 'phoneNumber',
+  role: 'role',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -155,6 +157,8 @@ exports.Prisma.DisciplineRecordScalarFieldEnum = {
   status: 'status',
   outDate: 'outDate',
   returnDate: 'returnDate',
+  accompaniedBy: 'accompaniedBy',
+  eventTheme: 'eventTheme',
   updatedAt: 'updatedAt'
 };
 
@@ -173,6 +177,40 @@ exports.Prisma.TransportAssignmentScalarFieldEnum = {
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AcademicTermScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AttendanceRecordScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  termId: 'termId',
+  date: 'date',
+  status: 'status',
+  note: 'note',
+  markedByStaffId: 'markedByStaffId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ParentNotificationScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  channel: 'channel',
+  phone: 'phone',
+  message: 'message',
+  type: 'type',
+  status: 'status',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -195,10 +233,36 @@ exports.Status = exports.$Enums.Status = {
   RETURNED: 'RETURNED'
 };
 
+exports.StaffRole = exports.$Enums.StaffRole = {
+  ADMIN: 'ADMIN',
+  DISCIPLINE: 'DISCIPLINE',
+  NURSE: 'NURSE',
+  LIBRARIAN: 'LIBRARIAN'
+};
+
 exports.TransportStatus = exports.$Enums.TransportStatus = {
   PAID: 'PAID',
   NOT_PAID: 'NOT_PAID',
   OUT: 'OUT'
+};
+
+exports.AttendanceStatus = exports.$Enums.AttendanceStatus = {
+  PRESENT: 'PRESENT',
+  ABSENT: 'ABSENT',
+  LATE: 'LATE',
+  EXCUSED: 'EXCUSED'
+};
+
+exports.ParentNotificationType = exports.$Enums.ParentNotificationType = {
+  TERM_OPENING: 'TERM_OPENING',
+  ABSENCE_ALERT: 'ABSENCE_ALERT',
+  ATTENDANCE_SUMMARY: 'ATTENDANCE_SUMMARY'
+};
+
+exports.NotificationStatus = exports.$Enums.NotificationStatus = {
+  SENT: 'SENT',
+  FAILED: 'FAILED',
+  PENDING: 'PENDING'
 };
 
 exports.Prisma.ModelName = {
@@ -206,7 +270,10 @@ exports.Prisma.ModelName = {
   Staff: 'Staff',
   DisciplineRecord: 'DisciplineRecord',
   Transport: 'Transport',
-  TransportAssignment: 'TransportAssignment'
+  TransportAssignment: 'TransportAssignment',
+  AcademicTerm: 'AcademicTerm',
+  AttendanceRecord: 'AttendanceRecord',
+  ParentNotification: 'ParentNotification'
 };
 
 /**

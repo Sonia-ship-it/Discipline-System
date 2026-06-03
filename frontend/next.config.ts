@@ -6,7 +6,11 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   async rewrites() {
-    const backendUrl = process.env.BACKEND_URL || 'https://discipline-management-system-rgr8.onrender.com';
+    const backendUrl =
+      process.env.BACKEND_URL ||
+      (process.env.NODE_ENV === 'production'
+        ? 'https://discipline-management-system-rgr8.onrender.com'
+        : 'http://localhost:2009');
     return [
       {
         source: '/api-proxy/:path*',

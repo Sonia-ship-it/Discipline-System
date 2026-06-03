@@ -22,6 +22,8 @@ interface RecordBackend {
   outDate: string;
   returnDate: string | null;
   location: string;
+  accompaniedBy?: string | null;
+  eventTheme?: string | null;
   student?: {
     firstName: string;
     lastName: string;
@@ -241,9 +243,18 @@ export default function RecordsList() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="flex items-center gap-2 px-3 py-1.5 bg-[#0A0E2E]/5 w-fit rounded-md border border-[#0A0E2E]/10">
-                          <FileText className="w-3.5 h-3.5 text-[#0A0E2E]/60" />
-                          <span className="text-[12px] font-bold text-[#0A0E2E]/80">{record.reason}</span>
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center gap-2 px-3 py-1.5 bg-[#0A0E2E]/5 w-fit rounded-md border border-[#0A0E2E]/10">
+                            <FileText className="w-3.5 h-3.5 text-[#0A0E2E]/60" />
+                            <span className="text-[12px] font-bold text-[#0A0E2E]/80">{record.reason}</span>
+                          </div>
+                          {record.reason === 'School Event' && (record.accompaniedBy || record.eventTheme) && (
+                            <p className="text-[10px] font-semibold text-[#0A0E2E]/55 max-w-xs">
+                              {record.accompaniedBy && <>Staff: {record.accompaniedBy}</>}
+                              {record.accompaniedBy && record.eventTheme && ' · '}
+                              {record.eventTheme && <>Theme: {record.eventTheme}</>}
+                            </p>
+                          )}
                         </div>
                       </td>
                       <td className="px-6 py-4">

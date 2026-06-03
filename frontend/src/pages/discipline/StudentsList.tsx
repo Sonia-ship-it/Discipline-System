@@ -18,7 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, Filter, History, User, MapPin, Trash2, Users, UserCheck, AlertTriangle, Layers3, Pencil, Phone, UserPlus, Eye, Download } from 'lucide-react';
+import { Search, Filter, History, User, MapPin, Trash2, Users, UserCheck, AlertTriangle, Layers3, Pencil, Phone, UserPlus, Eye, Download, ClipboardCheck, Bus } from 'lucide-react';
+import Link from 'next/link';
 import { apiFetch } from '@/lib/api';
 import { exportToExcel, exportToPDF } from '@/lib/exportUtils';
 import { toast } from 'sonner';
@@ -39,6 +40,11 @@ interface StudentBackend {
   classGroup: string;
   status: string;
   records: any[];
+  transportAssignments?: {
+    id: number;
+    status: string;
+    transport?: { id: number; location: string; price: number };
+  }[];
 }
 
 export default function StudentsList() {
@@ -192,6 +198,14 @@ export default function StudentsList() {
                   <Download className="h-3.5 w-3.5" /> Excel
                 </button>
               </div>
+              <Link href="/discipline/attendance">
+                <Button
+                  variant="outline"
+                  className="rounded-md border-[#0A0E2E]/15 text-[#0A0E2E] hover:bg-[#0A0E2E] hover:text-white"
+                >
+                  <ClipboardCheck className="h-4 w-4 mr-2" /> Attendance
+                </Button>
+              </Link>
               <Button
                 onClick={handleNew}
                 className="rounded-md bg-[#0A0E2E] text-white shadow-lg shadow-[#0A0E2E]/20 hover:bg-[#1a264a] transition-all hover:scale-[1.02] active:scale-[0.98]"
@@ -266,6 +280,7 @@ export default function StudentsList() {
                   <TableHead className="px-6 py-5 font-bold text-[#0A0E2E]/80">Student Name</TableHead>
                   <TableHead className="font-bold text-[#0A0E2E]/80">Class</TableHead>
                   <TableHead className="font-bold text-[#0A0E2E]/80">Parent Contact</TableHead>
+                  <TableHead className="font-bold text-[#0A0E2E]/80">Transport Route</TableHead>
                   <TableHead className="text-center font-bold text-[#0A0E2E]/80">Engagement</TableHead>
                   <TableHead className="font-bold text-[#0A0E2E]/80">Current Status</TableHead>
                   <TableHead className="text-right font-bold text-[#0A0E2E]/80">Actions</TableHead>
@@ -277,6 +292,7 @@ export default function StudentsList() {
                     <TableCell className="py-4 px-6"><div className="h-10 w-40 bg-[#0A0E2E]/5 rounded-md" /></TableCell>
                     <TableCell><div className="h-8 w-20 bg-[#0A0E2E]/5 rounded-md" /></TableCell>
                     <TableCell><div className="h-8 w-32 bg-[#0A0E2E]/5 rounded-md" /></TableCell>
+                    <TableCell><div className="h-8 w-28 bg-[#0A0E2E]/5 rounded-md" /></TableCell>
                     <TableCell><div className="h-8 w-16 mx-auto bg-[#0A0E2E]/5 rounded-md" /></TableCell>
                     <TableCell><div className="h-6 w-16 bg-[#0A0E2E]/5 rounded-full" /></TableCell>
                     <TableCell><div className="h-8 w-12 ml-auto bg-[#0A0E2E]/5 rounded-md" /></TableCell>
@@ -299,6 +315,7 @@ export default function StudentsList() {
                   <TableHead className="px-6 py-5 font-bold text-[#0A0E2E]/80">Student Name</TableHead>
                   <TableHead className="font-bold text-[#0A0E2E]/80">Class</TableHead>
                   <TableHead className="font-bold text-[#0A0E2E]/80">Parent Contact</TableHead>
+                  <TableHead className="font-bold text-[#0A0E2E]/80">Transport Route</TableHead>
                   <TableHead className="text-center font-bold text-[#0A0E2E]/80">Engagement</TableHead>
                   <TableHead className="font-bold text-[#0A0E2E]/80">Current Status</TableHead>
                   <TableHead className="text-right font-bold text-[#0A0E2E]/80">Actions</TableHead>
@@ -343,6 +360,26 @@ export default function StudentsList() {
                           {s.fatherPhoneNumber || s.motherPhoneNumber}
                         </div>
                       </div>
+                    </TableCell>
+                    <TableCell>
+                      {s.transportAssignments?.[0]?.transport ? (
+                        <div className="flex items-center gap-2">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#0A0E2E] text-white">
+                            <Bus className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <p className="text-xs font-bold text-[#0A0E2E]">
+                              {s.transportAssignments[0].transport.location}
+                            </p>
+                            <p className="text-[10px] font-semibold text-[#0A0E2E]/55">
+                              {s.transportAssignments[0].transport.price?.toLocaleString()} RWF ·{' '}
+                              {s.transportAssignments[0].status.replace('_', ' ')}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        <span className="text-[11px] font-medium text-[#0A0E2E]/45 italic">Not assigned</span>
+                      )}
                     </TableCell>
                     <TableCell className="text-center">
                       <button

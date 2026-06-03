@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { LayoutDashboard, Users, FileText, DoorOpen, Settings, Menu, X, UserCheck, Bus } from 'lucide-react';
+import { LayoutDashboard, Users, FileText, DoorOpen, Settings, Menu, X, UserCheck, Bus, ClipboardCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar } from '@/components/RCA/Avatar';
 import { useAuthStore } from '@/stores/authStore';
@@ -11,6 +11,7 @@ import { apiFetch } from '@/lib/api';
 const navItems = [
   { label: 'Dashboard', path: '/discipline/dashboard', icon: LayoutDashboard, queryKey: ['students', 'records', 'staff'] },
   { label: 'Students', path: '/discipline/students', icon: Users, queryKey: ['students'] },
+  { label: 'Attendance', path: '/discipline/attendance', icon: ClipboardCheck, queryKey: ['attendance', 'terms'] },
   { label: 'Staff Management', path: '/discipline/staff', icon: UserCheck, queryKey: ['staff'] },
   { label: 'Transport Management', path: '/discipline/transport', icon: Bus, queryKey: ['transport-routes'] },
   { label: 'Discipline Records', path: '/discipline/records', icon: FileText, queryKey: ['records'] },
@@ -35,6 +36,11 @@ export function AppSidebar() {
         queryKey: [key],
         queryFn: () => {
           if (key === 'transport-routes') return apiFetch('/transport');
+          if (key === 'terms') return apiFetch('/terms');
+          if (key === 'attendance') {
+            const today = new Date().toISOString().slice(0, 10);
+            return apiFetch(`/attendance?date=${today}`);
+          }
           return apiFetch(`/${key}`);
         },
         staleTime: 1000 * 60 * 5,

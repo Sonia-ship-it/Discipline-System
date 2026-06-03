@@ -1,92 +1,95 @@
 import { create } from 'zustand';
 import { apiFetch } from '@/lib/api';
 
-type UserRole = 'discipline';
+export type StaffRole = 'ADMIN' | 'DISCIPLINE' | 'NURSE' | 'LIBRARIAN';
+
+export interface AuthUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: StaffRole;
+}
 
 interface AuthState {
-  user: { id: string; name: string; email: string; avatar?: string; role: string } | null;
+  user: AuthUser | null;
   token: string | null;
-  role: UserRole;
   isAuthenticated: boolean;
-  login: (email: string, password: string, role?: UserRole) => Promise<void>;
-  register: (firstName: string, lastName: string, email: string, phoneNumber: string, password: string, role: string) => Promise<void>;
+  hydrated: boolean;
+  hydrate: () => void;
+  login: (email: string, password: string) => Promise<StaffRole>;
   logout: () => void;
-  setRole: (role: UserRole) => void;
 }
 
 const decodeJWT = (token: string) => {
   try {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
+    const jsonPayload = decodeURIComponent(
+      window.atob(base64).split('').map((c) =>
+        '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+      ).join('')
+    );
     return JSON.parse(jsonPayload);
-  } catch (e) {
+  } catch {
     return null;
   }
 };
 
-const getStoredToken = () => typeof window !== 'undefined' ? localStorage.getItem('auth-token') : null;
-const initialToken = getStoredToken();
-const initialUser = initialToken ? decodeJWT(initialToken) : null;
-
 export const useAuthStore = create<AuthState>((set) => ({
-  user: initialUser ? {
-    id: initialUser.sub,
-    name: (initialUser.firstName && initialUser.lastName) ? `${initialUser.firstName} ${initialUser.lastName}` :
-      (initialUser.given_name && initialUser.family_name) ? `${initialUser.given_name} ${initialUser.family_name}` :
-        (initialUser.name || initialUser.fullName || initialUser.full_name || initialUser.email.split('@')[0]),
-    email: initialUser.email,
-    role: initialUser.role
-  } : null,
-  token: initialToken,
-  role: 'discipline',
-  isAuthenticated: !!initialToken,
-  login: async (email, password, role) => {
+  // Always start with empty state — same on server and client
+  user: null,
+  token: null,
+  isAuthenticated: false,
+  hydrated: false,
+
+  // Call this once on the client to load stored session
+  hydrate: () => {
+    if (typeof window === 'undefined') return;
     try {
-      const data = await apiFetch('/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-      });
-
-      const token = data.access_token;
-      localStorage.setItem('auth-token', token);
-
-      const decoded = decodeJWT(token);
-
+      const token = localStorage.getItem('auth-token');
+      const raw = localStorage.getItem('auth-user');
+      const user: AuthUser | null = raw ? JSON.parse(raw) : null;
       set({
         token,
-        user: decoded ? {
-          id: decoded.sub,
-          name: (decoded.firstName && decoded.lastName) ? `${decoded.firstName} ${decoded.lastName}` :
-            (decoded.given_name && decoded.family_name) ? `${decoded.given_name} ${decoded.family_name}` :
-              (decoded.name || decoded.fullName || decoded.full_name || decoded.email.split('@')[0]),
-          email: decoded.email,
-          role: decoded.role
-        } : null,
-        isAuthenticated: true,
-        role: role || 'discipline',
+        user,
+        isAuthenticated: !!token && !!user,
+        hydrated: true,
       });
-    } catch (error) {
-      throw error;
+    } catch {
+      set({ hydrated: true });
     }
   },
-  register: async (firstName, lastName, email, phoneNumber, password, role) => {
-    try {
-      await apiFetch('/auth/register', {
-        method: 'POST',
-        body: JSON.stringify({ firstName, lastName, email, phoneNumber, password, role }),
-      });
-    } catch (error) {
-      console.error('Registration failed:', error);
-      throw error;
-    }
+
+  login: async (email, password) => {
+    const data = await apiFetch('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
+
+    const token: string = data.access_token;
+    const serverUser = data.user;
+    const decoded = decodeJWT(token);
+
+    const user: AuthUser = {
+      id: String(serverUser?.id ?? decoded?.sub),
+      firstName: serverUser?.firstName ?? decoded?.firstName ?? '',
+      lastName: serverUser?.lastName ?? decoded?.lastName ?? '',
+      email: serverUser?.email ?? decoded?.email ?? email,
+      role: (serverUser?.role ?? decoded?.role ?? 'DISCIPLINE') as StaffRole,
+    };
+
+    localStorage.setItem('auth-token', token);
+    localStorage.setItem('auth-user', JSON.stringify(user));
+
+    set({ token, user, isAuthenticated: true, hydrated: true });
+
+    return user.role;
   },
+
   logout: () => {
     localStorage.removeItem('auth-token');
+    localStorage.removeItem('auth-user');
     set({ user: null, token: null, isAuthenticated: false });
   },
-  setRole: (role) => set({ role }),
 }));
-

@@ -10,6 +10,7 @@ import {
     Mail,
     Shield,
     History,
+    ClipboardCheck,
     ArrowLeft,
     Pencil,
     FileText,
@@ -56,6 +57,13 @@ export default function StudentDetail() {
         staleTime: 1000 * 60 * 5,
     });
 
+    const { data: attendanceHistory = [] } = useQuery({
+        queryKey: ['attendance', 'student', id],
+        queryFn: () => apiFetch(`/attendance/student/${id}`),
+        enabled: !!id,
+        staleTime: 1000 * 60 * 2,
+    });
+
     const fetchStudent = () => queryClient.invalidateQueries({ queryKey: ['student', id] });
 
     if (loading) return (
@@ -83,12 +91,21 @@ export default function StudentDetail() {
                         <ArrowLeft className="w-4 h-4" /> Back to Students
                     </button>
 
-                    <Button
-                        className="bg-[#0A0E2E] text-white hover:bg-[#1a264a] shadow-lg shadow-[#0A0E2E]/20"
-                        onClick={() => router.push(`/discipline/students?edit=${student.id}`)}
-                    >
-                        <Pencil className="w-4 h-4 mr-2" /> Edit Records
-                    </Button>
+                    <div className="flex gap-2">
+                        <Button
+                            variant="outline"
+                            className="border-[#0A0E2E]/15 text-[#0A0E2E]"
+                            onClick={() => router.push('/discipline/attendance')}
+                        >
+                            <ClipboardCheck className="w-4 h-4 mr-2" /> Attendance
+                        </Button>
+                        <Button
+                            className="bg-[#0A0E2E] text-white hover:bg-[#1a264a] shadow-lg shadow-[#0A0E2E]/20"
+                            onClick={() => router.push(`/discipline/students?edit=${student.id}`)}
+                        >
+                            <Pencil className="w-4 h-4 mr-2" /> Edit Records
+                        </Button>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -118,6 +135,15 @@ export default function StudentDetail() {
                                             </div>
                                         </div>
                                         <div className="space-y-1">
+                                            <p className="text-xs font-bold uppercase text-slate-400">Transport route</p>
+                                            <div className="flex items-center gap-2 font-bold text-[#0A0E2E]">
+                                                <Bus className="w-4 h-4 text-[#0A0E2E]/50" />
+                                                {currentAssignment?.transport?.location
+                                                    ? `${currentAssignment.transport.location} (${currentAssignment.transport.price?.toLocaleString()} RWF)`
+                                                    : 'Not assigned'}
+                                            </div>
+                                        </div>
+                                        <div className="space-y-1">
                                             <p className="text-xs font-bold uppercase text-slate-400">Home Address</p>
                                             <div className="flex items-center gap-2 font-bold text-[#0A0E2E]">
                                                 <MapPin className="w-4 h-4 text-[#0A0E2E]/50" /> {student.location || 'Kigali, Rwanda'}
@@ -137,16 +163,14 @@ export default function StudentDetail() {
                                     </div>
                                     <h3 className="text-xl font-bold">Transport Route</h3>
                                 </div>
-                                {!currentAssignment && (
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={() => setAssignModalOpen(true)}
-                                        className="border-[#0A0E2E] text-[#0A0E2E] font-bold"
-                                    >
-                                        Assign Route
-                                    </Button>
-                                )}
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setAssignModalOpen(true)}
+                                    className="border-[#0A0E2E] text-[#0A0E2E] font-bold"
+                                >
+                                    {currentAssignment ? 'Change Route' : 'Assign Route'}
+                                </Button>
                             </div>
 
                             {currentAssignment ? (
@@ -179,6 +203,40 @@ export default function StudentDetail() {
                                 <div className="py-8 text-center border-2 border-dashed border-slate-100 rounded-md">
                                     <p className="text-slate-400 font-medium">No transport route assigned yet.</p>
                                 </div>
+                            )}
+                        </section>
+
+                        {/* Term attendance */}
+                        <section className="bg-white rounded-md border border-[#0A0E2E]/10 p-8 shadow-sm">
+                            <div className="flex items-center justify-between mb-6">
+                                <div className="flex items-center gap-3">
+                                    <div className="p-2 bg-[#0A0E2E]/5 rounded-md text-[#0A0E2E]">
+                                        <ClipboardCheck className="w-5 h-5" />
+                                    </div>
+                                    <h3 className="text-xl font-bold">Term attendance</h3>
+                                </div>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => router.push('/discipline/attendance')}
+                                    className="border-[#0A0E2E] text-[#0A0E2E] font-bold"
+                                >
+                                    Mark attendance
+                                </Button>
+                            </div>
+                            {attendanceHistory.length === 0 ? (
+                                <p className="text-sm text-slate-400 font-medium">No attendance records for the active term yet.</p>
+                            ) : (
+                                <ul className="space-y-2">
+                                    {attendanceHistory.slice(0, 8).map((a: { id: number; date: string; status: string }) => (
+                                        <li key={a.id} className="flex items-center justify-between rounded-md border border-slate-100 px-4 py-2">
+                                            <span className="text-sm font-bold text-[#0A0E2E]">
+                                                {new Date(a.date).toLocaleDateString()}
+                                            </span>
+                                            <StatusBadge status={a.status} />
+                                        </li>
+                                    ))}
+                                </ul>
                             )}
                         </section>
 

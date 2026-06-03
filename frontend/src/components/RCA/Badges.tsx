@@ -12,6 +12,12 @@ export function StatusBadge({ status, className }: { status: string; className?:
     RETURNED: 'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800',
     Pending: 'bg-amber-50 text-amber-700 border-amber-100',
     Resolved: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+    PRESENT: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+    ABSENT: 'bg-rose-50 text-rose-700 border-rose-100',
+    LATE: 'bg-amber-50 text-amber-700 border-amber-100',
+    EXCUSED: 'bg-sky-50 text-sky-700 border-sky-100',
+    SENT: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+    FAILED: 'bg-rose-50 text-rose-700 border-rose-100',
   };
 
   return (
