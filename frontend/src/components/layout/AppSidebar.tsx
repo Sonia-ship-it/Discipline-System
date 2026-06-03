@@ -1,7 +1,14 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+<<<<<<< HEAD
 import { useRouter } from 'next/router';
+import { LayoutDashboard, Users, FileText, DoorOpen, Settings, Menu, X, UserCheck, Bus, ClipboardCheck } from 'lucide-react';
+=======
+import { usePathname } from 'next/navigation';
 import { LayoutDashboard, Users, FileText, DoorOpen, Settings, Menu, X, UserCheck, Bus, Smartphone, CalendarCheck, CalendarCog } from 'lucide-react';
+>>>>>>> c1d689c033ea458577ba89d4d992c46c0b5e7516
 import { cn } from '@/lib/utils';
 import { Avatar } from '@/components/RCA/Avatar';
 import { useAuthStore } from '@/stores/authStore';
@@ -11,6 +18,7 @@ import { apiFetch } from '@/lib/api';
 const navItems = [
   { label: 'Dashboard', path: '/discipline/dashboard', icon: LayoutDashboard, queryKey: ['students', 'records', 'staff'] },
   { label: 'Students', path: '/discipline/students', icon: Users, queryKey: ['students'] },
+  { label: 'Attendance', path: '/discipline/attendance', icon: ClipboardCheck, queryKey: ['attendance', 'terms'] },
   { label: 'Staff Management', path: '/discipline/staff', icon: UserCheck, queryKey: ['staff'] },
   { label: 'Transport Management', path: '/discipline/transport', icon: Bus, queryKey: ['transport-routes'] },
   { label: 'Phone Borrowing', path: '/discipline/phones', icon: Smartphone, queryKey: [] },
@@ -21,7 +29,7 @@ const navItems = [
 ];
 
 export function AppSidebar() {
-  const router = useRouter();
+  const pathname = usePathname();
   const queryClient = useQueryClient();
   const { user } = useAuthStore();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -37,7 +45,15 @@ export function AppSidebar() {
         queryKey: [key],
         queryFn: () => {
           if (key === 'transport-routes') return apiFetch('/transport');
+<<<<<<< HEAD
+          if (key === 'terms') return apiFetch('/terms');
+          if (key === 'attendance') {
+            const today = new Date().toISOString().slice(0, 10);
+            return apiFetch(`/attendance?date=${today}`);
+          }
+=======
           if (key === 'term-sessions') return apiFetch('/opening-attendance/term-sessions');
+>>>>>>> c1d689c033ea458577ba89d4d992c46c0b5e7516
           return apiFetch(`/${key}`);
         },
         staleTime: 1000 * 60 * 5,
@@ -45,7 +61,7 @@ export function AppSidebar() {
     });
   };
 
-  const isActive = (path: string) => router.asPath.startsWith(path);
+  const isActive = (path: string) => pathname.startsWith(path);
 
   const nav = (
     <div className="flex flex-col h-full">

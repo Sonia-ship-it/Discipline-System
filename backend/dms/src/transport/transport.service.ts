@@ -26,12 +26,29 @@ export class TransportService {
 
     const statusValue = assignStudentDto.status || 'NOT_PAID';
 
+    const existing = await this.prisma.transportAssignment.findFirst({
+      where: { studentId: assignStudentDto.studentId },
+      orderBy: { id: 'desc' },
+    });
+
+    if (existing) {
+      return this.prisma.transportAssignment.update({
+        where: { id: existing.id },
+        data: {
+          transportId: assignStudentDto.transportId,
+          status: statusValue,
+        },
+        include: { transport: true, student: true },
+      });
+    }
+
     return this.prisma.transportAssignment.create({
       data: {
         studentId: assignStudentDto.studentId,
         transportId: assignStudentDto.transportId,
         status: statusValue,
-      }
+      },
+      include: { transport: true, student: true },
     });
   }
 

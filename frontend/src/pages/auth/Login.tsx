@@ -4,14 +4,36 @@ import { useRouter } from 'next/router';
 import { Mail, Lock, Eye, EyeOff, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { useAuthStore } from '@/stores/authStore';
+import { useAuthStore, StaffRole } from '@/stores/authStore';
 import { toast } from 'sonner';
 import { AuthBackground } from '@/components/auth/AuthBackground';
+import type { NextRouter } from 'next/router';
+
+export function redirectByRole(role: StaffRole | string | undefined, router: NextRouter) {
+  switch (role) {
+    case 'ADMIN':
+      router.push('/admin');
+      break;
+    case 'NURSE':
+      router.push('/discipline/records');
+      break;
+    case 'LIBRARIAN':
+      // Redirect to external library system
+      if (typeof window !== 'undefined') {
+        window.location.href = process.env.NEXT_PUBLIC_LIBRARY_URL || '/library';
+      }
+      break;
+    case 'DISCIPLINE':
+    default:
+      router.push('/discipline/dashboard');
+      break;
+  }
+}
 
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, isAuthenticated } = useAuthStore();
+  const { login, isAuthenticated, hydrated } = useAuthStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -20,10 +42,12 @@ export default function LoginPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if (!hydrated) return;
     if (isAuthenticated) {
-      router.push('/discipline/dashboard');
+      const user = useAuthStore.getState().user;
+      redirectByRole(user?.role, router);
     }
-  }, [isAuthenticated, router]);
+  }, [hydrated, isAuthenticated, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,9 +55,9 @@ export default function LoginPage() {
     setError('');
 
     try {
-      await login(email, password);
+      const role = await login(email, password);
       toast.success('Login successful');
-      router.push('/discipline/dashboard');
+      redirectByRole(role, router);
     } catch (err: any) {
       setError(err.message || 'Invalid credentials. Please try again.');
     } finally {

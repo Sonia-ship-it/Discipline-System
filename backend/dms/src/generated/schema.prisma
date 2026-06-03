@@ -28,32 +28,42 @@ model Student {
 
   records              DisciplineRecord[]
   transportAssignments TransportAssignment[]
-  phoneBorrows         PhoneBorrow[]
-  termAttendances      TermAttendance[]
+  attendanceRecords    AttendanceRecord[]
+  parentNotifications  ParentNotification[]
 }
 
 model Staff {
-  id              Int              @id @default(autoincrement())
-  firstName       String
-  lastName        String
-  email           String           @unique
-  password        String
-  phoneNumber     String
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  termAttendances TermAttendance[]
+  id          Int       @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String    @unique
+  password    String
+  phoneNumber String
+  role        StaffRole @default(DISCIPLINE)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum StaffRole {
+  ADMIN
+  DISCIPLINE
+  NURSE
+  LIBRARIAN
 }
 
 model DisciplineRecord {
-  id         Int       @id @default(autoincrement())
-  studentId  Int
-  reason     String
-  location   String?
-  status     String    @default("OUT")
-  outDate    DateTime  @default(now())
-  returnDate DateTime?
-  updatedAt  DateTime  @updatedAt
-  student    Student   @relation(fields: [studentId], references: [id])
+  id            Int       @id @default(autoincrement())
+  studentId     Int
+  reason        String
+  location      String?
+  status        String    @default("OUT")
+  outDate       DateTime  @default(now())
+  returnDate    DateTime?
+  accompaniedBy String? // Name of staff member going with the student (School Event)
+  eventTheme    String? // Theme of the event (School Event)
+  updatedAt     DateTime  @updatedAt
+  student       Student   @relation(fields: [studentId], references: [id])
 }
 
 model Transport {
@@ -90,62 +100,64 @@ enum Status {
   RETURNED
 }
 
-model PhoneBorrow {
-  id         Int               @id @default(autoincrement())
-  studentId  Int
-  phoneModel String            @default("Mara Z")
-  borrowedAt DateTime          @default(now())
-  returnedAt DateTime?
-  status     PhoneBorrowStatus @default(BORROWED)
-  student    Student           @relation(fields: [studentId], references: [id])
-  createdAt  DateTime          @default(now())
-  updatedAt  DateTime          @updatedAt
+model AcademicTerm {
+  id        Int       @id @default(autoincrement())
+  name      String
+  startDate DateTime
+  endDate   DateTime?
+  isActive  Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  attendanceRecords AttendanceRecord[]
 }
 
-enum PhoneBorrowStatus {
-  BORROWED
-  RETURNED
+model AttendanceRecord {
+  id              Int              @id @default(autoincrement())
+  studentId       Int
+  termId          Int
+  date            DateTime         @db.Date
+  status          AttendanceStatus @default(PRESENT)
+  note            String?
+  markedByStaffId Int?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  student Student      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  term    AcademicTerm @relation(fields: [termId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, termId, date])
 }
 
-model TermSession {
-  id          Int              @id @default(autoincrement())
-  name        String // "Term 1", "Term 2", "Term 3"
-  year        Int
-  startDate   DateTime
-  endDate     DateTime
-  openingDate DateTime
-  isActive    Boolean          @default(false)
-  status      TermStatus       @default(UPCOMING)
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  attendances TermAttendance[]
+model ParentNotification {
+  id        Int                    @id @default(autoincrement())
+  studentId Int
+  channel   String                 @default("SMS")
+  phone     String
+  message   String
+  type      ParentNotificationType
+  status    NotificationStatus     @default(SENT)
+  sentAt    DateTime               @default(now())
+  createdAt DateTime               @default(now())
 
-  @@unique([name, year])
-}
-
-model TermAttendance {
-  id           Int              @id @default(autoincrement())
-  termId       Int
-  studentId    Int
-  status       AttendanceStatus @default(NOT_REPORTED)
-  arrivalTime  DateTime?
-  recordedById Int?
-  recordedBy   Staff?           @relation(fields: [recordedById], references: [id])
-  student      Student          @relation(fields: [studentId], references: [id])
-  term         TermSession      @relation(fields: [termId], references: [id])
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-
-  @@unique([termId, studentId])
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }
 
 enum AttendanceStatus {
-  REPORTED
-  NOT_REPORTED
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
 }
 
-enum TermStatus {
-  UPCOMING
-  ACTIVE
-  COMPLETED
+enum ParentNotificationType {
+  TERM_OPENING
+  ABSENCE_ALERT
+  ATTENDANCE_SUMMARY
+}
+
+enum NotificationStatus {
+  SENT
+  FAILED
+  PENDING
 }

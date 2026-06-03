@@ -7,12 +7,13 @@ import { Toaster } from "@/components/ui/toaster";
 import Head from "next/head";
 import "@/index.css";
 import { apiFetch } from "@/lib/api";
+import { useAuthStore } from "@/stores/authStore";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 10, // 10 minutes default
-      gcTime: 1000 * 60 * 60 * 24, // 24 hours
+      staleTime: 1000 * 60 * 10,
+      gcTime: 1000 * 60 * 60 * 24,
       refetchOnWindowFocus: false,
       retry: 1,
     },
@@ -20,7 +21,13 @@ const queryClient = new QueryClient({
 });
 
 export default function NextApp({ Component, pageProps }: AppProps) {
-  // Aggressive Bootstrap: Warm up the backend and populate cache on start
+  const hydrate = useAuthStore((s) => s.hydrate);
+
+  useEffect(() => {
+    // Hydrate auth state from localStorage on first client render
+    hydrate();
+  }, [hydrate]);
+
   useEffect(() => {
     const bootstrap = async () => {
       const keys = ['students', 'records', 'staff', 'transport'];
@@ -32,8 +39,6 @@ export default function NextApp({ Component, pageProps }: AppProps) {
         });
       });
     };
-
-    // Small delay to ensure auth is initialized if needed
     const timer = setTimeout(bootstrap, 1000);
     return () => clearTimeout(timer);
   }, []);

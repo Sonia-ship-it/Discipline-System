@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Users, Activity, Zap, Shield, Search, ShieldAlert, FileText, DoorOpen, UserCheck } from 'lucide-react';
 import Link from 'next/link';

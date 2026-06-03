@@ -5,7 +5,7 @@ export class CreateStaffDto {
   @IsString() @IsNotEmpty() firstName: string;
   @IsString() @IsNotEmpty() lastName: string;
   @IsString() @IsNotEmpty() phoneNumber: string;
-  @IsString() @IsNotEmpty() role: string;
+  @IsOptional() @IsString() role?: string;
   @IsEmail() @IsNotEmpty() email: string;
   @IsString() @MinLength(6) password: string;
   @IsOptional() @IsString() status?: string;

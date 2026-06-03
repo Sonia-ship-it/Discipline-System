@@ -39,26 +39,36 @@ export type Transport = $Result.DefaultSelection<Prisma.$TransportPayload>
  */
 export type TransportAssignment = $Result.DefaultSelection<Prisma.$TransportAssignmentPayload>
 /**
- * Model PhoneBorrow
+ * Model AcademicTerm
  * 
  */
-export type PhoneBorrow = $Result.DefaultSelection<Prisma.$PhoneBorrowPayload>
+export type AcademicTerm = $Result.DefaultSelection<Prisma.$AcademicTermPayload>
 /**
- * Model TermSession
+ * Model AttendanceRecord
  * 
  */
-export type TermSession = $Result.DefaultSelection<Prisma.$TermSessionPayload>
+export type AttendanceRecord = $Result.DefaultSelection<Prisma.$AttendanceRecordPayload>
 /**
- * Model TermAttendance
+ * Model ParentNotification
  * 
  */
-export type TermAttendance = $Result.DefaultSelection<Prisma.$TermAttendancePayload>
+export type ParentNotification = $Result.DefaultSelection<Prisma.$ParentNotificationPayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const TransportStatus: {
+  export const StaffRole: {
+  ADMIN: 'ADMIN',
+  DISCIPLINE: 'DISCIPLINE',
+  NURSE: 'NURSE',
+  LIBRARIAN: 'LIBRARIAN'
+};
+
+export type StaffRole = (typeof StaffRole)[keyof typeof StaffRole]
+
+
+export const TransportStatus: {
   PAID: 'PAID',
   NOT_PAID: 'NOT_PAID',
   OUT: 'OUT'
@@ -76,31 +86,38 @@ export const Status: {
 export type Status = (typeof Status)[keyof typeof Status]
 
 
-export const PhoneBorrowStatus: {
-  BORROWED: 'BORROWED',
-  RETURNED: 'RETURNED'
-};
-
-export type PhoneBorrowStatus = (typeof PhoneBorrowStatus)[keyof typeof PhoneBorrowStatus]
-
-
 export const AttendanceStatus: {
-  REPORTED: 'REPORTED',
-  NOT_REPORTED: 'NOT_REPORTED'
+  PRESENT: 'PRESENT',
+  ABSENT: 'ABSENT',
+  LATE: 'LATE',
+  EXCUSED: 'EXCUSED'
 };
 
 export type AttendanceStatus = (typeof AttendanceStatus)[keyof typeof AttendanceStatus]
 
 
-export const TermStatus: {
-  UPCOMING: 'UPCOMING',
-  ACTIVE: 'ACTIVE',
-  COMPLETED: 'COMPLETED'
+export const ParentNotificationType: {
+  TERM_OPENING: 'TERM_OPENING',
+  ABSENCE_ALERT: 'ABSENCE_ALERT',
+  ATTENDANCE_SUMMARY: 'ATTENDANCE_SUMMARY'
 };
 
-export type TermStatus = (typeof TermStatus)[keyof typeof TermStatus]
+export type ParentNotificationType = (typeof ParentNotificationType)[keyof typeof ParentNotificationType]
+
+
+export const NotificationStatus: {
+  SENT: 'SENT',
+  FAILED: 'FAILED',
+  PENDING: 'PENDING'
+};
+
+export type NotificationStatus = (typeof NotificationStatus)[keyof typeof NotificationStatus]
 
 }
+
+export type StaffRole = $Enums.StaffRole
+
+export const StaffRole: typeof $Enums.StaffRole
 
 export type TransportStatus = $Enums.TransportStatus
 
@@ -110,17 +127,17 @@ export type Status = $Enums.Status
 
 export const Status: typeof $Enums.Status
 
-export type PhoneBorrowStatus = $Enums.PhoneBorrowStatus
-
-export const PhoneBorrowStatus: typeof $Enums.PhoneBorrowStatus
-
 export type AttendanceStatus = $Enums.AttendanceStatus
 
 export const AttendanceStatus: typeof $Enums.AttendanceStatus
 
-export type TermStatus = $Enums.TermStatus
+export type ParentNotificationType = $Enums.ParentNotificationType
 
-export const TermStatus: typeof $Enums.TermStatus
+export const ParentNotificationType: typeof $Enums.ParentNotificationType
+
+export type NotificationStatus = $Enums.NotificationStatus
+
+export const NotificationStatus: typeof $Enums.NotificationStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -235,7 +252,7 @@ export class PrismaClient<
    * 
    * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
@@ -294,34 +311,34 @@ export class PrismaClient<
   get transportAssignment(): Prisma.TransportAssignmentDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.phoneBorrow`: Exposes CRUD operations for the **PhoneBorrow** model.
+   * `prisma.academicTerm`: Exposes CRUD operations for the **AcademicTerm** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more PhoneBorrows
-    * const phoneBorrows = await prisma.phoneBorrow.findMany()
+    * // Fetch zero or more AcademicTerms
+    * const academicTerms = await prisma.academicTerm.findMany()
     * ```
     */
-  get phoneBorrow(): Prisma.PhoneBorrowDelegate<ExtArgs, ClientOptions>;
+  get academicTerm(): Prisma.AcademicTermDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.termSession`: Exposes CRUD operations for the **TermSession** model.
+   * `prisma.attendanceRecord`: Exposes CRUD operations for the **AttendanceRecord** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more TermSessions
-    * const termSessions = await prisma.termSession.findMany()
+    * // Fetch zero or more AttendanceRecords
+    * const attendanceRecords = await prisma.attendanceRecord.findMany()
     * ```
     */
-  get termSession(): Prisma.TermSessionDelegate<ExtArgs, ClientOptions>;
+  get attendanceRecord(): Prisma.AttendanceRecordDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.termAttendance`: Exposes CRUD operations for the **TermAttendance** model.
+   * `prisma.parentNotification`: Exposes CRUD operations for the **ParentNotification** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more TermAttendances
-    * const termAttendances = await prisma.termAttendance.findMany()
+    * // Fetch zero or more ParentNotifications
+    * const parentNotifications = await prisma.parentNotification.findMany()
     * ```
     */
-  get termAttendance(): Prisma.TermAttendanceDelegate<ExtArgs, ClientOptions>;
+  get parentNotification(): Prisma.ParentNotificationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -372,8 +389,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.8.0
-   * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
+   * Prisma Client JS version: 7.6.0
+   * Query Engine version: 75cbdc1eb7150937890ad5465d861175c6624711
    */
   export type PrismaVersion = {
     client: string
@@ -761,9 +778,9 @@ export namespace Prisma {
     DisciplineRecord: 'DisciplineRecord',
     Transport: 'Transport',
     TransportAssignment: 'TransportAssignment',
-    PhoneBorrow: 'PhoneBorrow',
-    TermSession: 'TermSession',
-    TermAttendance: 'TermAttendance'
+    AcademicTerm: 'AcademicTerm',
+    AttendanceRecord: 'AttendanceRecord',
+    ParentNotification: 'ParentNotification'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -779,7 +796,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "student" | "staff" | "disciplineRecord" | "transport" | "transportAssignment" | "phoneBorrow" | "termSession" | "termAttendance"
+      modelProps: "student" | "staff" | "disciplineRecord" | "transport" | "transportAssignment" | "academicTerm" | "attendanceRecord" | "parentNotification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1153,225 +1170,225 @@ export namespace Prisma {
           }
         }
       }
-      PhoneBorrow: {
-        payload: Prisma.$PhoneBorrowPayload<ExtArgs>
-        fields: Prisma.PhoneBorrowFieldRefs
+      AcademicTerm: {
+        payload: Prisma.$AcademicTermPayload<ExtArgs>
+        fields: Prisma.AcademicTermFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.PhoneBorrowFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload> | null
+            args: Prisma.AcademicTermFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.PhoneBorrowFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload>
+            args: Prisma.AcademicTermFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload>
           }
           findFirst: {
-            args: Prisma.PhoneBorrowFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload> | null
+            args: Prisma.AcademicTermFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.PhoneBorrowFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload>
+            args: Prisma.AcademicTermFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload>
           }
           findMany: {
-            args: Prisma.PhoneBorrowFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload>[]
+            args: Prisma.AcademicTermFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload>[]
           }
           create: {
-            args: Prisma.PhoneBorrowCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload>
+            args: Prisma.AcademicTermCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload>
           }
           createMany: {
-            args: Prisma.PhoneBorrowCreateManyArgs<ExtArgs>
+            args: Prisma.AcademicTermCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.PhoneBorrowCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload>[]
+            args: Prisma.AcademicTermCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload>[]
           }
           delete: {
-            args: Prisma.PhoneBorrowDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload>
+            args: Prisma.AcademicTermDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload>
           }
           update: {
-            args: Prisma.PhoneBorrowUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload>
+            args: Prisma.AcademicTermUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload>
           }
           deleteMany: {
-            args: Prisma.PhoneBorrowDeleteManyArgs<ExtArgs>
+            args: Prisma.AcademicTermDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.PhoneBorrowUpdateManyArgs<ExtArgs>
+            args: Prisma.AcademicTermUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.PhoneBorrowUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload>[]
+            args: Prisma.AcademicTermUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload>[]
           }
           upsert: {
-            args: Prisma.PhoneBorrowUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$PhoneBorrowPayload>
+            args: Prisma.AcademicTermUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AcademicTermPayload>
           }
           aggregate: {
-            args: Prisma.PhoneBorrowAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregatePhoneBorrow>
+            args: Prisma.AcademicTermAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAcademicTerm>
           }
           groupBy: {
-            args: Prisma.PhoneBorrowGroupByArgs<ExtArgs>
-            result: $Utils.Optional<PhoneBorrowGroupByOutputType>[]
+            args: Prisma.AcademicTermGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AcademicTermGroupByOutputType>[]
           }
           count: {
-            args: Prisma.PhoneBorrowCountArgs<ExtArgs>
-            result: $Utils.Optional<PhoneBorrowCountAggregateOutputType> | number
+            args: Prisma.AcademicTermCountArgs<ExtArgs>
+            result: $Utils.Optional<AcademicTermCountAggregateOutputType> | number
           }
         }
       }
-      TermSession: {
-        payload: Prisma.$TermSessionPayload<ExtArgs>
-        fields: Prisma.TermSessionFieldRefs
+      AttendanceRecord: {
+        payload: Prisma.$AttendanceRecordPayload<ExtArgs>
+        fields: Prisma.AttendanceRecordFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.TermSessionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload> | null
+            args: Prisma.AttendanceRecordFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.TermSessionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload>
+            args: Prisma.AttendanceRecordFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload>
           }
           findFirst: {
-            args: Prisma.TermSessionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload> | null
+            args: Prisma.AttendanceRecordFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.TermSessionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload>
+            args: Prisma.AttendanceRecordFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload>
           }
           findMany: {
-            args: Prisma.TermSessionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload>[]
+            args: Prisma.AttendanceRecordFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload>[]
           }
           create: {
-            args: Prisma.TermSessionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload>
+            args: Prisma.AttendanceRecordCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload>
           }
           createMany: {
-            args: Prisma.TermSessionCreateManyArgs<ExtArgs>
+            args: Prisma.AttendanceRecordCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.TermSessionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload>[]
+            args: Prisma.AttendanceRecordCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload>[]
           }
           delete: {
-            args: Prisma.TermSessionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload>
+            args: Prisma.AttendanceRecordDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload>
           }
           update: {
-            args: Prisma.TermSessionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload>
+            args: Prisma.AttendanceRecordUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload>
           }
           deleteMany: {
-            args: Prisma.TermSessionDeleteManyArgs<ExtArgs>
+            args: Prisma.AttendanceRecordDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.TermSessionUpdateManyArgs<ExtArgs>
+            args: Prisma.AttendanceRecordUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.TermSessionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload>[]
+            args: Prisma.AttendanceRecordUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload>[]
           }
           upsert: {
-            args: Prisma.TermSessionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermSessionPayload>
+            args: Prisma.AttendanceRecordUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AttendanceRecordPayload>
           }
           aggregate: {
-            args: Prisma.TermSessionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTermSession>
+            args: Prisma.AttendanceRecordAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAttendanceRecord>
           }
           groupBy: {
-            args: Prisma.TermSessionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TermSessionGroupByOutputType>[]
+            args: Prisma.AttendanceRecordGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AttendanceRecordGroupByOutputType>[]
           }
           count: {
-            args: Prisma.TermSessionCountArgs<ExtArgs>
-            result: $Utils.Optional<TermSessionCountAggregateOutputType> | number
+            args: Prisma.AttendanceRecordCountArgs<ExtArgs>
+            result: $Utils.Optional<AttendanceRecordCountAggregateOutputType> | number
           }
         }
       }
-      TermAttendance: {
-        payload: Prisma.$TermAttendancePayload<ExtArgs>
-        fields: Prisma.TermAttendanceFieldRefs
+      ParentNotification: {
+        payload: Prisma.$ParentNotificationPayload<ExtArgs>
+        fields: Prisma.ParentNotificationFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.TermAttendanceFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload> | null
+            args: Prisma.ParentNotificationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.TermAttendanceFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload>
+            args: Prisma.ParentNotificationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload>
           }
           findFirst: {
-            args: Prisma.TermAttendanceFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload> | null
+            args: Prisma.ParentNotificationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.TermAttendanceFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload>
+            args: Prisma.ParentNotificationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload>
           }
           findMany: {
-            args: Prisma.TermAttendanceFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload>[]
+            args: Prisma.ParentNotificationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload>[]
           }
           create: {
-            args: Prisma.TermAttendanceCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload>
+            args: Prisma.ParentNotificationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload>
           }
           createMany: {
-            args: Prisma.TermAttendanceCreateManyArgs<ExtArgs>
+            args: Prisma.ParentNotificationCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.TermAttendanceCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload>[]
+            args: Prisma.ParentNotificationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload>[]
           }
           delete: {
-            args: Prisma.TermAttendanceDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload>
+            args: Prisma.ParentNotificationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload>
           }
           update: {
-            args: Prisma.TermAttendanceUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload>
+            args: Prisma.ParentNotificationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload>
           }
           deleteMany: {
-            args: Prisma.TermAttendanceDeleteManyArgs<ExtArgs>
+            args: Prisma.ParentNotificationDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.TermAttendanceUpdateManyArgs<ExtArgs>
+            args: Prisma.ParentNotificationUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.TermAttendanceUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload>[]
+            args: Prisma.ParentNotificationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload>[]
           }
           upsert: {
-            args: Prisma.TermAttendanceUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$TermAttendancePayload>
+            args: Prisma.ParentNotificationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ParentNotificationPayload>
           }
           aggregate: {
-            args: Prisma.TermAttendanceAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateTermAttendance>
+            args: Prisma.ParentNotificationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateParentNotification>
           }
           groupBy: {
-            args: Prisma.TermAttendanceGroupByArgs<ExtArgs>
-            result: $Utils.Optional<TermAttendanceGroupByOutputType>[]
+            args: Prisma.ParentNotificationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ParentNotificationGroupByOutputType>[]
           }
           count: {
-            args: Prisma.TermAttendanceCountArgs<ExtArgs>
-            result: $Utils.Optional<TermAttendanceCountAggregateOutputType> | number
+            args: Prisma.ParentNotificationCountArgs<ExtArgs>
+            result: $Utils.Optional<ParentNotificationCountAggregateOutputType> | number
           }
         }
       }
@@ -1488,9 +1505,9 @@ export namespace Prisma {
     disciplineRecord?: DisciplineRecordOmit
     transport?: TransportOmit
     transportAssignment?: TransportAssignmentOmit
-    phoneBorrow?: PhoneBorrowOmit
-    termSession?: TermSessionOmit
-    termAttendance?: TermAttendanceOmit
+    academicTerm?: AcademicTermOmit
+    attendanceRecord?: AttendanceRecordOmit
+    parentNotification?: ParentNotificationOmit
   }
 
   /* Types for Logging */
@@ -1573,15 +1590,15 @@ export namespace Prisma {
   export type StudentCountOutputType = {
     records: number
     transportAssignments: number
-    phoneBorrows: number
-    termAttendances: number
+    attendanceRecords: number
+    parentNotifications: number
   }
 
   export type StudentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     records?: boolean | StudentCountOutputTypeCountRecordsArgs
     transportAssignments?: boolean | StudentCountOutputTypeCountTransportAssignmentsArgs
-    phoneBorrows?: boolean | StudentCountOutputTypeCountPhoneBorrowsArgs
-    termAttendances?: boolean | StudentCountOutputTypeCountTermAttendancesArgs
+    attendanceRecords?: boolean | StudentCountOutputTypeCountAttendanceRecordsArgs
+    parentNotifications?: boolean | StudentCountOutputTypeCountParentNotificationsArgs
   }
 
   // Custom InputTypes
@@ -1612,46 +1629,15 @@ export namespace Prisma {
   /**
    * StudentCountOutputType without action
    */
-  export type StudentCountOutputTypeCountPhoneBorrowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PhoneBorrowWhereInput
+  export type StudentCountOutputTypeCountAttendanceRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AttendanceRecordWhereInput
   }
 
   /**
    * StudentCountOutputType without action
    */
-  export type StudentCountOutputTypeCountTermAttendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TermAttendanceWhereInput
-  }
-
-
-  /**
-   * Count Type StaffCountOutputType
-   */
-
-  export type StaffCountOutputType = {
-    termAttendances: number
-  }
-
-  export type StaffCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    termAttendances?: boolean | StaffCountOutputTypeCountTermAttendancesArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * StaffCountOutputType without action
-   */
-  export type StaffCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the StaffCountOutputType
-     */
-    select?: StaffCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * StaffCountOutputType without action
-   */
-  export type StaffCountOutputTypeCountTermAttendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TermAttendanceWhereInput
+  export type StudentCountOutputTypeCountParentNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ParentNotificationWhereInput
   }
 
 
@@ -1687,33 +1673,33 @@ export namespace Prisma {
 
 
   /**
-   * Count Type TermSessionCountOutputType
+   * Count Type AcademicTermCountOutputType
    */
 
-  export type TermSessionCountOutputType = {
-    attendances: number
+  export type AcademicTermCountOutputType = {
+    attendanceRecords: number
   }
 
-  export type TermSessionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    attendances?: boolean | TermSessionCountOutputTypeCountAttendancesArgs
+  export type AcademicTermCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    attendanceRecords?: boolean | AcademicTermCountOutputTypeCountAttendanceRecordsArgs
   }
 
   // Custom InputTypes
   /**
-   * TermSessionCountOutputType without action
+   * AcademicTermCountOutputType without action
    */
-  export type TermSessionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSessionCountOutputType
+     * Select specific fields to fetch from the AcademicTermCountOutputType
      */
-    select?: TermSessionCountOutputTypeSelect<ExtArgs> | null
+    select?: AcademicTermCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * TermSessionCountOutputType without action
+   * AcademicTermCountOutputType without action
    */
-  export type TermSessionCountOutputTypeCountAttendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TermAttendanceWhereInput
+  export type AcademicTermCountOutputTypeCountAttendanceRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AttendanceRecordWhereInput
   }
 
 
@@ -1985,8 +1971,8 @@ export namespace Prisma {
     updatedAt?: boolean
     records?: boolean | Student$recordsArgs<ExtArgs>
     transportAssignments?: boolean | Student$transportAssignmentsArgs<ExtArgs>
-    phoneBorrows?: boolean | Student$phoneBorrowsArgs<ExtArgs>
-    termAttendances?: boolean | Student$termAttendancesArgs<ExtArgs>
+    attendanceRecords?: boolean | Student$attendanceRecordsArgs<ExtArgs>
+    parentNotifications?: boolean | Student$parentNotificationsArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["student"]>
 
@@ -2042,8 +2028,8 @@ export namespace Prisma {
   export type StudentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     records?: boolean | Student$recordsArgs<ExtArgs>
     transportAssignments?: boolean | Student$transportAssignmentsArgs<ExtArgs>
-    phoneBorrows?: boolean | Student$phoneBorrowsArgs<ExtArgs>
-    termAttendances?: boolean | Student$termAttendancesArgs<ExtArgs>
+    attendanceRecords?: boolean | Student$attendanceRecordsArgs<ExtArgs>
+    parentNotifications?: boolean | Student$parentNotificationsArgs<ExtArgs>
     _count?: boolean | StudentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StudentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2054,8 +2040,8 @@ export namespace Prisma {
     objects: {
       records: Prisma.$DisciplineRecordPayload<ExtArgs>[]
       transportAssignments: Prisma.$TransportAssignmentPayload<ExtArgs>[]
-      phoneBorrows: Prisma.$PhoneBorrowPayload<ExtArgs>[]
-      termAttendances: Prisma.$TermAttendancePayload<ExtArgs>[]
+      attendanceRecords: Prisma.$AttendanceRecordPayload<ExtArgs>[]
+      parentNotifications: Prisma.$ParentNotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2467,8 +2453,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     records<T extends Student$recordsArgs<ExtArgs> = {}>(args?: Subset<T, Student$recordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DisciplineRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transportAssignments<T extends Student$transportAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, Student$transportAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransportAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    phoneBorrows<T extends Student$phoneBorrowsArgs<ExtArgs> = {}>(args?: Subset<T, Student$phoneBorrowsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    termAttendances<T extends Student$termAttendancesArgs<ExtArgs> = {}>(args?: Subset<T, Student$termAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    attendanceRecords<T extends Student$attendanceRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Student$attendanceRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    parentNotifications<T extends Student$parentNotificationsArgs<ExtArgs> = {}>(args?: Subset<T, Student$parentNotificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2952,51 +2938,51 @@ export namespace Prisma {
   }
 
   /**
-   * Student.phoneBorrows
+   * Student.attendanceRecords
    */
-  export type Student$phoneBorrowsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Student$attendanceRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the PhoneBorrow
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: PhoneBorrowSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the PhoneBorrow
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-    where?: PhoneBorrowWhereInput
-    orderBy?: PhoneBorrowOrderByWithRelationInput | PhoneBorrowOrderByWithRelationInput[]
-    cursor?: PhoneBorrowWhereUniqueInput
+    include?: AttendanceRecordInclude<ExtArgs> | null
+    where?: AttendanceRecordWhereInput
+    orderBy?: AttendanceRecordOrderByWithRelationInput | AttendanceRecordOrderByWithRelationInput[]
+    cursor?: AttendanceRecordWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: PhoneBorrowScalarFieldEnum | PhoneBorrowScalarFieldEnum[]
+    distinct?: AttendanceRecordScalarFieldEnum | AttendanceRecordScalarFieldEnum[]
   }
 
   /**
-   * Student.termAttendances
+   * Student.parentNotifications
    */
-  export type Student$termAttendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Student$parentNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the ParentNotification
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: ParentNotificationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the ParentNotification
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: ParentNotificationOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
-    where?: TermAttendanceWhereInput
-    orderBy?: TermAttendanceOrderByWithRelationInput | TermAttendanceOrderByWithRelationInput[]
-    cursor?: TermAttendanceWhereUniqueInput
+    include?: ParentNotificationInclude<ExtArgs> | null
+    where?: ParentNotificationWhereInput
+    orderBy?: ParentNotificationOrderByWithRelationInput | ParentNotificationOrderByWithRelationInput[]
+    cursor?: ParentNotificationWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: TermAttendanceScalarFieldEnum | TermAttendanceScalarFieldEnum[]
+    distinct?: ParentNotificationScalarFieldEnum | ParentNotificationScalarFieldEnum[]
   }
 
   /**
@@ -3045,6 +3031,8 @@ export namespace Prisma {
     email: string | null
     password: string | null
     phoneNumber: string | null
+    role: $Enums.StaffRole | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3056,6 +3044,8 @@ export namespace Prisma {
     email: string | null
     password: string | null
     phoneNumber: string | null
+    role: $Enums.StaffRole | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -3067,6 +3057,8 @@ export namespace Prisma {
     email: number
     password: number
     phoneNumber: number
+    role: number
+    isActive: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -3088,6 +3080,8 @@ export namespace Prisma {
     email?: true
     password?: true
     phoneNumber?: true
+    role?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3099,6 +3093,8 @@ export namespace Prisma {
     email?: true
     password?: true
     phoneNumber?: true
+    role?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -3110,6 +3106,8 @@ export namespace Prisma {
     email?: true
     password?: true
     phoneNumber?: true
+    role?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -3208,6 +3206,8 @@ export namespace Prisma {
     email: string
     password: string
     phoneNumber: string
+    role: $Enums.StaffRole
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
     _count: StaffCountAggregateOutputType | null
@@ -3238,10 +3238,10 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phoneNumber?: boolean
+    role?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    termAttendances?: boolean | Staff$termAttendancesArgs<ExtArgs>
-    _count?: boolean | StaffCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["staff"]>
 
   export type StaffSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3251,6 +3251,8 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phoneNumber?: boolean
+    role?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["staff"]>
@@ -3262,6 +3264,8 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phoneNumber?: boolean
+    role?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["staff"]>
@@ -3273,23 +3277,17 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     phoneNumber?: boolean
+    role?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type StaffOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "password" | "phoneNumber" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
-  export type StaffInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    termAttendances?: boolean | Staff$termAttendancesArgs<ExtArgs>
-    _count?: boolean | StaffCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type StaffIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type StaffIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type StaffOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "firstName" | "lastName" | "email" | "password" | "phoneNumber" | "role" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
 
   export type $StaffPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Staff"
-    objects: {
-      termAttendances: Prisma.$TermAttendancePayload<ExtArgs>[]
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
       firstName: string
@@ -3297,6 +3295,8 @@ export namespace Prisma {
       email: string
       password: string
       phoneNumber: string
+      role: $Enums.StaffRole
+      isActive: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["staff"]>
@@ -3693,7 +3693,6 @@ export namespace Prisma {
    */
   export interface Prisma__StaffClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    termAttendances<T extends Staff$termAttendancesArgs<ExtArgs> = {}>(args?: Subset<T, Staff$termAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3729,6 +3728,8 @@ export namespace Prisma {
     readonly email: FieldRef<"Staff", 'String'>
     readonly password: FieldRef<"Staff", 'String'>
     readonly phoneNumber: FieldRef<"Staff", 'String'>
+    readonly role: FieldRef<"Staff", 'StaffRole'>
+    readonly isActive: FieldRef<"Staff", 'Boolean'>
     readonly createdAt: FieldRef<"Staff", 'DateTime'>
     readonly updatedAt: FieldRef<"Staff", 'DateTime'>
   }
@@ -3748,10 +3749,6 @@ export namespace Prisma {
      */
     omit?: StaffOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffInclude<ExtArgs> | null
-    /**
      * Filter, which Staff to fetch.
      */
     where: StaffWhereUniqueInput
@@ -3770,10 +3767,6 @@ export namespace Prisma {
      */
     omit?: StaffOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffInclude<ExtArgs> | null
-    /**
      * Filter, which Staff to fetch.
      */
     where: StaffWhereUniqueInput
@@ -3791,10 +3784,6 @@ export namespace Prisma {
      * Omit specific fields from the Staff
      */
     omit?: StaffOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffInclude<ExtArgs> | null
     /**
      * Filter, which Staff to fetch.
      */
@@ -3844,10 +3833,6 @@ export namespace Prisma {
      */
     omit?: StaffOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffInclude<ExtArgs> | null
-    /**
      * Filter, which Staff to fetch.
      */
     where?: StaffWhereInput
@@ -3895,10 +3880,6 @@ export namespace Prisma {
      * Omit specific fields from the Staff
      */
     omit?: StaffOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffInclude<ExtArgs> | null
     /**
      * Filter, which Staff to fetch.
      */
@@ -3948,10 +3929,6 @@ export namespace Prisma {
      */
     omit?: StaffOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffInclude<ExtArgs> | null
-    /**
      * The data needed to create a Staff.
      */
     data: XOR<StaffCreateInput, StaffUncheckedCreateInput>
@@ -3999,10 +3976,6 @@ export namespace Prisma {
      * Omit specific fields from the Staff
      */
     omit?: StaffOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffInclude<ExtArgs> | null
     /**
      * The data needed to update a Staff.
      */
@@ -4070,10 +4043,6 @@ export namespace Prisma {
      */
     omit?: StaffOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffInclude<ExtArgs> | null
-    /**
      * The filter to search for the Staff to update in case it exists.
      */
     where: StaffWhereUniqueInput
@@ -4100,10 +4069,6 @@ export namespace Prisma {
      */
     omit?: StaffOmit<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffInclude<ExtArgs> | null
-    /**
      * Filter which Staff to delete.
      */
     where: StaffWhereUniqueInput
@@ -4124,30 +4089,6 @@ export namespace Prisma {
   }
 
   /**
-   * Staff.termAttendances
-   */
-  export type Staff$termAttendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the TermAttendance
-     */
-    select?: TermAttendanceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the TermAttendance
-     */
-    omit?: TermAttendanceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TermAttendanceInclude<ExtArgs> | null
-    where?: TermAttendanceWhereInput
-    orderBy?: TermAttendanceOrderByWithRelationInput | TermAttendanceOrderByWithRelationInput[]
-    cursor?: TermAttendanceWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TermAttendanceScalarFieldEnum | TermAttendanceScalarFieldEnum[]
-  }
-
-  /**
    * Staff without action
    */
   export type StaffDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4159,10 +4100,6 @@ export namespace Prisma {
      * Omit specific fields from the Staff
      */
     omit?: StaffOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StaffInclude<ExtArgs> | null
   }
 
 
@@ -4196,6 +4133,8 @@ export namespace Prisma {
     status: string | null
     outDate: Date | null
     returnDate: Date | null
+    accompaniedBy: string | null
+    eventTheme: string | null
     updatedAt: Date | null
   }
 
@@ -4207,6 +4146,8 @@ export namespace Prisma {
     status: string | null
     outDate: Date | null
     returnDate: Date | null
+    accompaniedBy: string | null
+    eventTheme: string | null
     updatedAt: Date | null
   }
 
@@ -4218,6 +4159,8 @@ export namespace Prisma {
     status: number
     outDate: number
     returnDate: number
+    accompaniedBy: number
+    eventTheme: number
     updatedAt: number
     _all: number
   }
@@ -4241,6 +4184,8 @@ export namespace Prisma {
     status?: true
     outDate?: true
     returnDate?: true
+    accompaniedBy?: true
+    eventTheme?: true
     updatedAt?: true
   }
 
@@ -4252,6 +4197,8 @@ export namespace Prisma {
     status?: true
     outDate?: true
     returnDate?: true
+    accompaniedBy?: true
+    eventTheme?: true
     updatedAt?: true
   }
 
@@ -4263,6 +4210,8 @@ export namespace Prisma {
     status?: true
     outDate?: true
     returnDate?: true
+    accompaniedBy?: true
+    eventTheme?: true
     updatedAt?: true
     _all?: true
   }
@@ -4361,6 +4310,8 @@ export namespace Prisma {
     status: string
     outDate: Date
     returnDate: Date | null
+    accompaniedBy: string | null
+    eventTheme: string | null
     updatedAt: Date
     _count: DisciplineRecordCountAggregateOutputType | null
     _avg: DisciplineRecordAvgAggregateOutputType | null
@@ -4391,6 +4342,8 @@ export namespace Prisma {
     status?: boolean
     outDate?: boolean
     returnDate?: boolean
+    accompaniedBy?: boolean
+    eventTheme?: boolean
     updatedAt?: boolean
     student?: boolean | StudentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["disciplineRecord"]>
@@ -4403,6 +4356,8 @@ export namespace Prisma {
     status?: boolean
     outDate?: boolean
     returnDate?: boolean
+    accompaniedBy?: boolean
+    eventTheme?: boolean
     updatedAt?: boolean
     student?: boolean | StudentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["disciplineRecord"]>
@@ -4415,6 +4370,8 @@ export namespace Prisma {
     status?: boolean
     outDate?: boolean
     returnDate?: boolean
+    accompaniedBy?: boolean
+    eventTheme?: boolean
     updatedAt?: boolean
     student?: boolean | StudentDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["disciplineRecord"]>
@@ -4427,10 +4384,12 @@ export namespace Prisma {
     status?: boolean
     outDate?: boolean
     returnDate?: boolean
+    accompaniedBy?: boolean
+    eventTheme?: boolean
     updatedAt?: boolean
   }
 
-  export type DisciplineRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "reason" | "location" | "status" | "outDate" | "returnDate" | "updatedAt", ExtArgs["result"]["disciplineRecord"]>
+  export type DisciplineRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "reason" | "location" | "status" | "outDate" | "returnDate" | "accompaniedBy" | "eventTheme" | "updatedAt", ExtArgs["result"]["disciplineRecord"]>
   export type DisciplineRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     student?: boolean | StudentDefaultArgs<ExtArgs>
   }
@@ -4454,6 +4413,8 @@ export namespace Prisma {
       status: string
       outDate: Date
       returnDate: Date | null
+      accompaniedBy: string | null
+      eventTheme: string | null
       updatedAt: Date
     }, ExtArgs["result"]["disciplineRecord"]>
     composites: {}
@@ -4886,6 +4847,8 @@ export namespace Prisma {
     readonly status: FieldRef<"DisciplineRecord", 'String'>
     readonly outDate: FieldRef<"DisciplineRecord", 'DateTime'>
     readonly returnDate: FieldRef<"DisciplineRecord", 'DateTime'>
+    readonly accompaniedBy: FieldRef<"DisciplineRecord", 'String'>
+    readonly eventTheme: FieldRef<"DisciplineRecord", 'String'>
     readonly updatedAt: FieldRef<"DisciplineRecord", 'DateTime'>
   }
     
@@ -7546,1584 +7509,404 @@ export namespace Prisma {
 
 
   /**
-   * Model PhoneBorrow
+   * Model AcademicTerm
    */
 
-  export type AggregatePhoneBorrow = {
-    _count: PhoneBorrowCountAggregateOutputType | null
-    _avg: PhoneBorrowAvgAggregateOutputType | null
-    _sum: PhoneBorrowSumAggregateOutputType | null
-    _min: PhoneBorrowMinAggregateOutputType | null
-    _max: PhoneBorrowMaxAggregateOutputType | null
+  export type AggregateAcademicTerm = {
+    _count: AcademicTermCountAggregateOutputType | null
+    _avg: AcademicTermAvgAggregateOutputType | null
+    _sum: AcademicTermSumAggregateOutputType | null
+    _min: AcademicTermMinAggregateOutputType | null
+    _max: AcademicTermMaxAggregateOutputType | null
   }
 
-  export type PhoneBorrowAvgAggregateOutputType = {
+  export type AcademicTermAvgAggregateOutputType = {
     id: number | null
-    studentId: number | null
   }
 
-  export type PhoneBorrowSumAggregateOutputType = {
+  export type AcademicTermSumAggregateOutputType = {
     id: number | null
-    studentId: number | null
   }
 
-  export type PhoneBorrowMinAggregateOutputType = {
-    id: number | null
-    studentId: number | null
-    phoneModel: string | null
-    borrowedAt: Date | null
-    returnedAt: Date | null
-    status: $Enums.PhoneBorrowStatus | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type PhoneBorrowMaxAggregateOutputType = {
-    id: number | null
-    studentId: number | null
-    phoneModel: string | null
-    borrowedAt: Date | null
-    returnedAt: Date | null
-    status: $Enums.PhoneBorrowStatus | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type PhoneBorrowCountAggregateOutputType = {
-    id: number
-    studentId: number
-    phoneModel: number
-    borrowedAt: number
-    returnedAt: number
-    status: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type PhoneBorrowAvgAggregateInputType = {
-    id?: true
-    studentId?: true
-  }
-
-  export type PhoneBorrowSumAggregateInputType = {
-    id?: true
-    studentId?: true
-  }
-
-  export type PhoneBorrowMinAggregateInputType = {
-    id?: true
-    studentId?: true
-    phoneModel?: true
-    borrowedAt?: true
-    returnedAt?: true
-    status?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type PhoneBorrowMaxAggregateInputType = {
-    id?: true
-    studentId?: true
-    phoneModel?: true
-    borrowedAt?: true
-    returnedAt?: true
-    status?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type PhoneBorrowCountAggregateInputType = {
-    id?: true
-    studentId?: true
-    phoneModel?: true
-    borrowedAt?: true
-    returnedAt?: true
-    status?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type PhoneBorrowAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which PhoneBorrow to aggregate.
-     */
-    where?: PhoneBorrowWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PhoneBorrows to fetch.
-     */
-    orderBy?: PhoneBorrowOrderByWithRelationInput | PhoneBorrowOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: PhoneBorrowWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PhoneBorrows from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PhoneBorrows.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned PhoneBorrows
-    **/
-    _count?: true | PhoneBorrowCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: PhoneBorrowAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: PhoneBorrowSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: PhoneBorrowMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: PhoneBorrowMaxAggregateInputType
-  }
-
-  export type GetPhoneBorrowAggregateType<T extends PhoneBorrowAggregateArgs> = {
-        [P in keyof T & keyof AggregatePhoneBorrow]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregatePhoneBorrow[P]>
-      : GetScalarType<T[P], AggregatePhoneBorrow[P]>
-  }
-
-
-
-
-  export type PhoneBorrowGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PhoneBorrowWhereInput
-    orderBy?: PhoneBorrowOrderByWithAggregationInput | PhoneBorrowOrderByWithAggregationInput[]
-    by: PhoneBorrowScalarFieldEnum[] | PhoneBorrowScalarFieldEnum
-    having?: PhoneBorrowScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: PhoneBorrowCountAggregateInputType | true
-    _avg?: PhoneBorrowAvgAggregateInputType
-    _sum?: PhoneBorrowSumAggregateInputType
-    _min?: PhoneBorrowMinAggregateInputType
-    _max?: PhoneBorrowMaxAggregateInputType
-  }
-
-  export type PhoneBorrowGroupByOutputType = {
-    id: number
-    studentId: number
-    phoneModel: string
-    borrowedAt: Date
-    returnedAt: Date | null
-    status: $Enums.PhoneBorrowStatus
-    createdAt: Date
-    updatedAt: Date
-    _count: PhoneBorrowCountAggregateOutputType | null
-    _avg: PhoneBorrowAvgAggregateOutputType | null
-    _sum: PhoneBorrowSumAggregateOutputType | null
-    _min: PhoneBorrowMinAggregateOutputType | null
-    _max: PhoneBorrowMaxAggregateOutputType | null
-  }
-
-  type GetPhoneBorrowGroupByPayload<T extends PhoneBorrowGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<PhoneBorrowGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof PhoneBorrowGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], PhoneBorrowGroupByOutputType[P]>
-            : GetScalarType<T[P], PhoneBorrowGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type PhoneBorrowSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    studentId?: boolean
-    phoneModel?: boolean
-    borrowedAt?: boolean
-    returnedAt?: boolean
-    status?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    student?: boolean | StudentDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["phoneBorrow"]>
-
-  export type PhoneBorrowSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    studentId?: boolean
-    phoneModel?: boolean
-    borrowedAt?: boolean
-    returnedAt?: boolean
-    status?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    student?: boolean | StudentDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["phoneBorrow"]>
-
-  export type PhoneBorrowSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    studentId?: boolean
-    phoneModel?: boolean
-    borrowedAt?: boolean
-    returnedAt?: boolean
-    status?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    student?: boolean | StudentDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["phoneBorrow"]>
-
-  export type PhoneBorrowSelectScalar = {
-    id?: boolean
-    studentId?: boolean
-    phoneModel?: boolean
-    borrowedAt?: boolean
-    returnedAt?: boolean
-    status?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type PhoneBorrowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "phoneModel" | "borrowedAt" | "returnedAt" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["phoneBorrow"]>
-  export type PhoneBorrowInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | StudentDefaultArgs<ExtArgs>
-  }
-  export type PhoneBorrowIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | StudentDefaultArgs<ExtArgs>
-  }
-  export type PhoneBorrowIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    student?: boolean | StudentDefaultArgs<ExtArgs>
-  }
-
-  export type $PhoneBorrowPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "PhoneBorrow"
-    objects: {
-      student: Prisma.$StudentPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      studentId: number
-      phoneModel: string
-      borrowedAt: Date
-      returnedAt: Date | null
-      status: $Enums.PhoneBorrowStatus
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["phoneBorrow"]>
-    composites: {}
-  }
-
-  type PhoneBorrowGetPayload<S extends boolean | null | undefined | PhoneBorrowDefaultArgs> = $Result.GetResult<Prisma.$PhoneBorrowPayload, S>
-
-  type PhoneBorrowCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<PhoneBorrowFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: PhoneBorrowCountAggregateInputType | true
-    }
-
-  export interface PhoneBorrowDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PhoneBorrow'], meta: { name: 'PhoneBorrow' } }
-    /**
-     * Find zero or one PhoneBorrow that matches the filter.
-     * @param {PhoneBorrowFindUniqueArgs} args - Arguments to find a PhoneBorrow
-     * @example
-     * // Get one PhoneBorrow
-     * const phoneBorrow = await prisma.phoneBorrow.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends PhoneBorrowFindUniqueArgs>(args: SelectSubset<T, PhoneBorrowFindUniqueArgs<ExtArgs>>): Prisma__PhoneBorrowClient<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one PhoneBorrow that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {PhoneBorrowFindUniqueOrThrowArgs} args - Arguments to find a PhoneBorrow
-     * @example
-     * // Get one PhoneBorrow
-     * const phoneBorrow = await prisma.phoneBorrow.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends PhoneBorrowFindUniqueOrThrowArgs>(args: SelectSubset<T, PhoneBorrowFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PhoneBorrowClient<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first PhoneBorrow that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhoneBorrowFindFirstArgs} args - Arguments to find a PhoneBorrow
-     * @example
-     * // Get one PhoneBorrow
-     * const phoneBorrow = await prisma.phoneBorrow.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends PhoneBorrowFindFirstArgs>(args?: SelectSubset<T, PhoneBorrowFindFirstArgs<ExtArgs>>): Prisma__PhoneBorrowClient<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first PhoneBorrow that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhoneBorrowFindFirstOrThrowArgs} args - Arguments to find a PhoneBorrow
-     * @example
-     * // Get one PhoneBorrow
-     * const phoneBorrow = await prisma.phoneBorrow.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends PhoneBorrowFindFirstOrThrowArgs>(args?: SelectSubset<T, PhoneBorrowFindFirstOrThrowArgs<ExtArgs>>): Prisma__PhoneBorrowClient<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more PhoneBorrows that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhoneBorrowFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all PhoneBorrows
-     * const phoneBorrows = await prisma.phoneBorrow.findMany()
-     * 
-     * // Get first 10 PhoneBorrows
-     * const phoneBorrows = await prisma.phoneBorrow.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const phoneBorrowWithIdOnly = await prisma.phoneBorrow.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends PhoneBorrowFindManyArgs>(args?: SelectSubset<T, PhoneBorrowFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a PhoneBorrow.
-     * @param {PhoneBorrowCreateArgs} args - Arguments to create a PhoneBorrow.
-     * @example
-     * // Create one PhoneBorrow
-     * const PhoneBorrow = await prisma.phoneBorrow.create({
-     *   data: {
-     *     // ... data to create a PhoneBorrow
-     *   }
-     * })
-     * 
-     */
-    create<T extends PhoneBorrowCreateArgs>(args: SelectSubset<T, PhoneBorrowCreateArgs<ExtArgs>>): Prisma__PhoneBorrowClient<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many PhoneBorrows.
-     * @param {PhoneBorrowCreateManyArgs} args - Arguments to create many PhoneBorrows.
-     * @example
-     * // Create many PhoneBorrows
-     * const phoneBorrow = await prisma.phoneBorrow.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends PhoneBorrowCreateManyArgs>(args?: SelectSubset<T, PhoneBorrowCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many PhoneBorrows and returns the data saved in the database.
-     * @param {PhoneBorrowCreateManyAndReturnArgs} args - Arguments to create many PhoneBorrows.
-     * @example
-     * // Create many PhoneBorrows
-     * const phoneBorrow = await prisma.phoneBorrow.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many PhoneBorrows and only return the `id`
-     * const phoneBorrowWithIdOnly = await prisma.phoneBorrow.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends PhoneBorrowCreateManyAndReturnArgs>(args?: SelectSubset<T, PhoneBorrowCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a PhoneBorrow.
-     * @param {PhoneBorrowDeleteArgs} args - Arguments to delete one PhoneBorrow.
-     * @example
-     * // Delete one PhoneBorrow
-     * const PhoneBorrow = await prisma.phoneBorrow.delete({
-     *   where: {
-     *     // ... filter to delete one PhoneBorrow
-     *   }
-     * })
-     * 
-     */
-    delete<T extends PhoneBorrowDeleteArgs>(args: SelectSubset<T, PhoneBorrowDeleteArgs<ExtArgs>>): Prisma__PhoneBorrowClient<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one PhoneBorrow.
-     * @param {PhoneBorrowUpdateArgs} args - Arguments to update one PhoneBorrow.
-     * @example
-     * // Update one PhoneBorrow
-     * const phoneBorrow = await prisma.phoneBorrow.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends PhoneBorrowUpdateArgs>(args: SelectSubset<T, PhoneBorrowUpdateArgs<ExtArgs>>): Prisma__PhoneBorrowClient<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more PhoneBorrows.
-     * @param {PhoneBorrowDeleteManyArgs} args - Arguments to filter PhoneBorrows to delete.
-     * @example
-     * // Delete a few PhoneBorrows
-     * const { count } = await prisma.phoneBorrow.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends PhoneBorrowDeleteManyArgs>(args?: SelectSubset<T, PhoneBorrowDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more PhoneBorrows.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhoneBorrowUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many PhoneBorrows
-     * const phoneBorrow = await prisma.phoneBorrow.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends PhoneBorrowUpdateManyArgs>(args: SelectSubset<T, PhoneBorrowUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more PhoneBorrows and returns the data updated in the database.
-     * @param {PhoneBorrowUpdateManyAndReturnArgs} args - Arguments to update many PhoneBorrows.
-     * @example
-     * // Update many PhoneBorrows
-     * const phoneBorrow = await prisma.phoneBorrow.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more PhoneBorrows and only return the `id`
-     * const phoneBorrowWithIdOnly = await prisma.phoneBorrow.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends PhoneBorrowUpdateManyAndReturnArgs>(args: SelectSubset<T, PhoneBorrowUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one PhoneBorrow.
-     * @param {PhoneBorrowUpsertArgs} args - Arguments to update or create a PhoneBorrow.
-     * @example
-     * // Update or create a PhoneBorrow
-     * const phoneBorrow = await prisma.phoneBorrow.upsert({
-     *   create: {
-     *     // ... data to create a PhoneBorrow
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the PhoneBorrow we want to update
-     *   }
-     * })
-     */
-    upsert<T extends PhoneBorrowUpsertArgs>(args: SelectSubset<T, PhoneBorrowUpsertArgs<ExtArgs>>): Prisma__PhoneBorrowClient<$Result.GetResult<Prisma.$PhoneBorrowPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of PhoneBorrows.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhoneBorrowCountArgs} args - Arguments to filter PhoneBorrows to count.
-     * @example
-     * // Count the number of PhoneBorrows
-     * const count = await prisma.phoneBorrow.count({
-     *   where: {
-     *     // ... the filter for the PhoneBorrows we want to count
-     *   }
-     * })
-    **/
-    count<T extends PhoneBorrowCountArgs>(
-      args?: Subset<T, PhoneBorrowCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], PhoneBorrowCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a PhoneBorrow.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhoneBorrowAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends PhoneBorrowAggregateArgs>(args: Subset<T, PhoneBorrowAggregateArgs>): Prisma.PrismaPromise<GetPhoneBorrowAggregateType<T>>
-
-    /**
-     * Group by PhoneBorrow.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {PhoneBorrowGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends PhoneBorrowGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: PhoneBorrowGroupByArgs['orderBy'] }
-        : { orderBy?: PhoneBorrowGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, PhoneBorrowGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPhoneBorrowGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the PhoneBorrow model
-   */
-  readonly fields: PhoneBorrowFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for PhoneBorrow.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__PhoneBorrowClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the PhoneBorrow model
-   */
-  interface PhoneBorrowFieldRefs {
-    readonly id: FieldRef<"PhoneBorrow", 'Int'>
-    readonly studentId: FieldRef<"PhoneBorrow", 'Int'>
-    readonly phoneModel: FieldRef<"PhoneBorrow", 'String'>
-    readonly borrowedAt: FieldRef<"PhoneBorrow", 'DateTime'>
-    readonly returnedAt: FieldRef<"PhoneBorrow", 'DateTime'>
-    readonly status: FieldRef<"PhoneBorrow", 'PhoneBorrowStatus'>
-    readonly createdAt: FieldRef<"PhoneBorrow", 'DateTime'>
-    readonly updatedAt: FieldRef<"PhoneBorrow", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * PhoneBorrow findUnique
-   */
-  export type PhoneBorrowFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-    /**
-     * Filter, which PhoneBorrow to fetch.
-     */
-    where: PhoneBorrowWhereUniqueInput
-  }
-
-  /**
-   * PhoneBorrow findUniqueOrThrow
-   */
-  export type PhoneBorrowFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-    /**
-     * Filter, which PhoneBorrow to fetch.
-     */
-    where: PhoneBorrowWhereUniqueInput
-  }
-
-  /**
-   * PhoneBorrow findFirst
-   */
-  export type PhoneBorrowFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-    /**
-     * Filter, which PhoneBorrow to fetch.
-     */
-    where?: PhoneBorrowWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PhoneBorrows to fetch.
-     */
-    orderBy?: PhoneBorrowOrderByWithRelationInput | PhoneBorrowOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for PhoneBorrows.
-     */
-    cursor?: PhoneBorrowWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PhoneBorrows from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PhoneBorrows.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PhoneBorrows.
-     */
-    distinct?: PhoneBorrowScalarFieldEnum | PhoneBorrowScalarFieldEnum[]
-  }
-
-  /**
-   * PhoneBorrow findFirstOrThrow
-   */
-  export type PhoneBorrowFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-    /**
-     * Filter, which PhoneBorrow to fetch.
-     */
-    where?: PhoneBorrowWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PhoneBorrows to fetch.
-     */
-    orderBy?: PhoneBorrowOrderByWithRelationInput | PhoneBorrowOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for PhoneBorrows.
-     */
-    cursor?: PhoneBorrowWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PhoneBorrows from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PhoneBorrows.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PhoneBorrows.
-     */
-    distinct?: PhoneBorrowScalarFieldEnum | PhoneBorrowScalarFieldEnum[]
-  }
-
-  /**
-   * PhoneBorrow findMany
-   */
-  export type PhoneBorrowFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-    /**
-     * Filter, which PhoneBorrows to fetch.
-     */
-    where?: PhoneBorrowWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of PhoneBorrows to fetch.
-     */
-    orderBy?: PhoneBorrowOrderByWithRelationInput | PhoneBorrowOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing PhoneBorrows.
-     */
-    cursor?: PhoneBorrowWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` PhoneBorrows from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` PhoneBorrows.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of PhoneBorrows.
-     */
-    distinct?: PhoneBorrowScalarFieldEnum | PhoneBorrowScalarFieldEnum[]
-  }
-
-  /**
-   * PhoneBorrow create
-   */
-  export type PhoneBorrowCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-    /**
-     * The data needed to create a PhoneBorrow.
-     */
-    data: XOR<PhoneBorrowCreateInput, PhoneBorrowUncheckedCreateInput>
-  }
-
-  /**
-   * PhoneBorrow createMany
-   */
-  export type PhoneBorrowCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many PhoneBorrows.
-     */
-    data: PhoneBorrowCreateManyInput | PhoneBorrowCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * PhoneBorrow createManyAndReturn
-   */
-  export type PhoneBorrowCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * The data used to create many PhoneBorrows.
-     */
-    data: PhoneBorrowCreateManyInput | PhoneBorrowCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * PhoneBorrow update
-   */
-  export type PhoneBorrowUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-    /**
-     * The data needed to update a PhoneBorrow.
-     */
-    data: XOR<PhoneBorrowUpdateInput, PhoneBorrowUncheckedUpdateInput>
-    /**
-     * Choose, which PhoneBorrow to update.
-     */
-    where: PhoneBorrowWhereUniqueInput
-  }
-
-  /**
-   * PhoneBorrow updateMany
-   */
-  export type PhoneBorrowUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update PhoneBorrows.
-     */
-    data: XOR<PhoneBorrowUpdateManyMutationInput, PhoneBorrowUncheckedUpdateManyInput>
-    /**
-     * Filter which PhoneBorrows to update
-     */
-    where?: PhoneBorrowWhereInput
-    /**
-     * Limit how many PhoneBorrows to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * PhoneBorrow updateManyAndReturn
-   */
-  export type PhoneBorrowUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * The data used to update PhoneBorrows.
-     */
-    data: XOR<PhoneBorrowUpdateManyMutationInput, PhoneBorrowUncheckedUpdateManyInput>
-    /**
-     * Filter which PhoneBorrows to update
-     */
-    where?: PhoneBorrowWhereInput
-    /**
-     * Limit how many PhoneBorrows to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * PhoneBorrow upsert
-   */
-  export type PhoneBorrowUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-    /**
-     * The filter to search for the PhoneBorrow to update in case it exists.
-     */
-    where: PhoneBorrowWhereUniqueInput
-    /**
-     * In case the PhoneBorrow found by the `where` argument doesn't exist, create a new PhoneBorrow with this data.
-     */
-    create: XOR<PhoneBorrowCreateInput, PhoneBorrowUncheckedCreateInput>
-    /**
-     * In case the PhoneBorrow was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<PhoneBorrowUpdateInput, PhoneBorrowUncheckedUpdateInput>
-  }
-
-  /**
-   * PhoneBorrow delete
-   */
-  export type PhoneBorrowDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-    /**
-     * Filter which PhoneBorrow to delete.
-     */
-    where: PhoneBorrowWhereUniqueInput
-  }
-
-  /**
-   * PhoneBorrow deleteMany
-   */
-  export type PhoneBorrowDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which PhoneBorrows to delete
-     */
-    where?: PhoneBorrowWhereInput
-    /**
-     * Limit how many PhoneBorrows to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * PhoneBorrow without action
-   */
-  export type PhoneBorrowDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PhoneBorrow
-     */
-    select?: PhoneBorrowSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PhoneBorrow
-     */
-    omit?: PhoneBorrowOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PhoneBorrowInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model TermSession
-   */
-
-  export type AggregateTermSession = {
-    _count: TermSessionCountAggregateOutputType | null
-    _avg: TermSessionAvgAggregateOutputType | null
-    _sum: TermSessionSumAggregateOutputType | null
-    _min: TermSessionMinAggregateOutputType | null
-    _max: TermSessionMaxAggregateOutputType | null
-  }
-
-  export type TermSessionAvgAggregateOutputType = {
-    id: number | null
-    year: number | null
-  }
-
-  export type TermSessionSumAggregateOutputType = {
-    id: number | null
-    year: number | null
-  }
-
-  export type TermSessionMinAggregateOutputType = {
+  export type AcademicTermMinAggregateOutputType = {
     id: number | null
     name: string | null
-    year: number | null
     startDate: Date | null
     endDate: Date | null
-    openingDate: Date | null
     isActive: boolean | null
-    status: $Enums.TermStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type TermSessionMaxAggregateOutputType = {
+  export type AcademicTermMaxAggregateOutputType = {
     id: number | null
     name: string | null
-    year: number | null
     startDate: Date | null
     endDate: Date | null
-    openingDate: Date | null
     isActive: boolean | null
-    status: $Enums.TermStatus | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type TermSessionCountAggregateOutputType = {
+  export type AcademicTermCountAggregateOutputType = {
     id: number
     name: number
-    year: number
     startDate: number
     endDate: number
-    openingDate: number
     isActive: number
-    status: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type TermSessionAvgAggregateInputType = {
+  export type AcademicTermAvgAggregateInputType = {
     id?: true
-    year?: true
   }
 
-  export type TermSessionSumAggregateInputType = {
+  export type AcademicTermSumAggregateInputType = {
     id?: true
-    year?: true
   }
 
-  export type TermSessionMinAggregateInputType = {
+  export type AcademicTermMinAggregateInputType = {
     id?: true
     name?: true
-    year?: true
     startDate?: true
     endDate?: true
-    openingDate?: true
     isActive?: true
-    status?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type TermSessionMaxAggregateInputType = {
+  export type AcademicTermMaxAggregateInputType = {
     id?: true
     name?: true
-    year?: true
     startDate?: true
     endDate?: true
-    openingDate?: true
     isActive?: true
-    status?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type TermSessionCountAggregateInputType = {
+  export type AcademicTermCountAggregateInputType = {
     id?: true
     name?: true
-    year?: true
     startDate?: true
     endDate?: true
-    openingDate?: true
     isActive?: true
-    status?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type TermSessionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which TermSession to aggregate.
+     * Filter which AcademicTerm to aggregate.
      */
-    where?: TermSessionWhereInput
+    where?: AcademicTermWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TermSessions to fetch.
+     * Determine the order of AcademicTerms to fetch.
      */
-    orderBy?: TermSessionOrderByWithRelationInput | TermSessionOrderByWithRelationInput[]
+    orderBy?: AcademicTermOrderByWithRelationInput | AcademicTermOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: TermSessionWhereUniqueInput
+    cursor?: AcademicTermWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TermSessions from the position of the cursor.
+     * Take `±n` AcademicTerms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TermSessions.
+     * Skip the first `n` AcademicTerms.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned TermSessions
+     * Count returned AcademicTerms
     **/
-    _count?: true | TermSessionCountAggregateInputType
+    _count?: true | AcademicTermCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: TermSessionAvgAggregateInputType
+    _avg?: AcademicTermAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: TermSessionSumAggregateInputType
+    _sum?: AcademicTermSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: TermSessionMinAggregateInputType
+    _min?: AcademicTermMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: TermSessionMaxAggregateInputType
+    _max?: AcademicTermMaxAggregateInputType
   }
 
-  export type GetTermSessionAggregateType<T extends TermSessionAggregateArgs> = {
-        [P in keyof T & keyof AggregateTermSession]: P extends '_count' | 'count'
+  export type GetAcademicTermAggregateType<T extends AcademicTermAggregateArgs> = {
+        [P in keyof T & keyof AggregateAcademicTerm]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateTermSession[P]>
-      : GetScalarType<T[P], AggregateTermSession[P]>
+        : GetScalarType<T[P], AggregateAcademicTerm[P]>
+      : GetScalarType<T[P], AggregateAcademicTerm[P]>
   }
 
 
 
 
-  export type TermSessionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TermSessionWhereInput
-    orderBy?: TermSessionOrderByWithAggregationInput | TermSessionOrderByWithAggregationInput[]
-    by: TermSessionScalarFieldEnum[] | TermSessionScalarFieldEnum
-    having?: TermSessionScalarWhereWithAggregatesInput
+  export type AcademicTermGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AcademicTermWhereInput
+    orderBy?: AcademicTermOrderByWithAggregationInput | AcademicTermOrderByWithAggregationInput[]
+    by: AcademicTermScalarFieldEnum[] | AcademicTermScalarFieldEnum
+    having?: AcademicTermScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: TermSessionCountAggregateInputType | true
-    _avg?: TermSessionAvgAggregateInputType
-    _sum?: TermSessionSumAggregateInputType
-    _min?: TermSessionMinAggregateInputType
-    _max?: TermSessionMaxAggregateInputType
+    _count?: AcademicTermCountAggregateInputType | true
+    _avg?: AcademicTermAvgAggregateInputType
+    _sum?: AcademicTermSumAggregateInputType
+    _min?: AcademicTermMinAggregateInputType
+    _max?: AcademicTermMaxAggregateInputType
   }
 
-  export type TermSessionGroupByOutputType = {
+  export type AcademicTermGroupByOutputType = {
     id: number
     name: string
-    year: number
     startDate: Date
-    endDate: Date
-    openingDate: Date
+    endDate: Date | null
     isActive: boolean
-    status: $Enums.TermStatus
     createdAt: Date
     updatedAt: Date
-    _count: TermSessionCountAggregateOutputType | null
-    _avg: TermSessionAvgAggregateOutputType | null
-    _sum: TermSessionSumAggregateOutputType | null
-    _min: TermSessionMinAggregateOutputType | null
-    _max: TermSessionMaxAggregateOutputType | null
+    _count: AcademicTermCountAggregateOutputType | null
+    _avg: AcademicTermAvgAggregateOutputType | null
+    _sum: AcademicTermSumAggregateOutputType | null
+    _min: AcademicTermMinAggregateOutputType | null
+    _max: AcademicTermMaxAggregateOutputType | null
   }
 
-  type GetTermSessionGroupByPayload<T extends TermSessionGroupByArgs> = Prisma.PrismaPromise<
+  type GetAcademicTermGroupByPayload<T extends AcademicTermGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<TermSessionGroupByOutputType, T['by']> &
+      PickEnumerable<AcademicTermGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof TermSessionGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof AcademicTermGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], TermSessionGroupByOutputType[P]>
-            : GetScalarType<T[P], TermSessionGroupByOutputType[P]>
+              : GetScalarType<T[P], AcademicTermGroupByOutputType[P]>
+            : GetScalarType<T[P], AcademicTermGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type TermSessionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AcademicTermSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    year?: boolean
     startDate?: boolean
     endDate?: boolean
-    openingDate?: boolean
     isActive?: boolean
-    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    attendances?: boolean | TermSession$attendancesArgs<ExtArgs>
-    _count?: boolean | TermSessionCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["termSession"]>
+    attendanceRecords?: boolean | AcademicTerm$attendanceRecordsArgs<ExtArgs>
+    _count?: boolean | AcademicTermCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["academicTerm"]>
 
-  export type TermSessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AcademicTermSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    year?: boolean
     startDate?: boolean
     endDate?: boolean
-    openingDate?: boolean
     isActive?: boolean
-    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-  }, ExtArgs["result"]["termSession"]>
+  }, ExtArgs["result"]["academicTerm"]>
 
-  export type TermSessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AcademicTermSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    year?: boolean
     startDate?: boolean
     endDate?: boolean
-    openingDate?: boolean
     isActive?: boolean
-    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-  }, ExtArgs["result"]["termSession"]>
+  }, ExtArgs["result"]["academicTerm"]>
 
-  export type TermSessionSelectScalar = {
+  export type AcademicTermSelectScalar = {
     id?: boolean
     name?: boolean
-    year?: boolean
     startDate?: boolean
     endDate?: boolean
-    openingDate?: boolean
     isActive?: boolean
-    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TermSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "year" | "startDate" | "endDate" | "openingDate" | "isActive" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["termSession"]>
-  export type TermSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    attendances?: boolean | TermSession$attendancesArgs<ExtArgs>
-    _count?: boolean | TermSessionCountOutputTypeDefaultArgs<ExtArgs>
+  export type AcademicTermOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "startDate" | "endDate" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["academicTerm"]>
+  export type AcademicTermInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    attendanceRecords?: boolean | AcademicTerm$attendanceRecordsArgs<ExtArgs>
+    _count?: boolean | AcademicTermCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type TermSessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type TermSessionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AcademicTermIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AcademicTermIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $TermSessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "TermSession"
+  export type $AcademicTermPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AcademicTerm"
     objects: {
-      attendances: Prisma.$TermAttendancePayload<ExtArgs>[]
+      attendanceRecords: Prisma.$AttendanceRecordPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
-      year: number
       startDate: Date
-      endDate: Date
-      openingDate: Date
+      endDate: Date | null
       isActive: boolean
-      status: $Enums.TermStatus
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["termSession"]>
+    }, ExtArgs["result"]["academicTerm"]>
     composites: {}
   }
 
-  type TermSessionGetPayload<S extends boolean | null | undefined | TermSessionDefaultArgs> = $Result.GetResult<Prisma.$TermSessionPayload, S>
+  type AcademicTermGetPayload<S extends boolean | null | undefined | AcademicTermDefaultArgs> = $Result.GetResult<Prisma.$AcademicTermPayload, S>
 
-  type TermSessionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TermSessionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TermSessionCountAggregateInputType | true
+  type AcademicTermCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AcademicTermFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AcademicTermCountAggregateInputType | true
     }
 
-  export interface TermSessionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TermSession'], meta: { name: 'TermSession' } }
+  export interface AcademicTermDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AcademicTerm'], meta: { name: 'AcademicTerm' } }
     /**
-     * Find zero or one TermSession that matches the filter.
-     * @param {TermSessionFindUniqueArgs} args - Arguments to find a TermSession
+     * Find zero or one AcademicTerm that matches the filter.
+     * @param {AcademicTermFindUniqueArgs} args - Arguments to find a AcademicTerm
      * @example
-     * // Get one TermSession
-     * const termSession = await prisma.termSession.findUnique({
+     * // Get one AcademicTerm
+     * const academicTerm = await prisma.academicTerm.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends TermSessionFindUniqueArgs>(args: SelectSubset<T, TermSessionFindUniqueArgs<ExtArgs>>): Prisma__TermSessionClient<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends AcademicTermFindUniqueArgs>(args: SelectSubset<T, AcademicTermFindUniqueArgs<ExtArgs>>): Prisma__AcademicTermClient<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one TermSession that matches the filter or throw an error with `error.code='P2025'`
+     * Find one AcademicTerm that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {TermSessionFindUniqueOrThrowArgs} args - Arguments to find a TermSession
+     * @param {AcademicTermFindUniqueOrThrowArgs} args - Arguments to find a AcademicTerm
      * @example
-     * // Get one TermSession
-     * const termSession = await prisma.termSession.findUniqueOrThrow({
+     * // Get one AcademicTerm
+     * const academicTerm = await prisma.academicTerm.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends TermSessionFindUniqueOrThrowArgs>(args: SelectSubset<T, TermSessionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TermSessionClient<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends AcademicTermFindUniqueOrThrowArgs>(args: SelectSubset<T, AcademicTermFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AcademicTermClient<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first TermSession that matches the filter.
+     * Find the first AcademicTerm that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermSessionFindFirstArgs} args - Arguments to find a TermSession
+     * @param {AcademicTermFindFirstArgs} args - Arguments to find a AcademicTerm
      * @example
-     * // Get one TermSession
-     * const termSession = await prisma.termSession.findFirst({
+     * // Get one AcademicTerm
+     * const academicTerm = await prisma.academicTerm.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends TermSessionFindFirstArgs>(args?: SelectSubset<T, TermSessionFindFirstArgs<ExtArgs>>): Prisma__TermSessionClient<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends AcademicTermFindFirstArgs>(args?: SelectSubset<T, AcademicTermFindFirstArgs<ExtArgs>>): Prisma__AcademicTermClient<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first TermSession that matches the filter or
+     * Find the first AcademicTerm that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermSessionFindFirstOrThrowArgs} args - Arguments to find a TermSession
+     * @param {AcademicTermFindFirstOrThrowArgs} args - Arguments to find a AcademicTerm
      * @example
-     * // Get one TermSession
-     * const termSession = await prisma.termSession.findFirstOrThrow({
+     * // Get one AcademicTerm
+     * const academicTerm = await prisma.academicTerm.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends TermSessionFindFirstOrThrowArgs>(args?: SelectSubset<T, TermSessionFindFirstOrThrowArgs<ExtArgs>>): Prisma__TermSessionClient<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends AcademicTermFindFirstOrThrowArgs>(args?: SelectSubset<T, AcademicTermFindFirstOrThrowArgs<ExtArgs>>): Prisma__AcademicTermClient<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more TermSessions that matches the filter.
+     * Find zero or more AcademicTerms that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermSessionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {AcademicTermFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all TermSessions
-     * const termSessions = await prisma.termSession.findMany()
+     * // Get all AcademicTerms
+     * const academicTerms = await prisma.academicTerm.findMany()
      * 
-     * // Get first 10 TermSessions
-     * const termSessions = await prisma.termSession.findMany({ take: 10 })
+     * // Get first 10 AcademicTerms
+     * const academicTerms = await prisma.academicTerm.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const termSessionWithIdOnly = await prisma.termSession.findMany({ select: { id: true } })
+     * const academicTermWithIdOnly = await prisma.academicTerm.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends TermSessionFindManyArgs>(args?: SelectSubset<T, TermSessionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends AcademicTermFindManyArgs>(args?: SelectSubset<T, AcademicTermFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a TermSession.
-     * @param {TermSessionCreateArgs} args - Arguments to create a TermSession.
+     * Create a AcademicTerm.
+     * @param {AcademicTermCreateArgs} args - Arguments to create a AcademicTerm.
      * @example
-     * // Create one TermSession
-     * const TermSession = await prisma.termSession.create({
+     * // Create one AcademicTerm
+     * const AcademicTerm = await prisma.academicTerm.create({
      *   data: {
-     *     // ... data to create a TermSession
+     *     // ... data to create a AcademicTerm
      *   }
      * })
      * 
      */
-    create<T extends TermSessionCreateArgs>(args: SelectSubset<T, TermSessionCreateArgs<ExtArgs>>): Prisma__TermSessionClient<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends AcademicTermCreateArgs>(args: SelectSubset<T, AcademicTermCreateArgs<ExtArgs>>): Prisma__AcademicTermClient<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many TermSessions.
-     * @param {TermSessionCreateManyArgs} args - Arguments to create many TermSessions.
+     * Create many AcademicTerms.
+     * @param {AcademicTermCreateManyArgs} args - Arguments to create many AcademicTerms.
      * @example
-     * // Create many TermSessions
-     * const termSession = await prisma.termSession.createMany({
+     * // Create many AcademicTerms
+     * const academicTerm = await prisma.academicTerm.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends TermSessionCreateManyArgs>(args?: SelectSubset<T, TermSessionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends AcademicTermCreateManyArgs>(args?: SelectSubset<T, AcademicTermCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many TermSessions and returns the data saved in the database.
-     * @param {TermSessionCreateManyAndReturnArgs} args - Arguments to create many TermSessions.
+     * Create many AcademicTerms and returns the data saved in the database.
+     * @param {AcademicTermCreateManyAndReturnArgs} args - Arguments to create many AcademicTerms.
      * @example
-     * // Create many TermSessions
-     * const termSession = await prisma.termSession.createManyAndReturn({
+     * // Create many AcademicTerms
+     * const academicTerm = await prisma.academicTerm.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many TermSessions and only return the `id`
-     * const termSessionWithIdOnly = await prisma.termSession.createManyAndReturn({
+     * // Create many AcademicTerms and only return the `id`
+     * const academicTermWithIdOnly = await prisma.academicTerm.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -9133,28 +7916,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends TermSessionCreateManyAndReturnArgs>(args?: SelectSubset<T, TermSessionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends AcademicTermCreateManyAndReturnArgs>(args?: SelectSubset<T, AcademicTermCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a TermSession.
-     * @param {TermSessionDeleteArgs} args - Arguments to delete one TermSession.
+     * Delete a AcademicTerm.
+     * @param {AcademicTermDeleteArgs} args - Arguments to delete one AcademicTerm.
      * @example
-     * // Delete one TermSession
-     * const TermSession = await prisma.termSession.delete({
+     * // Delete one AcademicTerm
+     * const AcademicTerm = await prisma.academicTerm.delete({
      *   where: {
-     *     // ... filter to delete one TermSession
+     *     // ... filter to delete one AcademicTerm
      *   }
      * })
      * 
      */
-    delete<T extends TermSessionDeleteArgs>(args: SelectSubset<T, TermSessionDeleteArgs<ExtArgs>>): Prisma__TermSessionClient<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends AcademicTermDeleteArgs>(args: SelectSubset<T, AcademicTermDeleteArgs<ExtArgs>>): Prisma__AcademicTermClient<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one TermSession.
-     * @param {TermSessionUpdateArgs} args - Arguments to update one TermSession.
+     * Update one AcademicTerm.
+     * @param {AcademicTermUpdateArgs} args - Arguments to update one AcademicTerm.
      * @example
-     * // Update one TermSession
-     * const termSession = await prisma.termSession.update({
+     * // Update one AcademicTerm
+     * const academicTerm = await prisma.academicTerm.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -9164,30 +7947,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends TermSessionUpdateArgs>(args: SelectSubset<T, TermSessionUpdateArgs<ExtArgs>>): Prisma__TermSessionClient<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends AcademicTermUpdateArgs>(args: SelectSubset<T, AcademicTermUpdateArgs<ExtArgs>>): Prisma__AcademicTermClient<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more TermSessions.
-     * @param {TermSessionDeleteManyArgs} args - Arguments to filter TermSessions to delete.
+     * Delete zero or more AcademicTerms.
+     * @param {AcademicTermDeleteManyArgs} args - Arguments to filter AcademicTerms to delete.
      * @example
-     * // Delete a few TermSessions
-     * const { count } = await prisma.termSession.deleteMany({
+     * // Delete a few AcademicTerms
+     * const { count } = await prisma.academicTerm.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends TermSessionDeleteManyArgs>(args?: SelectSubset<T, TermSessionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends AcademicTermDeleteManyArgs>(args?: SelectSubset<T, AcademicTermDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TermSessions.
+     * Update zero or more AcademicTerms.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermSessionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {AcademicTermUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many TermSessions
-     * const termSession = await prisma.termSession.updateMany({
+     * // Update many AcademicTerms
+     * const academicTerm = await prisma.academicTerm.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -9197,14 +7980,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends TermSessionUpdateManyArgs>(args: SelectSubset<T, TermSessionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends AcademicTermUpdateManyArgs>(args: SelectSubset<T, AcademicTermUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TermSessions and returns the data updated in the database.
-     * @param {TermSessionUpdateManyAndReturnArgs} args - Arguments to update many TermSessions.
+     * Update zero or more AcademicTerms and returns the data updated in the database.
+     * @param {AcademicTermUpdateManyAndReturnArgs} args - Arguments to update many AcademicTerms.
      * @example
-     * // Update many TermSessions
-     * const termSession = await prisma.termSession.updateManyAndReturn({
+     * // Update many AcademicTerms
+     * const academicTerm = await prisma.academicTerm.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -9213,8 +7996,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more TermSessions and only return the `id`
-     * const termSessionWithIdOnly = await prisma.termSession.updateManyAndReturn({
+     * // Update zero or more AcademicTerms and only return the `id`
+     * const academicTermWithIdOnly = await prisma.academicTerm.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -9227,56 +8010,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends TermSessionUpdateManyAndReturnArgs>(args: SelectSubset<T, TermSessionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends AcademicTermUpdateManyAndReturnArgs>(args: SelectSubset<T, AcademicTermUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one TermSession.
-     * @param {TermSessionUpsertArgs} args - Arguments to update or create a TermSession.
+     * Create or update one AcademicTerm.
+     * @param {AcademicTermUpsertArgs} args - Arguments to update or create a AcademicTerm.
      * @example
-     * // Update or create a TermSession
-     * const termSession = await prisma.termSession.upsert({
+     * // Update or create a AcademicTerm
+     * const academicTerm = await prisma.academicTerm.upsert({
      *   create: {
-     *     // ... data to create a TermSession
+     *     // ... data to create a AcademicTerm
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the TermSession we want to update
+     *     // ... the filter for the AcademicTerm we want to update
      *   }
      * })
      */
-    upsert<T extends TermSessionUpsertArgs>(args: SelectSubset<T, TermSessionUpsertArgs<ExtArgs>>): Prisma__TermSessionClient<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends AcademicTermUpsertArgs>(args: SelectSubset<T, AcademicTermUpsertArgs<ExtArgs>>): Prisma__AcademicTermClient<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of TermSessions.
+     * Count the number of AcademicTerms.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermSessionCountArgs} args - Arguments to filter TermSessions to count.
+     * @param {AcademicTermCountArgs} args - Arguments to filter AcademicTerms to count.
      * @example
-     * // Count the number of TermSessions
-     * const count = await prisma.termSession.count({
+     * // Count the number of AcademicTerms
+     * const count = await prisma.academicTerm.count({
      *   where: {
-     *     // ... the filter for the TermSessions we want to count
+     *     // ... the filter for the AcademicTerms we want to count
      *   }
      * })
     **/
-    count<T extends TermSessionCountArgs>(
-      args?: Subset<T, TermSessionCountArgs>,
+    count<T extends AcademicTermCountArgs>(
+      args?: Subset<T, AcademicTermCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TermSessionCountAggregateOutputType>
+          : GetScalarType<T['select'], AcademicTermCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a TermSession.
+     * Allows you to perform aggregations operations on a AcademicTerm.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermSessionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {AcademicTermAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -9296,13 +8079,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TermSessionAggregateArgs>(args: Subset<T, TermSessionAggregateArgs>): Prisma.PrismaPromise<GetTermSessionAggregateType<T>>
+    aggregate<T extends AcademicTermAggregateArgs>(args: Subset<T, AcademicTermAggregateArgs>): Prisma.PrismaPromise<GetAcademicTermAggregateType<T>>
 
     /**
-     * Group by TermSession.
+     * Group by AcademicTerm.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermSessionGroupByArgs} args - Group by arguments.
+     * @param {AcademicTermGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -9317,14 +8100,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends TermSessionGroupByArgs,
+      T extends AcademicTermGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TermSessionGroupByArgs['orderBy'] }
-        : { orderBy?: TermSessionGroupByArgs['orderBy'] },
+        ? { orderBy: AcademicTermGroupByArgs['orderBy'] }
+        : { orderBy?: AcademicTermGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -9373,22 +8156,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, TermSessionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTermSessionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, AcademicTermGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAcademicTermGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the TermSession model
+   * Fields of the AcademicTerm model
    */
-  readonly fields: TermSessionFieldRefs;
+  readonly fields: AcademicTermFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for TermSession.
+   * The delegate class that acts as a "Promise-like" for AcademicTerm.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__TermSessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__AcademicTermClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    attendances<T extends TermSession$attendancesArgs<ExtArgs> = {}>(args?: Subset<T, TermSession$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    attendanceRecords<T extends AcademicTerm$attendanceRecordsArgs<ExtArgs> = {}>(args?: Subset<T, AcademicTerm$attendanceRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9415,895 +8198,897 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the TermSession model
+   * Fields of the AcademicTerm model
    */
-  interface TermSessionFieldRefs {
-    readonly id: FieldRef<"TermSession", 'Int'>
-    readonly name: FieldRef<"TermSession", 'String'>
-    readonly year: FieldRef<"TermSession", 'Int'>
-    readonly startDate: FieldRef<"TermSession", 'DateTime'>
-    readonly endDate: FieldRef<"TermSession", 'DateTime'>
-    readonly openingDate: FieldRef<"TermSession", 'DateTime'>
-    readonly isActive: FieldRef<"TermSession", 'Boolean'>
-    readonly status: FieldRef<"TermSession", 'TermStatus'>
-    readonly createdAt: FieldRef<"TermSession", 'DateTime'>
-    readonly updatedAt: FieldRef<"TermSession", 'DateTime'>
+  interface AcademicTermFieldRefs {
+    readonly id: FieldRef<"AcademicTerm", 'Int'>
+    readonly name: FieldRef<"AcademicTerm", 'String'>
+    readonly startDate: FieldRef<"AcademicTerm", 'DateTime'>
+    readonly endDate: FieldRef<"AcademicTerm", 'DateTime'>
+    readonly isActive: FieldRef<"AcademicTerm", 'Boolean'>
+    readonly createdAt: FieldRef<"AcademicTerm", 'DateTime'>
+    readonly updatedAt: FieldRef<"AcademicTerm", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * TermSession findUnique
+   * AcademicTerm findUnique
    */
-  export type TermSessionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelect<ExtArgs> | null
+    select?: AcademicTermSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermSessionInclude<ExtArgs> | null
+    include?: AcademicTermInclude<ExtArgs> | null
     /**
-     * Filter, which TermSession to fetch.
+     * Filter, which AcademicTerm to fetch.
      */
-    where: TermSessionWhereUniqueInput
+    where: AcademicTermWhereUniqueInput
   }
 
   /**
-   * TermSession findUniqueOrThrow
+   * AcademicTerm findUniqueOrThrow
    */
-  export type TermSessionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelect<ExtArgs> | null
+    select?: AcademicTermSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermSessionInclude<ExtArgs> | null
+    include?: AcademicTermInclude<ExtArgs> | null
     /**
-     * Filter, which TermSession to fetch.
+     * Filter, which AcademicTerm to fetch.
      */
-    where: TermSessionWhereUniqueInput
+    where: AcademicTermWhereUniqueInput
   }
 
   /**
-   * TermSession findFirst
+   * AcademicTerm findFirst
    */
-  export type TermSessionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelect<ExtArgs> | null
+    select?: AcademicTermSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermSessionInclude<ExtArgs> | null
+    include?: AcademicTermInclude<ExtArgs> | null
     /**
-     * Filter, which TermSession to fetch.
+     * Filter, which AcademicTerm to fetch.
      */
-    where?: TermSessionWhereInput
+    where?: AcademicTermWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TermSessions to fetch.
+     * Determine the order of AcademicTerms to fetch.
      */
-    orderBy?: TermSessionOrderByWithRelationInput | TermSessionOrderByWithRelationInput[]
+    orderBy?: AcademicTermOrderByWithRelationInput | AcademicTermOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TermSessions.
+     * Sets the position for searching for AcademicTerms.
      */
-    cursor?: TermSessionWhereUniqueInput
+    cursor?: AcademicTermWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TermSessions from the position of the cursor.
+     * Take `±n` AcademicTerms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TermSessions.
+     * Skip the first `n` AcademicTerms.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TermSessions.
+     * Filter by unique combinations of AcademicTerms.
      */
-    distinct?: TermSessionScalarFieldEnum | TermSessionScalarFieldEnum[]
+    distinct?: AcademicTermScalarFieldEnum | AcademicTermScalarFieldEnum[]
   }
 
   /**
-   * TermSession findFirstOrThrow
+   * AcademicTerm findFirstOrThrow
    */
-  export type TermSessionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelect<ExtArgs> | null
+    select?: AcademicTermSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermSessionInclude<ExtArgs> | null
+    include?: AcademicTermInclude<ExtArgs> | null
     /**
-     * Filter, which TermSession to fetch.
+     * Filter, which AcademicTerm to fetch.
      */
-    where?: TermSessionWhereInput
+    where?: AcademicTermWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TermSessions to fetch.
+     * Determine the order of AcademicTerms to fetch.
      */
-    orderBy?: TermSessionOrderByWithRelationInput | TermSessionOrderByWithRelationInput[]
+    orderBy?: AcademicTermOrderByWithRelationInput | AcademicTermOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TermSessions.
+     * Sets the position for searching for AcademicTerms.
      */
-    cursor?: TermSessionWhereUniqueInput
+    cursor?: AcademicTermWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TermSessions from the position of the cursor.
+     * Take `±n` AcademicTerms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TermSessions.
+     * Skip the first `n` AcademicTerms.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TermSessions.
+     * Filter by unique combinations of AcademicTerms.
      */
-    distinct?: TermSessionScalarFieldEnum | TermSessionScalarFieldEnum[]
+    distinct?: AcademicTermScalarFieldEnum | AcademicTermScalarFieldEnum[]
   }
 
   /**
-   * TermSession findMany
+   * AcademicTerm findMany
    */
-  export type TermSessionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelect<ExtArgs> | null
+    select?: AcademicTermSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermSessionInclude<ExtArgs> | null
+    include?: AcademicTermInclude<ExtArgs> | null
     /**
-     * Filter, which TermSessions to fetch.
+     * Filter, which AcademicTerms to fetch.
      */
-    where?: TermSessionWhereInput
+    where?: AcademicTermWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TermSessions to fetch.
+     * Determine the order of AcademicTerms to fetch.
      */
-    orderBy?: TermSessionOrderByWithRelationInput | TermSessionOrderByWithRelationInput[]
+    orderBy?: AcademicTermOrderByWithRelationInput | AcademicTermOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing TermSessions.
+     * Sets the position for listing AcademicTerms.
      */
-    cursor?: TermSessionWhereUniqueInput
+    cursor?: AcademicTermWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TermSessions from the position of the cursor.
+     * Take `±n` AcademicTerms from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TermSessions.
+     * Skip the first `n` AcademicTerms.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TermSessions.
+     * Filter by unique combinations of AcademicTerms.
      */
-    distinct?: TermSessionScalarFieldEnum | TermSessionScalarFieldEnum[]
+    distinct?: AcademicTermScalarFieldEnum | AcademicTermScalarFieldEnum[]
   }
 
   /**
-   * TermSession create
+   * AcademicTerm create
    */
-  export type TermSessionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelect<ExtArgs> | null
+    select?: AcademicTermSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermSessionInclude<ExtArgs> | null
+    include?: AcademicTermInclude<ExtArgs> | null
     /**
-     * The data needed to create a TermSession.
+     * The data needed to create a AcademicTerm.
      */
-    data: XOR<TermSessionCreateInput, TermSessionUncheckedCreateInput>
+    data: XOR<AcademicTermCreateInput, AcademicTermUncheckedCreateInput>
   }
 
   /**
-   * TermSession createMany
+   * AcademicTerm createMany
    */
-  export type TermSessionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many TermSessions.
+     * The data used to create many AcademicTerms.
      */
-    data: TermSessionCreateManyInput | TermSessionCreateManyInput[]
+    data: AcademicTermCreateManyInput | AcademicTermCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * TermSession createManyAndReturn
+   * AcademicTerm createManyAndReturn
    */
-  export type TermSessionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelectCreateManyAndReturn<ExtArgs> | null
+    select?: AcademicTermSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
-     * The data used to create many TermSessions.
+     * The data used to create many AcademicTerms.
      */
-    data: TermSessionCreateManyInput | TermSessionCreateManyInput[]
+    data: AcademicTermCreateManyInput | AcademicTermCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * TermSession update
+   * AcademicTerm update
    */
-  export type TermSessionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelect<ExtArgs> | null
+    select?: AcademicTermSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermSessionInclude<ExtArgs> | null
+    include?: AcademicTermInclude<ExtArgs> | null
     /**
-     * The data needed to update a TermSession.
+     * The data needed to update a AcademicTerm.
      */
-    data: XOR<TermSessionUpdateInput, TermSessionUncheckedUpdateInput>
+    data: XOR<AcademicTermUpdateInput, AcademicTermUncheckedUpdateInput>
     /**
-     * Choose, which TermSession to update.
+     * Choose, which AcademicTerm to update.
      */
-    where: TermSessionWhereUniqueInput
+    where: AcademicTermWhereUniqueInput
   }
 
   /**
-   * TermSession updateMany
+   * AcademicTerm updateMany
    */
-  export type TermSessionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update TermSessions.
+     * The data used to update AcademicTerms.
      */
-    data: XOR<TermSessionUpdateManyMutationInput, TermSessionUncheckedUpdateManyInput>
+    data: XOR<AcademicTermUpdateManyMutationInput, AcademicTermUncheckedUpdateManyInput>
     /**
-     * Filter which TermSessions to update
+     * Filter which AcademicTerms to update
      */
-    where?: TermSessionWhereInput
+    where?: AcademicTermWhereInput
     /**
-     * Limit how many TermSessions to update.
+     * Limit how many AcademicTerms to update.
      */
     limit?: number
   }
 
   /**
-   * TermSession updateManyAndReturn
+   * AcademicTerm updateManyAndReturn
    */
-  export type TermSessionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: AcademicTermSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
-     * The data used to update TermSessions.
+     * The data used to update AcademicTerms.
      */
-    data: XOR<TermSessionUpdateManyMutationInput, TermSessionUncheckedUpdateManyInput>
+    data: XOR<AcademicTermUpdateManyMutationInput, AcademicTermUncheckedUpdateManyInput>
     /**
-     * Filter which TermSessions to update
+     * Filter which AcademicTerms to update
      */
-    where?: TermSessionWhereInput
+    where?: AcademicTermWhereInput
     /**
-     * Limit how many TermSessions to update.
+     * Limit how many AcademicTerms to update.
      */
     limit?: number
   }
 
   /**
-   * TermSession upsert
+   * AcademicTerm upsert
    */
-  export type TermSessionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelect<ExtArgs> | null
+    select?: AcademicTermSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermSessionInclude<ExtArgs> | null
+    include?: AcademicTermInclude<ExtArgs> | null
     /**
-     * The filter to search for the TermSession to update in case it exists.
+     * The filter to search for the AcademicTerm to update in case it exists.
      */
-    where: TermSessionWhereUniqueInput
+    where: AcademicTermWhereUniqueInput
     /**
-     * In case the TermSession found by the `where` argument doesn't exist, create a new TermSession with this data.
+     * In case the AcademicTerm found by the `where` argument doesn't exist, create a new AcademicTerm with this data.
      */
-    create: XOR<TermSessionCreateInput, TermSessionUncheckedCreateInput>
+    create: XOR<AcademicTermCreateInput, AcademicTermUncheckedCreateInput>
     /**
-     * In case the TermSession was found with the provided `where` argument, update it with this data.
+     * In case the AcademicTerm was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<TermSessionUpdateInput, TermSessionUncheckedUpdateInput>
+    update: XOR<AcademicTermUpdateInput, AcademicTermUncheckedUpdateInput>
   }
 
   /**
-   * TermSession delete
+   * AcademicTerm delete
    */
-  export type TermSessionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelect<ExtArgs> | null
+    select?: AcademicTermSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermSessionInclude<ExtArgs> | null
+    include?: AcademicTermInclude<ExtArgs> | null
     /**
-     * Filter which TermSession to delete.
+     * Filter which AcademicTerm to delete.
      */
-    where: TermSessionWhereUniqueInput
+    where: AcademicTermWhereUniqueInput
   }
 
   /**
-   * TermSession deleteMany
+   * AcademicTerm deleteMany
    */
-  export type TermSessionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which TermSessions to delete
+     * Filter which AcademicTerms to delete
      */
-    where?: TermSessionWhereInput
+    where?: AcademicTermWhereInput
     /**
-     * Limit how many TermSessions to delete.
+     * Limit how many AcademicTerms to delete.
      */
     limit?: number
   }
 
   /**
-   * TermSession.attendances
+   * AcademicTerm.attendanceRecords
    */
-  export type TermSession$attendancesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTerm$attendanceRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
-    where?: TermAttendanceWhereInput
-    orderBy?: TermAttendanceOrderByWithRelationInput | TermAttendanceOrderByWithRelationInput[]
-    cursor?: TermAttendanceWhereUniqueInput
+    include?: AttendanceRecordInclude<ExtArgs> | null
+    where?: AttendanceRecordWhereInput
+    orderBy?: AttendanceRecordOrderByWithRelationInput | AttendanceRecordOrderByWithRelationInput[]
+    cursor?: AttendanceRecordWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: TermAttendanceScalarFieldEnum | TermAttendanceScalarFieldEnum[]
+    distinct?: AttendanceRecordScalarFieldEnum | AttendanceRecordScalarFieldEnum[]
   }
 
   /**
-   * TermSession without action
+   * AcademicTerm without action
    */
-  export type TermSessionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AcademicTermDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermSession
+     * Select specific fields to fetch from the AcademicTerm
      */
-    select?: TermSessionSelect<ExtArgs> | null
+    select?: AcademicTermSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermSession
+     * Omit specific fields from the AcademicTerm
      */
-    omit?: TermSessionOmit<ExtArgs> | null
+    omit?: AcademicTermOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermSessionInclude<ExtArgs> | null
+    include?: AcademicTermInclude<ExtArgs> | null
   }
 
 
   /**
-   * Model TermAttendance
+   * Model AttendanceRecord
    */
 
-  export type AggregateTermAttendance = {
-    _count: TermAttendanceCountAggregateOutputType | null
-    _avg: TermAttendanceAvgAggregateOutputType | null
-    _sum: TermAttendanceSumAggregateOutputType | null
-    _min: TermAttendanceMinAggregateOutputType | null
-    _max: TermAttendanceMaxAggregateOutputType | null
+  export type AggregateAttendanceRecord = {
+    _count: AttendanceRecordCountAggregateOutputType | null
+    _avg: AttendanceRecordAvgAggregateOutputType | null
+    _sum: AttendanceRecordSumAggregateOutputType | null
+    _min: AttendanceRecordMinAggregateOutputType | null
+    _max: AttendanceRecordMaxAggregateOutputType | null
   }
 
-  export type TermAttendanceAvgAggregateOutputType = {
+  export type AttendanceRecordAvgAggregateOutputType = {
     id: number | null
-    termId: number | null
     studentId: number | null
-    recordedById: number | null
+    termId: number | null
+    markedByStaffId: number | null
   }
 
-  export type TermAttendanceSumAggregateOutputType = {
+  export type AttendanceRecordSumAggregateOutputType = {
     id: number | null
-    termId: number | null
     studentId: number | null
-    recordedById: number | null
+    termId: number | null
+    markedByStaffId: number | null
   }
 
-  export type TermAttendanceMinAggregateOutputType = {
+  export type AttendanceRecordMinAggregateOutputType = {
     id: number | null
-    termId: number | null
     studentId: number | null
+    termId: number | null
+    date: Date | null
     status: $Enums.AttendanceStatus | null
-    arrivalTime: Date | null
-    recordedById: number | null
+    note: string | null
+    markedByStaffId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type TermAttendanceMaxAggregateOutputType = {
+  export type AttendanceRecordMaxAggregateOutputType = {
     id: number | null
-    termId: number | null
     studentId: number | null
+    termId: number | null
+    date: Date | null
     status: $Enums.AttendanceStatus | null
-    arrivalTime: Date | null
-    recordedById: number | null
+    note: string | null
+    markedByStaffId: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
 
-  export type TermAttendanceCountAggregateOutputType = {
+  export type AttendanceRecordCountAggregateOutputType = {
     id: number
-    termId: number
     studentId: number
+    termId: number
+    date: number
     status: number
-    arrivalTime: number
-    recordedById: number
+    note: number
+    markedByStaffId: number
     createdAt: number
     updatedAt: number
     _all: number
   }
 
 
-  export type TermAttendanceAvgAggregateInputType = {
+  export type AttendanceRecordAvgAggregateInputType = {
     id?: true
-    termId?: true
     studentId?: true
-    recordedById?: true
+    termId?: true
+    markedByStaffId?: true
   }
 
-  export type TermAttendanceSumAggregateInputType = {
+  export type AttendanceRecordSumAggregateInputType = {
     id?: true
-    termId?: true
     studentId?: true
-    recordedById?: true
+    termId?: true
+    markedByStaffId?: true
   }
 
-  export type TermAttendanceMinAggregateInputType = {
+  export type AttendanceRecordMinAggregateInputType = {
     id?: true
-    termId?: true
     studentId?: true
+    termId?: true
+    date?: true
     status?: true
-    arrivalTime?: true
-    recordedById?: true
+    note?: true
+    markedByStaffId?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type TermAttendanceMaxAggregateInputType = {
+  export type AttendanceRecordMaxAggregateInputType = {
     id?: true
-    termId?: true
     studentId?: true
+    termId?: true
+    date?: true
     status?: true
-    arrivalTime?: true
-    recordedById?: true
+    note?: true
+    markedByStaffId?: true
     createdAt?: true
     updatedAt?: true
   }
 
-  export type TermAttendanceCountAggregateInputType = {
+  export type AttendanceRecordCountAggregateInputType = {
     id?: true
-    termId?: true
     studentId?: true
+    termId?: true
+    date?: true
     status?: true
-    arrivalTime?: true
-    recordedById?: true
+    note?: true
+    markedByStaffId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
   }
 
-  export type TermAttendanceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which TermAttendance to aggregate.
+     * Filter which AttendanceRecord to aggregate.
      */
-    where?: TermAttendanceWhereInput
+    where?: AttendanceRecordWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TermAttendances to fetch.
+     * Determine the order of AttendanceRecords to fetch.
      */
-    orderBy?: TermAttendanceOrderByWithRelationInput | TermAttendanceOrderByWithRelationInput[]
+    orderBy?: AttendanceRecordOrderByWithRelationInput | AttendanceRecordOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: TermAttendanceWhereUniqueInput
+    cursor?: AttendanceRecordWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TermAttendances from the position of the cursor.
+     * Take `±n` AttendanceRecords from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TermAttendances.
+     * Skip the first `n` AttendanceRecords.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned TermAttendances
+     * Count returned AttendanceRecords
     **/
-    _count?: true | TermAttendanceCountAggregateInputType
+    _count?: true | AttendanceRecordCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: TermAttendanceAvgAggregateInputType
+    _avg?: AttendanceRecordAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: TermAttendanceSumAggregateInputType
+    _sum?: AttendanceRecordSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: TermAttendanceMinAggregateInputType
+    _min?: AttendanceRecordMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: TermAttendanceMaxAggregateInputType
+    _max?: AttendanceRecordMaxAggregateInputType
   }
 
-  export type GetTermAttendanceAggregateType<T extends TermAttendanceAggregateArgs> = {
-        [P in keyof T & keyof AggregateTermAttendance]: P extends '_count' | 'count'
+  export type GetAttendanceRecordAggregateType<T extends AttendanceRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateAttendanceRecord]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateTermAttendance[P]>
-      : GetScalarType<T[P], AggregateTermAttendance[P]>
+        : GetScalarType<T[P], AggregateAttendanceRecord[P]>
+      : GetScalarType<T[P], AggregateAttendanceRecord[P]>
   }
 
 
 
 
-  export type TermAttendanceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TermAttendanceWhereInput
-    orderBy?: TermAttendanceOrderByWithAggregationInput | TermAttendanceOrderByWithAggregationInput[]
-    by: TermAttendanceScalarFieldEnum[] | TermAttendanceScalarFieldEnum
-    having?: TermAttendanceScalarWhereWithAggregatesInput
+  export type AttendanceRecordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AttendanceRecordWhereInput
+    orderBy?: AttendanceRecordOrderByWithAggregationInput | AttendanceRecordOrderByWithAggregationInput[]
+    by: AttendanceRecordScalarFieldEnum[] | AttendanceRecordScalarFieldEnum
+    having?: AttendanceRecordScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: TermAttendanceCountAggregateInputType | true
-    _avg?: TermAttendanceAvgAggregateInputType
-    _sum?: TermAttendanceSumAggregateInputType
-    _min?: TermAttendanceMinAggregateInputType
-    _max?: TermAttendanceMaxAggregateInputType
+    _count?: AttendanceRecordCountAggregateInputType | true
+    _avg?: AttendanceRecordAvgAggregateInputType
+    _sum?: AttendanceRecordSumAggregateInputType
+    _min?: AttendanceRecordMinAggregateInputType
+    _max?: AttendanceRecordMaxAggregateInputType
   }
 
-  export type TermAttendanceGroupByOutputType = {
+  export type AttendanceRecordGroupByOutputType = {
     id: number
-    termId: number
     studentId: number
+    termId: number
+    date: Date
     status: $Enums.AttendanceStatus
-    arrivalTime: Date | null
-    recordedById: number | null
+    note: string | null
+    markedByStaffId: number | null
     createdAt: Date
     updatedAt: Date
-    _count: TermAttendanceCountAggregateOutputType | null
-    _avg: TermAttendanceAvgAggregateOutputType | null
-    _sum: TermAttendanceSumAggregateOutputType | null
-    _min: TermAttendanceMinAggregateOutputType | null
-    _max: TermAttendanceMaxAggregateOutputType | null
+    _count: AttendanceRecordCountAggregateOutputType | null
+    _avg: AttendanceRecordAvgAggregateOutputType | null
+    _sum: AttendanceRecordSumAggregateOutputType | null
+    _min: AttendanceRecordMinAggregateOutputType | null
+    _max: AttendanceRecordMaxAggregateOutputType | null
   }
 
-  type GetTermAttendanceGroupByPayload<T extends TermAttendanceGroupByArgs> = Prisma.PrismaPromise<
+  type GetAttendanceRecordGroupByPayload<T extends AttendanceRecordGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<TermAttendanceGroupByOutputType, T['by']> &
+      PickEnumerable<AttendanceRecordGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof TermAttendanceGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof AttendanceRecordGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], TermAttendanceGroupByOutputType[P]>
-            : GetScalarType<T[P], TermAttendanceGroupByOutputType[P]>
+              : GetScalarType<T[P], AttendanceRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], AttendanceRecordGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type TermAttendanceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AttendanceRecordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    termId?: boolean
     studentId?: boolean
+    termId?: boolean
+    date?: boolean
     status?: boolean
-    arrivalTime?: boolean
-    recordedById?: boolean
+    note?: boolean
+    markedByStaffId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    recordedBy?: boolean | TermAttendance$recordedByArgs<ExtArgs>
     student?: boolean | StudentDefaultArgs<ExtArgs>
-    term?: boolean | TermSessionDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["termAttendance"]>
+    term?: boolean | AcademicTermDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["attendanceRecord"]>
 
-  export type TermAttendanceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AttendanceRecordSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    termId?: boolean
     studentId?: boolean
+    termId?: boolean
+    date?: boolean
     status?: boolean
-    arrivalTime?: boolean
-    recordedById?: boolean
+    note?: boolean
+    markedByStaffId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    recordedBy?: boolean | TermAttendance$recordedByArgs<ExtArgs>
     student?: boolean | StudentDefaultArgs<ExtArgs>
-    term?: boolean | TermSessionDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["termAttendance"]>
+    term?: boolean | AcademicTermDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["attendanceRecord"]>
 
-  export type TermAttendanceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type AttendanceRecordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    termId?: boolean
     studentId?: boolean
+    termId?: boolean
+    date?: boolean
     status?: boolean
-    arrivalTime?: boolean
-    recordedById?: boolean
+    note?: boolean
+    markedByStaffId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    recordedBy?: boolean | TermAttendance$recordedByArgs<ExtArgs>
     student?: boolean | StudentDefaultArgs<ExtArgs>
-    term?: boolean | TermSessionDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["termAttendance"]>
+    term?: boolean | AcademicTermDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["attendanceRecord"]>
 
-  export type TermAttendanceSelectScalar = {
+  export type AttendanceRecordSelectScalar = {
     id?: boolean
-    termId?: boolean
     studentId?: boolean
+    termId?: boolean
+    date?: boolean
     status?: boolean
-    arrivalTime?: boolean
-    recordedById?: boolean
+    note?: boolean
+    markedByStaffId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type TermAttendanceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "termId" | "studentId" | "status" | "arrivalTime" | "recordedById" | "createdAt" | "updatedAt", ExtArgs["result"]["termAttendance"]>
-  export type TermAttendanceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    recordedBy?: boolean | TermAttendance$recordedByArgs<ExtArgs>
+  export type AttendanceRecordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "termId" | "date" | "status" | "note" | "markedByStaffId" | "createdAt" | "updatedAt", ExtArgs["result"]["attendanceRecord"]>
+  export type AttendanceRecordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     student?: boolean | StudentDefaultArgs<ExtArgs>
-    term?: boolean | TermSessionDefaultArgs<ExtArgs>
+    term?: boolean | AcademicTermDefaultArgs<ExtArgs>
   }
-  export type TermAttendanceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    recordedBy?: boolean | TermAttendance$recordedByArgs<ExtArgs>
+  export type AttendanceRecordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     student?: boolean | StudentDefaultArgs<ExtArgs>
-    term?: boolean | TermSessionDefaultArgs<ExtArgs>
+    term?: boolean | AcademicTermDefaultArgs<ExtArgs>
   }
-  export type TermAttendanceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    recordedBy?: boolean | TermAttendance$recordedByArgs<ExtArgs>
+  export type AttendanceRecordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     student?: boolean | StudentDefaultArgs<ExtArgs>
-    term?: boolean | TermSessionDefaultArgs<ExtArgs>
+    term?: boolean | AcademicTermDefaultArgs<ExtArgs>
   }
 
-  export type $TermAttendancePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "TermAttendance"
+  export type $AttendanceRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AttendanceRecord"
     objects: {
-      recordedBy: Prisma.$StaffPayload<ExtArgs> | null
       student: Prisma.$StudentPayload<ExtArgs>
-      term: Prisma.$TermSessionPayload<ExtArgs>
+      term: Prisma.$AcademicTermPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      termId: number
       studentId: number
+      termId: number
+      date: Date
       status: $Enums.AttendanceStatus
-      arrivalTime: Date | null
-      recordedById: number | null
+      note: string | null
+      markedByStaffId: number | null
       createdAt: Date
       updatedAt: Date
-    }, ExtArgs["result"]["termAttendance"]>
+    }, ExtArgs["result"]["attendanceRecord"]>
     composites: {}
   }
 
-  type TermAttendanceGetPayload<S extends boolean | null | undefined | TermAttendanceDefaultArgs> = $Result.GetResult<Prisma.$TermAttendancePayload, S>
+  type AttendanceRecordGetPayload<S extends boolean | null | undefined | AttendanceRecordDefaultArgs> = $Result.GetResult<Prisma.$AttendanceRecordPayload, S>
 
-  type TermAttendanceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<TermAttendanceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: TermAttendanceCountAggregateInputType | true
+  type AttendanceRecordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AttendanceRecordFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AttendanceRecordCountAggregateInputType | true
     }
 
-  export interface TermAttendanceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TermAttendance'], meta: { name: 'TermAttendance' } }
+  export interface AttendanceRecordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AttendanceRecord'], meta: { name: 'AttendanceRecord' } }
     /**
-     * Find zero or one TermAttendance that matches the filter.
-     * @param {TermAttendanceFindUniqueArgs} args - Arguments to find a TermAttendance
+     * Find zero or one AttendanceRecord that matches the filter.
+     * @param {AttendanceRecordFindUniqueArgs} args - Arguments to find a AttendanceRecord
      * @example
-     * // Get one TermAttendance
-     * const termAttendance = await prisma.termAttendance.findUnique({
+     * // Get one AttendanceRecord
+     * const attendanceRecord = await prisma.attendanceRecord.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends TermAttendanceFindUniqueArgs>(args: SelectSubset<T, TermAttendanceFindUniqueArgs<ExtArgs>>): Prisma__TermAttendanceClient<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends AttendanceRecordFindUniqueArgs>(args: SelectSubset<T, AttendanceRecordFindUniqueArgs<ExtArgs>>): Prisma__AttendanceRecordClient<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one TermAttendance that matches the filter or throw an error with `error.code='P2025'`
+     * Find one AttendanceRecord that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {TermAttendanceFindUniqueOrThrowArgs} args - Arguments to find a TermAttendance
+     * @param {AttendanceRecordFindUniqueOrThrowArgs} args - Arguments to find a AttendanceRecord
      * @example
-     * // Get one TermAttendance
-     * const termAttendance = await prisma.termAttendance.findUniqueOrThrow({
+     * // Get one AttendanceRecord
+     * const attendanceRecord = await prisma.attendanceRecord.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends TermAttendanceFindUniqueOrThrowArgs>(args: SelectSubset<T, TermAttendanceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TermAttendanceClient<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends AttendanceRecordFindUniqueOrThrowArgs>(args: SelectSubset<T, AttendanceRecordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AttendanceRecordClient<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first TermAttendance that matches the filter.
+     * Find the first AttendanceRecord that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermAttendanceFindFirstArgs} args - Arguments to find a TermAttendance
+     * @param {AttendanceRecordFindFirstArgs} args - Arguments to find a AttendanceRecord
      * @example
-     * // Get one TermAttendance
-     * const termAttendance = await prisma.termAttendance.findFirst({
+     * // Get one AttendanceRecord
+     * const attendanceRecord = await prisma.attendanceRecord.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends TermAttendanceFindFirstArgs>(args?: SelectSubset<T, TermAttendanceFindFirstArgs<ExtArgs>>): Prisma__TermAttendanceClient<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends AttendanceRecordFindFirstArgs>(args?: SelectSubset<T, AttendanceRecordFindFirstArgs<ExtArgs>>): Prisma__AttendanceRecordClient<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first TermAttendance that matches the filter or
+     * Find the first AttendanceRecord that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermAttendanceFindFirstOrThrowArgs} args - Arguments to find a TermAttendance
+     * @param {AttendanceRecordFindFirstOrThrowArgs} args - Arguments to find a AttendanceRecord
      * @example
-     * // Get one TermAttendance
-     * const termAttendance = await prisma.termAttendance.findFirstOrThrow({
+     * // Get one AttendanceRecord
+     * const attendanceRecord = await prisma.attendanceRecord.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends TermAttendanceFindFirstOrThrowArgs>(args?: SelectSubset<T, TermAttendanceFindFirstOrThrowArgs<ExtArgs>>): Prisma__TermAttendanceClient<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends AttendanceRecordFindFirstOrThrowArgs>(args?: SelectSubset<T, AttendanceRecordFindFirstOrThrowArgs<ExtArgs>>): Prisma__AttendanceRecordClient<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more TermAttendances that matches the filter.
+     * Find zero or more AttendanceRecords that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermAttendanceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {AttendanceRecordFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all TermAttendances
-     * const termAttendances = await prisma.termAttendance.findMany()
+     * // Get all AttendanceRecords
+     * const attendanceRecords = await prisma.attendanceRecord.findMany()
      * 
-     * // Get first 10 TermAttendances
-     * const termAttendances = await prisma.termAttendance.findMany({ take: 10 })
+     * // Get first 10 AttendanceRecords
+     * const attendanceRecords = await prisma.attendanceRecord.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const termAttendanceWithIdOnly = await prisma.termAttendance.findMany({ select: { id: true } })
+     * const attendanceRecordWithIdOnly = await prisma.attendanceRecord.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends TermAttendanceFindManyArgs>(args?: SelectSubset<T, TermAttendanceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends AttendanceRecordFindManyArgs>(args?: SelectSubset<T, AttendanceRecordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a TermAttendance.
-     * @param {TermAttendanceCreateArgs} args - Arguments to create a TermAttendance.
+     * Create a AttendanceRecord.
+     * @param {AttendanceRecordCreateArgs} args - Arguments to create a AttendanceRecord.
      * @example
-     * // Create one TermAttendance
-     * const TermAttendance = await prisma.termAttendance.create({
+     * // Create one AttendanceRecord
+     * const AttendanceRecord = await prisma.attendanceRecord.create({
      *   data: {
-     *     // ... data to create a TermAttendance
+     *     // ... data to create a AttendanceRecord
      *   }
      * })
      * 
      */
-    create<T extends TermAttendanceCreateArgs>(args: SelectSubset<T, TermAttendanceCreateArgs<ExtArgs>>): Prisma__TermAttendanceClient<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends AttendanceRecordCreateArgs>(args: SelectSubset<T, AttendanceRecordCreateArgs<ExtArgs>>): Prisma__AttendanceRecordClient<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many TermAttendances.
-     * @param {TermAttendanceCreateManyArgs} args - Arguments to create many TermAttendances.
+     * Create many AttendanceRecords.
+     * @param {AttendanceRecordCreateManyArgs} args - Arguments to create many AttendanceRecords.
      * @example
-     * // Create many TermAttendances
-     * const termAttendance = await prisma.termAttendance.createMany({
+     * // Create many AttendanceRecords
+     * const attendanceRecord = await prisma.attendanceRecord.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends TermAttendanceCreateManyArgs>(args?: SelectSubset<T, TermAttendanceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends AttendanceRecordCreateManyArgs>(args?: SelectSubset<T, AttendanceRecordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many TermAttendances and returns the data saved in the database.
-     * @param {TermAttendanceCreateManyAndReturnArgs} args - Arguments to create many TermAttendances.
+     * Create many AttendanceRecords and returns the data saved in the database.
+     * @param {AttendanceRecordCreateManyAndReturnArgs} args - Arguments to create many AttendanceRecords.
      * @example
-     * // Create many TermAttendances
-     * const termAttendance = await prisma.termAttendance.createManyAndReturn({
+     * // Create many AttendanceRecords
+     * const attendanceRecord = await prisma.attendanceRecord.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many TermAttendances and only return the `id`
-     * const termAttendanceWithIdOnly = await prisma.termAttendance.createManyAndReturn({
+     * // Create many AttendanceRecords and only return the `id`
+     * const attendanceRecordWithIdOnly = await prisma.attendanceRecord.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -10313,28 +9098,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends TermAttendanceCreateManyAndReturnArgs>(args?: SelectSubset<T, TermAttendanceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends AttendanceRecordCreateManyAndReturnArgs>(args?: SelectSubset<T, AttendanceRecordCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a TermAttendance.
-     * @param {TermAttendanceDeleteArgs} args - Arguments to delete one TermAttendance.
+     * Delete a AttendanceRecord.
+     * @param {AttendanceRecordDeleteArgs} args - Arguments to delete one AttendanceRecord.
      * @example
-     * // Delete one TermAttendance
-     * const TermAttendance = await prisma.termAttendance.delete({
+     * // Delete one AttendanceRecord
+     * const AttendanceRecord = await prisma.attendanceRecord.delete({
      *   where: {
-     *     // ... filter to delete one TermAttendance
+     *     // ... filter to delete one AttendanceRecord
      *   }
      * })
      * 
      */
-    delete<T extends TermAttendanceDeleteArgs>(args: SelectSubset<T, TermAttendanceDeleteArgs<ExtArgs>>): Prisma__TermAttendanceClient<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends AttendanceRecordDeleteArgs>(args: SelectSubset<T, AttendanceRecordDeleteArgs<ExtArgs>>): Prisma__AttendanceRecordClient<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one TermAttendance.
-     * @param {TermAttendanceUpdateArgs} args - Arguments to update one TermAttendance.
+     * Update one AttendanceRecord.
+     * @param {AttendanceRecordUpdateArgs} args - Arguments to update one AttendanceRecord.
      * @example
-     * // Update one TermAttendance
-     * const termAttendance = await prisma.termAttendance.update({
+     * // Update one AttendanceRecord
+     * const attendanceRecord = await prisma.attendanceRecord.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10344,30 +9129,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends TermAttendanceUpdateArgs>(args: SelectSubset<T, TermAttendanceUpdateArgs<ExtArgs>>): Prisma__TermAttendanceClient<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends AttendanceRecordUpdateArgs>(args: SelectSubset<T, AttendanceRecordUpdateArgs<ExtArgs>>): Prisma__AttendanceRecordClient<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more TermAttendances.
-     * @param {TermAttendanceDeleteManyArgs} args - Arguments to filter TermAttendances to delete.
+     * Delete zero or more AttendanceRecords.
+     * @param {AttendanceRecordDeleteManyArgs} args - Arguments to filter AttendanceRecords to delete.
      * @example
-     * // Delete a few TermAttendances
-     * const { count } = await prisma.termAttendance.deleteMany({
+     * // Delete a few AttendanceRecords
+     * const { count } = await prisma.attendanceRecord.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends TermAttendanceDeleteManyArgs>(args?: SelectSubset<T, TermAttendanceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends AttendanceRecordDeleteManyArgs>(args?: SelectSubset<T, AttendanceRecordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TermAttendances.
+     * Update zero or more AttendanceRecords.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermAttendanceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {AttendanceRecordUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many TermAttendances
-     * const termAttendance = await prisma.termAttendance.updateMany({
+     * // Update many AttendanceRecords
+     * const attendanceRecord = await prisma.attendanceRecord.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10377,14 +9162,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends TermAttendanceUpdateManyArgs>(args: SelectSubset<T, TermAttendanceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends AttendanceRecordUpdateManyArgs>(args: SelectSubset<T, AttendanceRecordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more TermAttendances and returns the data updated in the database.
-     * @param {TermAttendanceUpdateManyAndReturnArgs} args - Arguments to update many TermAttendances.
+     * Update zero or more AttendanceRecords and returns the data updated in the database.
+     * @param {AttendanceRecordUpdateManyAndReturnArgs} args - Arguments to update many AttendanceRecords.
      * @example
-     * // Update many TermAttendances
-     * const termAttendance = await prisma.termAttendance.updateManyAndReturn({
+     * // Update many AttendanceRecords
+     * const attendanceRecord = await prisma.attendanceRecord.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10393,8 +9178,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more TermAttendances and only return the `id`
-     * const termAttendanceWithIdOnly = await prisma.termAttendance.updateManyAndReturn({
+     * // Update zero or more AttendanceRecords and only return the `id`
+     * const attendanceRecordWithIdOnly = await prisma.attendanceRecord.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -10407,56 +9192,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends TermAttendanceUpdateManyAndReturnArgs>(args: SelectSubset<T, TermAttendanceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends AttendanceRecordUpdateManyAndReturnArgs>(args: SelectSubset<T, AttendanceRecordUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one TermAttendance.
-     * @param {TermAttendanceUpsertArgs} args - Arguments to update or create a TermAttendance.
+     * Create or update one AttendanceRecord.
+     * @param {AttendanceRecordUpsertArgs} args - Arguments to update or create a AttendanceRecord.
      * @example
-     * // Update or create a TermAttendance
-     * const termAttendance = await prisma.termAttendance.upsert({
+     * // Update or create a AttendanceRecord
+     * const attendanceRecord = await prisma.attendanceRecord.upsert({
      *   create: {
-     *     // ... data to create a TermAttendance
+     *     // ... data to create a AttendanceRecord
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the TermAttendance we want to update
+     *     // ... the filter for the AttendanceRecord we want to update
      *   }
      * })
      */
-    upsert<T extends TermAttendanceUpsertArgs>(args: SelectSubset<T, TermAttendanceUpsertArgs<ExtArgs>>): Prisma__TermAttendanceClient<$Result.GetResult<Prisma.$TermAttendancePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends AttendanceRecordUpsertArgs>(args: SelectSubset<T, AttendanceRecordUpsertArgs<ExtArgs>>): Prisma__AttendanceRecordClient<$Result.GetResult<Prisma.$AttendanceRecordPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of TermAttendances.
+     * Count the number of AttendanceRecords.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermAttendanceCountArgs} args - Arguments to filter TermAttendances to count.
+     * @param {AttendanceRecordCountArgs} args - Arguments to filter AttendanceRecords to count.
      * @example
-     * // Count the number of TermAttendances
-     * const count = await prisma.termAttendance.count({
+     * // Count the number of AttendanceRecords
+     * const count = await prisma.attendanceRecord.count({
      *   where: {
-     *     // ... the filter for the TermAttendances we want to count
+     *     // ... the filter for the AttendanceRecords we want to count
      *   }
      * })
     **/
-    count<T extends TermAttendanceCountArgs>(
-      args?: Subset<T, TermAttendanceCountArgs>,
+    count<T extends AttendanceRecordCountArgs>(
+      args?: Subset<T, AttendanceRecordCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], TermAttendanceCountAggregateOutputType>
+          : GetScalarType<T['select'], AttendanceRecordCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a TermAttendance.
+     * Allows you to perform aggregations operations on a AttendanceRecord.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermAttendanceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {AttendanceRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -10476,13 +9261,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends TermAttendanceAggregateArgs>(args: Subset<T, TermAttendanceAggregateArgs>): Prisma.PrismaPromise<GetTermAttendanceAggregateType<T>>
+    aggregate<T extends AttendanceRecordAggregateArgs>(args: Subset<T, AttendanceRecordAggregateArgs>): Prisma.PrismaPromise<GetAttendanceRecordAggregateType<T>>
 
     /**
-     * Group by TermAttendance.
+     * Group by AttendanceRecord.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {TermAttendanceGroupByArgs} args - Group by arguments.
+     * @param {AttendanceRecordGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -10497,14 +9282,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends TermAttendanceGroupByArgs,
+      T extends AttendanceRecordGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: TermAttendanceGroupByArgs['orderBy'] }
-        : { orderBy?: TermAttendanceGroupByArgs['orderBy'] },
+        ? { orderBy: AttendanceRecordGroupByArgs['orderBy'] }
+        : { orderBy?: AttendanceRecordGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -10553,24 +9338,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, TermAttendanceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTermAttendanceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, AttendanceRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAttendanceRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the TermAttendance model
+   * Fields of the AttendanceRecord model
    */
-  readonly fields: TermAttendanceFieldRefs;
+  readonly fields: AttendanceRecordFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for TermAttendance.
+   * The delegate class that acts as a "Promise-like" for AttendanceRecord.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__TermAttendanceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__AttendanceRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    recordedBy<T extends TermAttendance$recordedByArgs<ExtArgs> = {}>(args?: Subset<T, TermAttendance$recordedByArgs<ExtArgs>>): Prisma__StaffClient<$Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    term<T extends TermSessionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TermSessionDefaultArgs<ExtArgs>>): Prisma__TermSessionClient<$Result.GetResult<Prisma.$TermSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    term<T extends AcademicTermDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AcademicTermDefaultArgs<ExtArgs>>): Prisma__AcademicTermClient<$Result.GetResult<Prisma.$AcademicTermPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10597,452 +9381,1587 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the TermAttendance model
+   * Fields of the AttendanceRecord model
    */
-  interface TermAttendanceFieldRefs {
-    readonly id: FieldRef<"TermAttendance", 'Int'>
-    readonly termId: FieldRef<"TermAttendance", 'Int'>
-    readonly studentId: FieldRef<"TermAttendance", 'Int'>
-    readonly status: FieldRef<"TermAttendance", 'AttendanceStatus'>
-    readonly arrivalTime: FieldRef<"TermAttendance", 'DateTime'>
-    readonly recordedById: FieldRef<"TermAttendance", 'Int'>
-    readonly createdAt: FieldRef<"TermAttendance", 'DateTime'>
-    readonly updatedAt: FieldRef<"TermAttendance", 'DateTime'>
+  interface AttendanceRecordFieldRefs {
+    readonly id: FieldRef<"AttendanceRecord", 'Int'>
+    readonly studentId: FieldRef<"AttendanceRecord", 'Int'>
+    readonly termId: FieldRef<"AttendanceRecord", 'Int'>
+    readonly date: FieldRef<"AttendanceRecord", 'DateTime'>
+    readonly status: FieldRef<"AttendanceRecord", 'AttendanceStatus'>
+    readonly note: FieldRef<"AttendanceRecord", 'String'>
+    readonly markedByStaffId: FieldRef<"AttendanceRecord", 'Int'>
+    readonly createdAt: FieldRef<"AttendanceRecord", 'DateTime'>
+    readonly updatedAt: FieldRef<"AttendanceRecord", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * TermAttendance findUnique
+   * AttendanceRecord findUnique
    */
-  export type TermAttendanceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
+    include?: AttendanceRecordInclude<ExtArgs> | null
     /**
-     * Filter, which TermAttendance to fetch.
+     * Filter, which AttendanceRecord to fetch.
      */
-    where: TermAttendanceWhereUniqueInput
+    where: AttendanceRecordWhereUniqueInput
   }
 
   /**
-   * TermAttendance findUniqueOrThrow
+   * AttendanceRecord findUniqueOrThrow
    */
-  export type TermAttendanceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
+    include?: AttendanceRecordInclude<ExtArgs> | null
     /**
-     * Filter, which TermAttendance to fetch.
+     * Filter, which AttendanceRecord to fetch.
      */
-    where: TermAttendanceWhereUniqueInput
+    where: AttendanceRecordWhereUniqueInput
   }
 
   /**
-   * TermAttendance findFirst
+   * AttendanceRecord findFirst
    */
-  export type TermAttendanceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
+    include?: AttendanceRecordInclude<ExtArgs> | null
     /**
-     * Filter, which TermAttendance to fetch.
+     * Filter, which AttendanceRecord to fetch.
      */
-    where?: TermAttendanceWhereInput
+    where?: AttendanceRecordWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TermAttendances to fetch.
+     * Determine the order of AttendanceRecords to fetch.
      */
-    orderBy?: TermAttendanceOrderByWithRelationInput | TermAttendanceOrderByWithRelationInput[]
+    orderBy?: AttendanceRecordOrderByWithRelationInput | AttendanceRecordOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TermAttendances.
+     * Sets the position for searching for AttendanceRecords.
      */
-    cursor?: TermAttendanceWhereUniqueInput
+    cursor?: AttendanceRecordWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TermAttendances from the position of the cursor.
+     * Take `±n` AttendanceRecords from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TermAttendances.
+     * Skip the first `n` AttendanceRecords.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TermAttendances.
+     * Filter by unique combinations of AttendanceRecords.
      */
-    distinct?: TermAttendanceScalarFieldEnum | TermAttendanceScalarFieldEnum[]
+    distinct?: AttendanceRecordScalarFieldEnum | AttendanceRecordScalarFieldEnum[]
   }
 
   /**
-   * TermAttendance findFirstOrThrow
+   * AttendanceRecord findFirstOrThrow
    */
-  export type TermAttendanceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
+    include?: AttendanceRecordInclude<ExtArgs> | null
     /**
-     * Filter, which TermAttendance to fetch.
+     * Filter, which AttendanceRecord to fetch.
      */
-    where?: TermAttendanceWhereInput
+    where?: AttendanceRecordWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TermAttendances to fetch.
+     * Determine the order of AttendanceRecords to fetch.
      */
-    orderBy?: TermAttendanceOrderByWithRelationInput | TermAttendanceOrderByWithRelationInput[]
+    orderBy?: AttendanceRecordOrderByWithRelationInput | AttendanceRecordOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for TermAttendances.
+     * Sets the position for searching for AttendanceRecords.
      */
-    cursor?: TermAttendanceWhereUniqueInput
+    cursor?: AttendanceRecordWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TermAttendances from the position of the cursor.
+     * Take `±n` AttendanceRecords from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TermAttendances.
+     * Skip the first `n` AttendanceRecords.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TermAttendances.
+     * Filter by unique combinations of AttendanceRecords.
      */
-    distinct?: TermAttendanceScalarFieldEnum | TermAttendanceScalarFieldEnum[]
+    distinct?: AttendanceRecordScalarFieldEnum | AttendanceRecordScalarFieldEnum[]
   }
 
   /**
-   * TermAttendance findMany
+   * AttendanceRecord findMany
    */
-  export type TermAttendanceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
+    include?: AttendanceRecordInclude<ExtArgs> | null
     /**
-     * Filter, which TermAttendances to fetch.
+     * Filter, which AttendanceRecords to fetch.
      */
-    where?: TermAttendanceWhereInput
+    where?: AttendanceRecordWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of TermAttendances to fetch.
+     * Determine the order of AttendanceRecords to fetch.
      */
-    orderBy?: TermAttendanceOrderByWithRelationInput | TermAttendanceOrderByWithRelationInput[]
+    orderBy?: AttendanceRecordOrderByWithRelationInput | AttendanceRecordOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing TermAttendances.
+     * Sets the position for listing AttendanceRecords.
      */
-    cursor?: TermAttendanceWhereUniqueInput
+    cursor?: AttendanceRecordWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` TermAttendances from the position of the cursor.
+     * Take `±n` AttendanceRecords from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` TermAttendances.
+     * Skip the first `n` AttendanceRecords.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of TermAttendances.
+     * Filter by unique combinations of AttendanceRecords.
      */
-    distinct?: TermAttendanceScalarFieldEnum | TermAttendanceScalarFieldEnum[]
+    distinct?: AttendanceRecordScalarFieldEnum | AttendanceRecordScalarFieldEnum[]
   }
 
   /**
-   * TermAttendance create
+   * AttendanceRecord create
    */
-  export type TermAttendanceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
+    include?: AttendanceRecordInclude<ExtArgs> | null
     /**
-     * The data needed to create a TermAttendance.
+     * The data needed to create a AttendanceRecord.
      */
-    data: XOR<TermAttendanceCreateInput, TermAttendanceUncheckedCreateInput>
+    data: XOR<AttendanceRecordCreateInput, AttendanceRecordUncheckedCreateInput>
   }
 
   /**
-   * TermAttendance createMany
+   * AttendanceRecord createMany
    */
-  export type TermAttendanceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many TermAttendances.
+     * The data used to create many AttendanceRecords.
      */
-    data: TermAttendanceCreateManyInput | TermAttendanceCreateManyInput[]
+    data: AttendanceRecordCreateManyInput | AttendanceRecordCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * TermAttendance createManyAndReturn
+   * AttendanceRecord createManyAndReturn
    */
-  export type TermAttendanceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelectCreateManyAndReturn<ExtArgs> | null
+    select?: AttendanceRecordSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
-     * The data used to create many TermAttendances.
+     * The data used to create many AttendanceRecords.
      */
-    data: TermAttendanceCreateManyInput | TermAttendanceCreateManyInput[]
+    data: AttendanceRecordCreateManyInput | AttendanceRecordCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: AttendanceRecordIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * TermAttendance update
+   * AttendanceRecord update
    */
-  export type TermAttendanceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
+    include?: AttendanceRecordInclude<ExtArgs> | null
     /**
-     * The data needed to update a TermAttendance.
+     * The data needed to update a AttendanceRecord.
      */
-    data: XOR<TermAttendanceUpdateInput, TermAttendanceUncheckedUpdateInput>
+    data: XOR<AttendanceRecordUpdateInput, AttendanceRecordUncheckedUpdateInput>
     /**
-     * Choose, which TermAttendance to update.
+     * Choose, which AttendanceRecord to update.
      */
-    where: TermAttendanceWhereUniqueInput
+    where: AttendanceRecordWhereUniqueInput
   }
 
   /**
-   * TermAttendance updateMany
+   * AttendanceRecord updateMany
    */
-  export type TermAttendanceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update TermAttendances.
+     * The data used to update AttendanceRecords.
      */
-    data: XOR<TermAttendanceUpdateManyMutationInput, TermAttendanceUncheckedUpdateManyInput>
+    data: XOR<AttendanceRecordUpdateManyMutationInput, AttendanceRecordUncheckedUpdateManyInput>
     /**
-     * Filter which TermAttendances to update
+     * Filter which AttendanceRecords to update
      */
-    where?: TermAttendanceWhereInput
+    where?: AttendanceRecordWhereInput
     /**
-     * Limit how many TermAttendances to update.
+     * Limit how many AttendanceRecords to update.
      */
     limit?: number
   }
 
   /**
-   * TermAttendance updateManyAndReturn
+   * AttendanceRecord updateManyAndReturn
    */
-  export type TermAttendanceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: AttendanceRecordSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
-     * The data used to update TermAttendances.
+     * The data used to update AttendanceRecords.
      */
-    data: XOR<TermAttendanceUpdateManyMutationInput, TermAttendanceUncheckedUpdateManyInput>
+    data: XOR<AttendanceRecordUpdateManyMutationInput, AttendanceRecordUncheckedUpdateManyInput>
     /**
-     * Filter which TermAttendances to update
+     * Filter which AttendanceRecords to update
      */
-    where?: TermAttendanceWhereInput
+    where?: AttendanceRecordWhereInput
     /**
-     * Limit how many TermAttendances to update.
+     * Limit how many AttendanceRecords to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: AttendanceRecordIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * TermAttendance upsert
+   * AttendanceRecord upsert
    */
-  export type TermAttendanceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
+    include?: AttendanceRecordInclude<ExtArgs> | null
     /**
-     * The filter to search for the TermAttendance to update in case it exists.
+     * The filter to search for the AttendanceRecord to update in case it exists.
      */
-    where: TermAttendanceWhereUniqueInput
+    where: AttendanceRecordWhereUniqueInput
     /**
-     * In case the TermAttendance found by the `where` argument doesn't exist, create a new TermAttendance with this data.
+     * In case the AttendanceRecord found by the `where` argument doesn't exist, create a new AttendanceRecord with this data.
      */
-    create: XOR<TermAttendanceCreateInput, TermAttendanceUncheckedCreateInput>
+    create: XOR<AttendanceRecordCreateInput, AttendanceRecordUncheckedCreateInput>
     /**
-     * In case the TermAttendance was found with the provided `where` argument, update it with this data.
+     * In case the AttendanceRecord was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<TermAttendanceUpdateInput, TermAttendanceUncheckedUpdateInput>
+    update: XOR<AttendanceRecordUpdateInput, AttendanceRecordUncheckedUpdateInput>
   }
 
   /**
-   * TermAttendance delete
+   * AttendanceRecord delete
    */
-  export type TermAttendanceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the TermAttendance
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
+    include?: AttendanceRecordInclude<ExtArgs> | null
     /**
-     * Filter which TermAttendance to delete.
+     * Filter which AttendanceRecord to delete.
      */
-    where: TermAttendanceWhereUniqueInput
+    where: AttendanceRecordWhereUniqueInput
   }
 
   /**
-   * TermAttendance deleteMany
+   * AttendanceRecord deleteMany
    */
-  export type TermAttendanceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which TermAttendances to delete
+     * Filter which AttendanceRecords to delete
      */
-    where?: TermAttendanceWhereInput
+    where?: AttendanceRecordWhereInput
     /**
-     * Limit how many TermAttendances to delete.
+     * Limit how many AttendanceRecords to delete.
      */
     limit?: number
   }
 
   /**
-   * TermAttendance.recordedBy
+   * AttendanceRecord without action
    */
-  export type TermAttendance$recordedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AttendanceRecordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Staff
+     * Select specific fields to fetch from the AttendanceRecord
      */
-    select?: StaffSelect<ExtArgs> | null
+    select?: AttendanceRecordSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Staff
+     * Omit specific fields from the AttendanceRecord
      */
-    omit?: StaffOmit<ExtArgs> | null
+    omit?: AttendanceRecordOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: StaffInclude<ExtArgs> | null
-    where?: StaffWhereInput
+    include?: AttendanceRecordInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ParentNotification
+   */
+
+  export type AggregateParentNotification = {
+    _count: ParentNotificationCountAggregateOutputType | null
+    _avg: ParentNotificationAvgAggregateOutputType | null
+    _sum: ParentNotificationSumAggregateOutputType | null
+    _min: ParentNotificationMinAggregateOutputType | null
+    _max: ParentNotificationMaxAggregateOutputType | null
+  }
+
+  export type ParentNotificationAvgAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+  }
+
+  export type ParentNotificationSumAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+  }
+
+  export type ParentNotificationMinAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    channel: string | null
+    phone: string | null
+    message: string | null
+    type: $Enums.ParentNotificationType | null
+    status: $Enums.NotificationStatus | null
+    sentAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type ParentNotificationMaxAggregateOutputType = {
+    id: number | null
+    studentId: number | null
+    channel: string | null
+    phone: string | null
+    message: string | null
+    type: $Enums.ParentNotificationType | null
+    status: $Enums.NotificationStatus | null
+    sentAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type ParentNotificationCountAggregateOutputType = {
+    id: number
+    studentId: number
+    channel: number
+    phone: number
+    message: number
+    type: number
+    status: number
+    sentAt: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ParentNotificationAvgAggregateInputType = {
+    id?: true
+    studentId?: true
+  }
+
+  export type ParentNotificationSumAggregateInputType = {
+    id?: true
+    studentId?: true
+  }
+
+  export type ParentNotificationMinAggregateInputType = {
+    id?: true
+    studentId?: true
+    channel?: true
+    phone?: true
+    message?: true
+    type?: true
+    status?: true
+    sentAt?: true
+    createdAt?: true
+  }
+
+  export type ParentNotificationMaxAggregateInputType = {
+    id?: true
+    studentId?: true
+    channel?: true
+    phone?: true
+    message?: true
+    type?: true
+    status?: true
+    sentAt?: true
+    createdAt?: true
+  }
+
+  export type ParentNotificationCountAggregateInputType = {
+    id?: true
+    studentId?: true
+    channel?: true
+    phone?: true
+    message?: true
+    type?: true
+    status?: true
+    sentAt?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ParentNotificationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ParentNotification to aggregate.
+     */
+    where?: ParentNotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ParentNotifications to fetch.
+     */
+    orderBy?: ParentNotificationOrderByWithRelationInput | ParentNotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ParentNotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ParentNotifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ParentNotifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ParentNotifications
+    **/
+    _count?: true | ParentNotificationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ParentNotificationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ParentNotificationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ParentNotificationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ParentNotificationMaxAggregateInputType
+  }
+
+  export type GetParentNotificationAggregateType<T extends ParentNotificationAggregateArgs> = {
+        [P in keyof T & keyof AggregateParentNotification]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateParentNotification[P]>
+      : GetScalarType<T[P], AggregateParentNotification[P]>
+  }
+
+
+
+
+  export type ParentNotificationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ParentNotificationWhereInput
+    orderBy?: ParentNotificationOrderByWithAggregationInput | ParentNotificationOrderByWithAggregationInput[]
+    by: ParentNotificationScalarFieldEnum[] | ParentNotificationScalarFieldEnum
+    having?: ParentNotificationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ParentNotificationCountAggregateInputType | true
+    _avg?: ParentNotificationAvgAggregateInputType
+    _sum?: ParentNotificationSumAggregateInputType
+    _min?: ParentNotificationMinAggregateInputType
+    _max?: ParentNotificationMaxAggregateInputType
+  }
+
+  export type ParentNotificationGroupByOutputType = {
+    id: number
+    studentId: number
+    channel: string
+    phone: string
+    message: string
+    type: $Enums.ParentNotificationType
+    status: $Enums.NotificationStatus
+    sentAt: Date
+    createdAt: Date
+    _count: ParentNotificationCountAggregateOutputType | null
+    _avg: ParentNotificationAvgAggregateOutputType | null
+    _sum: ParentNotificationSumAggregateOutputType | null
+    _min: ParentNotificationMinAggregateOutputType | null
+    _max: ParentNotificationMaxAggregateOutputType | null
+  }
+
+  type GetParentNotificationGroupByPayload<T extends ParentNotificationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ParentNotificationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ParentNotificationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ParentNotificationGroupByOutputType[P]>
+            : GetScalarType<T[P], ParentNotificationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ParentNotificationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    channel?: boolean
+    phone?: boolean
+    message?: boolean
+    type?: boolean
+    status?: boolean
+    sentAt?: boolean
+    createdAt?: boolean
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["parentNotification"]>
+
+  export type ParentNotificationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    channel?: boolean
+    phone?: boolean
+    message?: boolean
+    type?: boolean
+    status?: boolean
+    sentAt?: boolean
+    createdAt?: boolean
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["parentNotification"]>
+
+  export type ParentNotificationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    studentId?: boolean
+    channel?: boolean
+    phone?: boolean
+    message?: boolean
+    type?: boolean
+    status?: boolean
+    sentAt?: boolean
+    createdAt?: boolean
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["parentNotification"]>
+
+  export type ParentNotificationSelectScalar = {
+    id?: boolean
+    studentId?: boolean
+    channel?: boolean
+    phone?: boolean
+    message?: boolean
+    type?: boolean
+    status?: boolean
+    sentAt?: boolean
+    createdAt?: boolean
+  }
+
+  export type ParentNotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "channel" | "phone" | "message" | "type" | "status" | "sentAt" | "createdAt", ExtArgs["result"]["parentNotification"]>
+  export type ParentNotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }
+  export type ParentNotificationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }
+  export type ParentNotificationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    student?: boolean | StudentDefaultArgs<ExtArgs>
+  }
+
+  export type $ParentNotificationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ParentNotification"
+    objects: {
+      student: Prisma.$StudentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      studentId: number
+      channel: string
+      phone: string
+      message: string
+      type: $Enums.ParentNotificationType
+      status: $Enums.NotificationStatus
+      sentAt: Date
+      createdAt: Date
+    }, ExtArgs["result"]["parentNotification"]>
+    composites: {}
+  }
+
+  type ParentNotificationGetPayload<S extends boolean | null | undefined | ParentNotificationDefaultArgs> = $Result.GetResult<Prisma.$ParentNotificationPayload, S>
+
+  type ParentNotificationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ParentNotificationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ParentNotificationCountAggregateInputType | true
+    }
+
+  export interface ParentNotificationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ParentNotification'], meta: { name: 'ParentNotification' } }
+    /**
+     * Find zero or one ParentNotification that matches the filter.
+     * @param {ParentNotificationFindUniqueArgs} args - Arguments to find a ParentNotification
+     * @example
+     * // Get one ParentNotification
+     * const parentNotification = await prisma.parentNotification.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ParentNotificationFindUniqueArgs>(args: SelectSubset<T, ParentNotificationFindUniqueArgs<ExtArgs>>): Prisma__ParentNotificationClient<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ParentNotification that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ParentNotificationFindUniqueOrThrowArgs} args - Arguments to find a ParentNotification
+     * @example
+     * // Get one ParentNotification
+     * const parentNotification = await prisma.parentNotification.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ParentNotificationFindUniqueOrThrowArgs>(args: SelectSubset<T, ParentNotificationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ParentNotificationClient<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ParentNotification that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParentNotificationFindFirstArgs} args - Arguments to find a ParentNotification
+     * @example
+     * // Get one ParentNotification
+     * const parentNotification = await prisma.parentNotification.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ParentNotificationFindFirstArgs>(args?: SelectSubset<T, ParentNotificationFindFirstArgs<ExtArgs>>): Prisma__ParentNotificationClient<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ParentNotification that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParentNotificationFindFirstOrThrowArgs} args - Arguments to find a ParentNotification
+     * @example
+     * // Get one ParentNotification
+     * const parentNotification = await prisma.parentNotification.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ParentNotificationFindFirstOrThrowArgs>(args?: SelectSubset<T, ParentNotificationFindFirstOrThrowArgs<ExtArgs>>): Prisma__ParentNotificationClient<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ParentNotifications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParentNotificationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ParentNotifications
+     * const parentNotifications = await prisma.parentNotification.findMany()
+     * 
+     * // Get first 10 ParentNotifications
+     * const parentNotifications = await prisma.parentNotification.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const parentNotificationWithIdOnly = await prisma.parentNotification.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ParentNotificationFindManyArgs>(args?: SelectSubset<T, ParentNotificationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ParentNotification.
+     * @param {ParentNotificationCreateArgs} args - Arguments to create a ParentNotification.
+     * @example
+     * // Create one ParentNotification
+     * const ParentNotification = await prisma.parentNotification.create({
+     *   data: {
+     *     // ... data to create a ParentNotification
+     *   }
+     * })
+     * 
+     */
+    create<T extends ParentNotificationCreateArgs>(args: SelectSubset<T, ParentNotificationCreateArgs<ExtArgs>>): Prisma__ParentNotificationClient<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ParentNotifications.
+     * @param {ParentNotificationCreateManyArgs} args - Arguments to create many ParentNotifications.
+     * @example
+     * // Create many ParentNotifications
+     * const parentNotification = await prisma.parentNotification.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ParentNotificationCreateManyArgs>(args?: SelectSubset<T, ParentNotificationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ParentNotifications and returns the data saved in the database.
+     * @param {ParentNotificationCreateManyAndReturnArgs} args - Arguments to create many ParentNotifications.
+     * @example
+     * // Create many ParentNotifications
+     * const parentNotification = await prisma.parentNotification.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ParentNotifications and only return the `id`
+     * const parentNotificationWithIdOnly = await prisma.parentNotification.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ParentNotificationCreateManyAndReturnArgs>(args?: SelectSubset<T, ParentNotificationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ParentNotification.
+     * @param {ParentNotificationDeleteArgs} args - Arguments to delete one ParentNotification.
+     * @example
+     * // Delete one ParentNotification
+     * const ParentNotification = await prisma.parentNotification.delete({
+     *   where: {
+     *     // ... filter to delete one ParentNotification
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ParentNotificationDeleteArgs>(args: SelectSubset<T, ParentNotificationDeleteArgs<ExtArgs>>): Prisma__ParentNotificationClient<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ParentNotification.
+     * @param {ParentNotificationUpdateArgs} args - Arguments to update one ParentNotification.
+     * @example
+     * // Update one ParentNotification
+     * const parentNotification = await prisma.parentNotification.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ParentNotificationUpdateArgs>(args: SelectSubset<T, ParentNotificationUpdateArgs<ExtArgs>>): Prisma__ParentNotificationClient<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ParentNotifications.
+     * @param {ParentNotificationDeleteManyArgs} args - Arguments to filter ParentNotifications to delete.
+     * @example
+     * // Delete a few ParentNotifications
+     * const { count } = await prisma.parentNotification.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ParentNotificationDeleteManyArgs>(args?: SelectSubset<T, ParentNotificationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ParentNotifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParentNotificationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ParentNotifications
+     * const parentNotification = await prisma.parentNotification.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ParentNotificationUpdateManyArgs>(args: SelectSubset<T, ParentNotificationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ParentNotifications and returns the data updated in the database.
+     * @param {ParentNotificationUpdateManyAndReturnArgs} args - Arguments to update many ParentNotifications.
+     * @example
+     * // Update many ParentNotifications
+     * const parentNotification = await prisma.parentNotification.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ParentNotifications and only return the `id`
+     * const parentNotificationWithIdOnly = await prisma.parentNotification.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ParentNotificationUpdateManyAndReturnArgs>(args: SelectSubset<T, ParentNotificationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ParentNotification.
+     * @param {ParentNotificationUpsertArgs} args - Arguments to update or create a ParentNotification.
+     * @example
+     * // Update or create a ParentNotification
+     * const parentNotification = await prisma.parentNotification.upsert({
+     *   create: {
+     *     // ... data to create a ParentNotification
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ParentNotification we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ParentNotificationUpsertArgs>(args: SelectSubset<T, ParentNotificationUpsertArgs<ExtArgs>>): Prisma__ParentNotificationClient<$Result.GetResult<Prisma.$ParentNotificationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ParentNotifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParentNotificationCountArgs} args - Arguments to filter ParentNotifications to count.
+     * @example
+     * // Count the number of ParentNotifications
+     * const count = await prisma.parentNotification.count({
+     *   where: {
+     *     // ... the filter for the ParentNotifications we want to count
+     *   }
+     * })
+    **/
+    count<T extends ParentNotificationCountArgs>(
+      args?: Subset<T, ParentNotificationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ParentNotificationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ParentNotification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParentNotificationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ParentNotificationAggregateArgs>(args: Subset<T, ParentNotificationAggregateArgs>): Prisma.PrismaPromise<GetParentNotificationAggregateType<T>>
+
+    /**
+     * Group by ParentNotification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ParentNotificationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ParentNotificationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ParentNotificationGroupByArgs['orderBy'] }
+        : { orderBy?: ParentNotificationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ParentNotificationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetParentNotificationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ParentNotification model
+   */
+  readonly fields: ParentNotificationFieldRefs;
   }
 
   /**
-   * TermAttendance without action
+   * The delegate class that acts as a "Promise-like" for ParentNotification.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export type TermAttendanceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export interface Prisma__ParentNotificationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    student<T extends StudentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StudentDefaultArgs<ExtArgs>>): Prisma__StudentClient<$Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
-     * Select specific fields to fetch from the TermAttendance
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
      */
-    select?: TermAttendanceSelect<ExtArgs> | null
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
     /**
-     * Omit specific fields from the TermAttendance
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
      */
-    omit?: TermAttendanceOmit<ExtArgs> | null
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ParentNotification model
+   */
+  interface ParentNotificationFieldRefs {
+    readonly id: FieldRef<"ParentNotification", 'Int'>
+    readonly studentId: FieldRef<"ParentNotification", 'Int'>
+    readonly channel: FieldRef<"ParentNotification", 'String'>
+    readonly phone: FieldRef<"ParentNotification", 'String'>
+    readonly message: FieldRef<"ParentNotification", 'String'>
+    readonly type: FieldRef<"ParentNotification", 'ParentNotificationType'>
+    readonly status: FieldRef<"ParentNotification", 'NotificationStatus'>
+    readonly sentAt: FieldRef<"ParentNotification", 'DateTime'>
+    readonly createdAt: FieldRef<"ParentNotification", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ParentNotification findUnique
+   */
+  export type ParentNotificationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: TermAttendanceInclude<ExtArgs> | null
+    include?: ParentNotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which ParentNotification to fetch.
+     */
+    where: ParentNotificationWhereUniqueInput
+  }
+
+  /**
+   * ParentNotification findUniqueOrThrow
+   */
+  export type ParentNotificationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which ParentNotification to fetch.
+     */
+    where: ParentNotificationWhereUniqueInput
+  }
+
+  /**
+   * ParentNotification findFirst
+   */
+  export type ParentNotificationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which ParentNotification to fetch.
+     */
+    where?: ParentNotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ParentNotifications to fetch.
+     */
+    orderBy?: ParentNotificationOrderByWithRelationInput | ParentNotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ParentNotifications.
+     */
+    cursor?: ParentNotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ParentNotifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ParentNotifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ParentNotifications.
+     */
+    distinct?: ParentNotificationScalarFieldEnum | ParentNotificationScalarFieldEnum[]
+  }
+
+  /**
+   * ParentNotification findFirstOrThrow
+   */
+  export type ParentNotificationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which ParentNotification to fetch.
+     */
+    where?: ParentNotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ParentNotifications to fetch.
+     */
+    orderBy?: ParentNotificationOrderByWithRelationInput | ParentNotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ParentNotifications.
+     */
+    cursor?: ParentNotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ParentNotifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ParentNotifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ParentNotifications.
+     */
+    distinct?: ParentNotificationScalarFieldEnum | ParentNotificationScalarFieldEnum[]
+  }
+
+  /**
+   * ParentNotification findMany
+   */
+  export type ParentNotificationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which ParentNotifications to fetch.
+     */
+    where?: ParentNotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ParentNotifications to fetch.
+     */
+    orderBy?: ParentNotificationOrderByWithRelationInput | ParentNotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ParentNotifications.
+     */
+    cursor?: ParentNotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ParentNotifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ParentNotifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ParentNotifications.
+     */
+    distinct?: ParentNotificationScalarFieldEnum | ParentNotificationScalarFieldEnum[]
+  }
+
+  /**
+   * ParentNotification create
+   */
+  export type ParentNotificationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ParentNotification.
+     */
+    data: XOR<ParentNotificationCreateInput, ParentNotificationUncheckedCreateInput>
+  }
+
+  /**
+   * ParentNotification createMany
+   */
+  export type ParentNotificationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ParentNotifications.
+     */
+    data: ParentNotificationCreateManyInput | ParentNotificationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ParentNotification createManyAndReturn
+   */
+  export type ParentNotificationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * The data used to create many ParentNotifications.
+     */
+    data: ParentNotificationCreateManyInput | ParentNotificationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ParentNotification update
+   */
+  export type ParentNotificationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ParentNotification.
+     */
+    data: XOR<ParentNotificationUpdateInput, ParentNotificationUncheckedUpdateInput>
+    /**
+     * Choose, which ParentNotification to update.
+     */
+    where: ParentNotificationWhereUniqueInput
+  }
+
+  /**
+   * ParentNotification updateMany
+   */
+  export type ParentNotificationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ParentNotifications.
+     */
+    data: XOR<ParentNotificationUpdateManyMutationInput, ParentNotificationUncheckedUpdateManyInput>
+    /**
+     * Filter which ParentNotifications to update
+     */
+    where?: ParentNotificationWhereInput
+    /**
+     * Limit how many ParentNotifications to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ParentNotification updateManyAndReturn
+   */
+  export type ParentNotificationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * The data used to update ParentNotifications.
+     */
+    data: XOR<ParentNotificationUpdateManyMutationInput, ParentNotificationUncheckedUpdateManyInput>
+    /**
+     * Filter which ParentNotifications to update
+     */
+    where?: ParentNotificationWhereInput
+    /**
+     * Limit how many ParentNotifications to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ParentNotification upsert
+   */
+  export type ParentNotificationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ParentNotification to update in case it exists.
+     */
+    where: ParentNotificationWhereUniqueInput
+    /**
+     * In case the ParentNotification found by the `where` argument doesn't exist, create a new ParentNotification with this data.
+     */
+    create: XOR<ParentNotificationCreateInput, ParentNotificationUncheckedCreateInput>
+    /**
+     * In case the ParentNotification was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ParentNotificationUpdateInput, ParentNotificationUncheckedUpdateInput>
+  }
+
+  /**
+   * ParentNotification delete
+   */
+  export type ParentNotificationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationInclude<ExtArgs> | null
+    /**
+     * Filter which ParentNotification to delete.
+     */
+    where: ParentNotificationWhereUniqueInput
+  }
+
+  /**
+   * ParentNotification deleteMany
+   */
+  export type ParentNotificationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ParentNotifications to delete
+     */
+    where?: ParentNotificationWhereInput
+    /**
+     * Limit how many ParentNotifications to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ParentNotification without action
+   */
+  export type ParentNotificationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ParentNotification
+     */
+    select?: ParentNotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ParentNotification
+     */
+    omit?: ParentNotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ParentNotificationInclude<ExtArgs> | null
   }
 
 
@@ -11086,6 +11005,8 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     phoneNumber: 'phoneNumber',
+    role: 'role',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -11101,6 +11022,8 @@ export namespace Prisma {
     status: 'status',
     outDate: 'outDate',
     returnDate: 'returnDate',
+    accompaniedBy: 'accompaniedBy',
+    eventTheme: 'eventTheme',
     updatedAt: 'updatedAt'
   };
 
@@ -11130,48 +11053,47 @@ export namespace Prisma {
   export type TransportAssignmentScalarFieldEnum = (typeof TransportAssignmentScalarFieldEnum)[keyof typeof TransportAssignmentScalarFieldEnum]
 
 
-  export const PhoneBorrowScalarFieldEnum: {
-    id: 'id',
-    studentId: 'studentId',
-    phoneModel: 'phoneModel',
-    borrowedAt: 'borrowedAt',
-    returnedAt: 'returnedAt',
-    status: 'status',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type PhoneBorrowScalarFieldEnum = (typeof PhoneBorrowScalarFieldEnum)[keyof typeof PhoneBorrowScalarFieldEnum]
-
-
-  export const TermSessionScalarFieldEnum: {
+  export const AcademicTermScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    year: 'year',
     startDate: 'startDate',
     endDate: 'endDate',
-    openingDate: 'openingDate',
     isActive: 'isActive',
-    status: 'status',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type TermSessionScalarFieldEnum = (typeof TermSessionScalarFieldEnum)[keyof typeof TermSessionScalarFieldEnum]
+  export type AcademicTermScalarFieldEnum = (typeof AcademicTermScalarFieldEnum)[keyof typeof AcademicTermScalarFieldEnum]
 
 
-  export const TermAttendanceScalarFieldEnum: {
+  export const AttendanceRecordScalarFieldEnum: {
     id: 'id',
-    termId: 'termId',
     studentId: 'studentId',
+    termId: 'termId',
+    date: 'date',
     status: 'status',
-    arrivalTime: 'arrivalTime',
-    recordedById: 'recordedById',
+    note: 'note',
+    markedByStaffId: 'markedByStaffId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
 
-  export type TermAttendanceScalarFieldEnum = (typeof TermAttendanceScalarFieldEnum)[keyof typeof TermAttendanceScalarFieldEnum]
+  export type AttendanceRecordScalarFieldEnum = (typeof AttendanceRecordScalarFieldEnum)[keyof typeof AttendanceRecordScalarFieldEnum]
+
+
+  export const ParentNotificationScalarFieldEnum: {
+    id: 'id',
+    studentId: 'studentId',
+    channel: 'channel',
+    phone: 'phone',
+    message: 'message',
+    type: 'type',
+    status: 'status',
+    sentAt: 'sentAt',
+    createdAt: 'createdAt'
+  };
+
+  export type ParentNotificationScalarFieldEnum = (typeof ParentNotificationScalarFieldEnum)[keyof typeof ParentNotificationScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -11260,6 +11182,27 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'StaffRole'
+   */
+  export type EnumStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StaffRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'StaffRole[]'
+   */
+  export type ListEnumStaffRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StaffRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -11288,41 +11231,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'PhoneBorrowStatus'
-   */
-  export type EnumPhoneBorrowStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PhoneBorrowStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'PhoneBorrowStatus[]'
-   */
-  export type ListEnumPhoneBorrowStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PhoneBorrowStatus[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
-   * Reference to a field of type 'TermStatus'
-   */
-  export type EnumTermStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TermStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'TermStatus[]'
-   */
-  export type ListEnumTermStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TermStatus[]'>
-    
-
-
-  /**
    * Reference to a field of type 'AttendanceStatus'
    */
   export type EnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus'>
@@ -11333,6 +11241,34 @@ export namespace Prisma {
    * Reference to a field of type 'AttendanceStatus[]'
    */
   export type ListEnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ParentNotificationType'
+   */
+  export type EnumParentNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ParentNotificationType'>
+    
+
+
+  /**
+   * Reference to a field of type 'ParentNotificationType[]'
+   */
+  export type ListEnumParentNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ParentNotificationType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'NotificationStatus'
+   */
+  export type EnumNotificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'NotificationStatus[]'
+   */
+  export type ListEnumNotificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationStatus[]'>
     
   /**
    * Deep Input Types
@@ -11358,8 +11294,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Student"> | Date | string
     records?: DisciplineRecordListRelationFilter
     transportAssignments?: TransportAssignmentListRelationFilter
-    phoneBorrows?: PhoneBorrowListRelationFilter
-    termAttendances?: TermAttendanceListRelationFilter
+    attendanceRecords?: AttendanceRecordListRelationFilter
+    parentNotifications?: ParentNotificationListRelationFilter
   }
 
   export type StudentOrderByWithRelationInput = {
@@ -11378,8 +11314,8 @@ export namespace Prisma {
     updatedAt?: SortOrder
     records?: DisciplineRecordOrderByRelationAggregateInput
     transportAssignments?: TransportAssignmentOrderByRelationAggregateInput
-    phoneBorrows?: PhoneBorrowOrderByRelationAggregateInput
-    termAttendances?: TermAttendanceOrderByRelationAggregateInput
+    attendanceRecords?: AttendanceRecordOrderByRelationAggregateInput
+    parentNotifications?: ParentNotificationOrderByRelationAggregateInput
   }
 
   export type StudentWhereUniqueInput = Prisma.AtLeast<{
@@ -11401,8 +11337,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Student"> | Date | string
     records?: DisciplineRecordListRelationFilter
     transportAssignments?: TransportAssignmentListRelationFilter
-    phoneBorrows?: PhoneBorrowListRelationFilter
-    termAttendances?: TermAttendanceListRelationFilter
+    attendanceRecords?: AttendanceRecordListRelationFilter
+    parentNotifications?: ParentNotificationListRelationFilter
   }, "id">
 
   export type StudentOrderByWithAggregationInput = {
@@ -11455,9 +11391,10 @@ export namespace Prisma {
     email?: StringFilter<"Staff"> | string
     password?: StringFilter<"Staff"> | string
     phoneNumber?: StringFilter<"Staff"> | string
+    role?: EnumStaffRoleFilter<"Staff"> | $Enums.StaffRole
+    isActive?: BoolFilter<"Staff"> | boolean
     createdAt?: DateTimeFilter<"Staff"> | Date | string
     updatedAt?: DateTimeFilter<"Staff"> | Date | string
-    termAttendances?: TermAttendanceListRelationFilter
   }
 
   export type StaffOrderByWithRelationInput = {
@@ -11467,9 +11404,10 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phoneNumber?: SortOrder
+    role?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    termAttendances?: TermAttendanceOrderByRelationAggregateInput
   }
 
   export type StaffWhereUniqueInput = Prisma.AtLeast<{
@@ -11482,9 +11420,10 @@ export namespace Prisma {
     lastName?: StringFilter<"Staff"> | string
     password?: StringFilter<"Staff"> | string
     phoneNumber?: StringFilter<"Staff"> | string
+    role?: EnumStaffRoleFilter<"Staff"> | $Enums.StaffRole
+    isActive?: BoolFilter<"Staff"> | boolean
     createdAt?: DateTimeFilter<"Staff"> | Date | string
     updatedAt?: DateTimeFilter<"Staff"> | Date | string
-    termAttendances?: TermAttendanceListRelationFilter
   }, "id" | "email">
 
   export type StaffOrderByWithAggregationInput = {
@@ -11494,6 +11433,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phoneNumber?: SortOrder
+    role?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: StaffCountOrderByAggregateInput
@@ -11513,6 +11454,8 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Staff"> | string
     password?: StringWithAggregatesFilter<"Staff"> | string
     phoneNumber?: StringWithAggregatesFilter<"Staff"> | string
+    role?: EnumStaffRoleWithAggregatesFilter<"Staff"> | $Enums.StaffRole
+    isActive?: BoolWithAggregatesFilter<"Staff"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Staff"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Staff"> | Date | string
   }
@@ -11528,6 +11471,8 @@ export namespace Prisma {
     status?: StringFilter<"DisciplineRecord"> | string
     outDate?: DateTimeFilter<"DisciplineRecord"> | Date | string
     returnDate?: DateTimeNullableFilter<"DisciplineRecord"> | Date | string | null
+    accompaniedBy?: StringNullableFilter<"DisciplineRecord"> | string | null
+    eventTheme?: StringNullableFilter<"DisciplineRecord"> | string | null
     updatedAt?: DateTimeFilter<"DisciplineRecord"> | Date | string
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
   }
@@ -11540,6 +11485,8 @@ export namespace Prisma {
     status?: SortOrder
     outDate?: SortOrder
     returnDate?: SortOrderInput | SortOrder
+    accompaniedBy?: SortOrderInput | SortOrder
+    eventTheme?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
     student?: StudentOrderByWithRelationInput
   }
@@ -11555,6 +11502,8 @@ export namespace Prisma {
     status?: StringFilter<"DisciplineRecord"> | string
     outDate?: DateTimeFilter<"DisciplineRecord"> | Date | string
     returnDate?: DateTimeNullableFilter<"DisciplineRecord"> | Date | string | null
+    accompaniedBy?: StringNullableFilter<"DisciplineRecord"> | string | null
+    eventTheme?: StringNullableFilter<"DisciplineRecord"> | string | null
     updatedAt?: DateTimeFilter<"DisciplineRecord"> | Date | string
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
   }, "id">
@@ -11567,6 +11516,8 @@ export namespace Prisma {
     status?: SortOrder
     outDate?: SortOrder
     returnDate?: SortOrderInput | SortOrder
+    accompaniedBy?: SortOrderInput | SortOrder
+    eventTheme?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
     _count?: DisciplineRecordCountOrderByAggregateInput
     _avg?: DisciplineRecordAvgOrderByAggregateInput
@@ -11586,6 +11537,8 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"DisciplineRecord"> | string
     outDate?: DateTimeWithAggregatesFilter<"DisciplineRecord"> | Date | string
     returnDate?: DateTimeNullableWithAggregatesFilter<"DisciplineRecord"> | Date | string | null
+    accompaniedBy?: StringNullableWithAggregatesFilter<"DisciplineRecord"> | string | null
+    eventTheme?: StringNullableWithAggregatesFilter<"DisciplineRecord"> | string | null
     updatedAt?: DateTimeWithAggregatesFilter<"DisciplineRecord"> | Date | string
   }
 
@@ -11712,238 +11665,229 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"TransportAssignment"> | Date | string
   }
 
-  export type PhoneBorrowWhereInput = {
-    AND?: PhoneBorrowWhereInput | PhoneBorrowWhereInput[]
-    OR?: PhoneBorrowWhereInput[]
-    NOT?: PhoneBorrowWhereInput | PhoneBorrowWhereInput[]
-    id?: IntFilter<"PhoneBorrow"> | number
-    studentId?: IntFilter<"PhoneBorrow"> | number
-    phoneModel?: StringFilter<"PhoneBorrow"> | string
-    borrowedAt?: DateTimeFilter<"PhoneBorrow"> | Date | string
-    returnedAt?: DateTimeNullableFilter<"PhoneBorrow"> | Date | string | null
-    status?: EnumPhoneBorrowStatusFilter<"PhoneBorrow"> | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeFilter<"PhoneBorrow"> | Date | string
-    updatedAt?: DateTimeFilter<"PhoneBorrow"> | Date | string
-    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+  export type AcademicTermWhereInput = {
+    AND?: AcademicTermWhereInput | AcademicTermWhereInput[]
+    OR?: AcademicTermWhereInput[]
+    NOT?: AcademicTermWhereInput | AcademicTermWhereInput[]
+    id?: IntFilter<"AcademicTerm"> | number
+    name?: StringFilter<"AcademicTerm"> | string
+    startDate?: DateTimeFilter<"AcademicTerm"> | Date | string
+    endDate?: DateTimeNullableFilter<"AcademicTerm"> | Date | string | null
+    isActive?: BoolFilter<"AcademicTerm"> | boolean
+    createdAt?: DateTimeFilter<"AcademicTerm"> | Date | string
+    updatedAt?: DateTimeFilter<"AcademicTerm"> | Date | string
+    attendanceRecords?: AttendanceRecordListRelationFilter
   }
 
-  export type PhoneBorrowOrderByWithRelationInput = {
+  export type AcademicTermOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    attendanceRecords?: AttendanceRecordOrderByRelationAggregateInput
+  }
+
+  export type AcademicTermWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AcademicTermWhereInput | AcademicTermWhereInput[]
+    OR?: AcademicTermWhereInput[]
+    NOT?: AcademicTermWhereInput | AcademicTermWhereInput[]
+    name?: StringFilter<"AcademicTerm"> | string
+    startDate?: DateTimeFilter<"AcademicTerm"> | Date | string
+    endDate?: DateTimeNullableFilter<"AcademicTerm"> | Date | string | null
+    isActive?: BoolFilter<"AcademicTerm"> | boolean
+    createdAt?: DateTimeFilter<"AcademicTerm"> | Date | string
+    updatedAt?: DateTimeFilter<"AcademicTerm"> | Date | string
+    attendanceRecords?: AttendanceRecordListRelationFilter
+  }, "id">
+
+  export type AcademicTermOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AcademicTermCountOrderByAggregateInput
+    _avg?: AcademicTermAvgOrderByAggregateInput
+    _max?: AcademicTermMaxOrderByAggregateInput
+    _min?: AcademicTermMinOrderByAggregateInput
+    _sum?: AcademicTermSumOrderByAggregateInput
+  }
+
+  export type AcademicTermScalarWhereWithAggregatesInput = {
+    AND?: AcademicTermScalarWhereWithAggregatesInput | AcademicTermScalarWhereWithAggregatesInput[]
+    OR?: AcademicTermScalarWhereWithAggregatesInput[]
+    NOT?: AcademicTermScalarWhereWithAggregatesInput | AcademicTermScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AcademicTerm"> | number
+    name?: StringWithAggregatesFilter<"AcademicTerm"> | string
+    startDate?: DateTimeWithAggregatesFilter<"AcademicTerm"> | Date | string
+    endDate?: DateTimeNullableWithAggregatesFilter<"AcademicTerm"> | Date | string | null
+    isActive?: BoolWithAggregatesFilter<"AcademicTerm"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"AcademicTerm"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AcademicTerm"> | Date | string
+  }
+
+  export type AttendanceRecordWhereInput = {
+    AND?: AttendanceRecordWhereInput | AttendanceRecordWhereInput[]
+    OR?: AttendanceRecordWhereInput[]
+    NOT?: AttendanceRecordWhereInput | AttendanceRecordWhereInput[]
+    id?: IntFilter<"AttendanceRecord"> | number
+    studentId?: IntFilter<"AttendanceRecord"> | number
+    termId?: IntFilter<"AttendanceRecord"> | number
+    date?: DateTimeFilter<"AttendanceRecord"> | Date | string
+    status?: EnumAttendanceStatusFilter<"AttendanceRecord"> | $Enums.AttendanceStatus
+    note?: StringNullableFilter<"AttendanceRecord"> | string | null
+    markedByStaffId?: IntNullableFilter<"AttendanceRecord"> | number | null
+    createdAt?: DateTimeFilter<"AttendanceRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"AttendanceRecord"> | Date | string
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+    term?: XOR<AcademicTermScalarRelationFilter, AcademicTermWhereInput>
+  }
+
+  export type AttendanceRecordOrderByWithRelationInput = {
     id?: SortOrder
     studentId?: SortOrder
-    phoneModel?: SortOrder
-    borrowedAt?: SortOrder
-    returnedAt?: SortOrderInput | SortOrder
+    termId?: SortOrder
+    date?: SortOrder
     status?: SortOrder
+    note?: SortOrderInput | SortOrder
+    markedByStaffId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     student?: StudentOrderByWithRelationInput
+    term?: AcademicTermOrderByWithRelationInput
   }
 
-  export type PhoneBorrowWhereUniqueInput = Prisma.AtLeast<{
+  export type AttendanceRecordWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: PhoneBorrowWhereInput | PhoneBorrowWhereInput[]
-    OR?: PhoneBorrowWhereInput[]
-    NOT?: PhoneBorrowWhereInput | PhoneBorrowWhereInput[]
-    studentId?: IntFilter<"PhoneBorrow"> | number
-    phoneModel?: StringFilter<"PhoneBorrow"> | string
-    borrowedAt?: DateTimeFilter<"PhoneBorrow"> | Date | string
-    returnedAt?: DateTimeNullableFilter<"PhoneBorrow"> | Date | string | null
-    status?: EnumPhoneBorrowStatusFilter<"PhoneBorrow"> | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeFilter<"PhoneBorrow"> | Date | string
-    updatedAt?: DateTimeFilter<"PhoneBorrow"> | Date | string
+    studentId_termId_date?: AttendanceRecordStudentIdTermIdDateCompoundUniqueInput
+    AND?: AttendanceRecordWhereInput | AttendanceRecordWhereInput[]
+    OR?: AttendanceRecordWhereInput[]
+    NOT?: AttendanceRecordWhereInput | AttendanceRecordWhereInput[]
+    studentId?: IntFilter<"AttendanceRecord"> | number
+    termId?: IntFilter<"AttendanceRecord"> | number
+    date?: DateTimeFilter<"AttendanceRecord"> | Date | string
+    status?: EnumAttendanceStatusFilter<"AttendanceRecord"> | $Enums.AttendanceStatus
+    note?: StringNullableFilter<"AttendanceRecord"> | string | null
+    markedByStaffId?: IntNullableFilter<"AttendanceRecord"> | number | null
+    createdAt?: DateTimeFilter<"AttendanceRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"AttendanceRecord"> | Date | string
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+    term?: XOR<AcademicTermScalarRelationFilter, AcademicTermWhereInput>
+  }, "id" | "studentId_termId_date">
+
+  export type AttendanceRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    termId?: SortOrder
+    date?: SortOrder
+    status?: SortOrder
+    note?: SortOrderInput | SortOrder
+    markedByStaffId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AttendanceRecordCountOrderByAggregateInput
+    _avg?: AttendanceRecordAvgOrderByAggregateInput
+    _max?: AttendanceRecordMaxOrderByAggregateInput
+    _min?: AttendanceRecordMinOrderByAggregateInput
+    _sum?: AttendanceRecordSumOrderByAggregateInput
+  }
+
+  export type AttendanceRecordScalarWhereWithAggregatesInput = {
+    AND?: AttendanceRecordScalarWhereWithAggregatesInput | AttendanceRecordScalarWhereWithAggregatesInput[]
+    OR?: AttendanceRecordScalarWhereWithAggregatesInput[]
+    NOT?: AttendanceRecordScalarWhereWithAggregatesInput | AttendanceRecordScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"AttendanceRecord"> | number
+    studentId?: IntWithAggregatesFilter<"AttendanceRecord"> | number
+    termId?: IntWithAggregatesFilter<"AttendanceRecord"> | number
+    date?: DateTimeWithAggregatesFilter<"AttendanceRecord"> | Date | string
+    status?: EnumAttendanceStatusWithAggregatesFilter<"AttendanceRecord"> | $Enums.AttendanceStatus
+    note?: StringNullableWithAggregatesFilter<"AttendanceRecord"> | string | null
+    markedByStaffId?: IntNullableWithAggregatesFilter<"AttendanceRecord"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"AttendanceRecord"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AttendanceRecord"> | Date | string
+  }
+
+  export type ParentNotificationWhereInput = {
+    AND?: ParentNotificationWhereInput | ParentNotificationWhereInput[]
+    OR?: ParentNotificationWhereInput[]
+    NOT?: ParentNotificationWhereInput | ParentNotificationWhereInput[]
+    id?: IntFilter<"ParentNotification"> | number
+    studentId?: IntFilter<"ParentNotification"> | number
+    channel?: StringFilter<"ParentNotification"> | string
+    phone?: StringFilter<"ParentNotification"> | string
+    message?: StringFilter<"ParentNotification"> | string
+    type?: EnumParentNotificationTypeFilter<"ParentNotification"> | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusFilter<"ParentNotification"> | $Enums.NotificationStatus
+    sentAt?: DateTimeFilter<"ParentNotification"> | Date | string
+    createdAt?: DateTimeFilter<"ParentNotification"> | Date | string
+    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
+  }
+
+  export type ParentNotificationOrderByWithRelationInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    channel?: SortOrder
+    phone?: SortOrder
+    message?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    sentAt?: SortOrder
+    createdAt?: SortOrder
+    student?: StudentOrderByWithRelationInput
+  }
+
+  export type ParentNotificationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ParentNotificationWhereInput | ParentNotificationWhereInput[]
+    OR?: ParentNotificationWhereInput[]
+    NOT?: ParentNotificationWhereInput | ParentNotificationWhereInput[]
+    studentId?: IntFilter<"ParentNotification"> | number
+    channel?: StringFilter<"ParentNotification"> | string
+    phone?: StringFilter<"ParentNotification"> | string
+    message?: StringFilter<"ParentNotification"> | string
+    type?: EnumParentNotificationTypeFilter<"ParentNotification"> | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusFilter<"ParentNotification"> | $Enums.NotificationStatus
+    sentAt?: DateTimeFilter<"ParentNotification"> | Date | string
+    createdAt?: DateTimeFilter<"ParentNotification"> | Date | string
     student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
   }, "id">
 
-  export type PhoneBorrowOrderByWithAggregationInput = {
+  export type ParentNotificationOrderByWithAggregationInput = {
     id?: SortOrder
     studentId?: SortOrder
-    phoneModel?: SortOrder
-    borrowedAt?: SortOrder
-    returnedAt?: SortOrderInput | SortOrder
+    channel?: SortOrder
+    phone?: SortOrder
+    message?: SortOrder
+    type?: SortOrder
     status?: SortOrder
+    sentAt?: SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: PhoneBorrowCountOrderByAggregateInput
-    _avg?: PhoneBorrowAvgOrderByAggregateInput
-    _max?: PhoneBorrowMaxOrderByAggregateInput
-    _min?: PhoneBorrowMinOrderByAggregateInput
-    _sum?: PhoneBorrowSumOrderByAggregateInput
+    _count?: ParentNotificationCountOrderByAggregateInput
+    _avg?: ParentNotificationAvgOrderByAggregateInput
+    _max?: ParentNotificationMaxOrderByAggregateInput
+    _min?: ParentNotificationMinOrderByAggregateInput
+    _sum?: ParentNotificationSumOrderByAggregateInput
   }
 
-  export type PhoneBorrowScalarWhereWithAggregatesInput = {
-    AND?: PhoneBorrowScalarWhereWithAggregatesInput | PhoneBorrowScalarWhereWithAggregatesInput[]
-    OR?: PhoneBorrowScalarWhereWithAggregatesInput[]
-    NOT?: PhoneBorrowScalarWhereWithAggregatesInput | PhoneBorrowScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"PhoneBorrow"> | number
-    studentId?: IntWithAggregatesFilter<"PhoneBorrow"> | number
-    phoneModel?: StringWithAggregatesFilter<"PhoneBorrow"> | string
-    borrowedAt?: DateTimeWithAggregatesFilter<"PhoneBorrow"> | Date | string
-    returnedAt?: DateTimeNullableWithAggregatesFilter<"PhoneBorrow"> | Date | string | null
-    status?: EnumPhoneBorrowStatusWithAggregatesFilter<"PhoneBorrow"> | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeWithAggregatesFilter<"PhoneBorrow"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"PhoneBorrow"> | Date | string
-  }
-
-  export type TermSessionWhereInput = {
-    AND?: TermSessionWhereInput | TermSessionWhereInput[]
-    OR?: TermSessionWhereInput[]
-    NOT?: TermSessionWhereInput | TermSessionWhereInput[]
-    id?: IntFilter<"TermSession"> | number
-    name?: StringFilter<"TermSession"> | string
-    year?: IntFilter<"TermSession"> | number
-    startDate?: DateTimeFilter<"TermSession"> | Date | string
-    endDate?: DateTimeFilter<"TermSession"> | Date | string
-    openingDate?: DateTimeFilter<"TermSession"> | Date | string
-    isActive?: BoolFilter<"TermSession"> | boolean
-    status?: EnumTermStatusFilter<"TermSession"> | $Enums.TermStatus
-    createdAt?: DateTimeFilter<"TermSession"> | Date | string
-    updatedAt?: DateTimeFilter<"TermSession"> | Date | string
-    attendances?: TermAttendanceListRelationFilter
-  }
-
-  export type TermSessionOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    year?: SortOrder
-    startDate?: SortOrder
-    endDate?: SortOrder
-    openingDate?: SortOrder
-    isActive?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    attendances?: TermAttendanceOrderByRelationAggregateInput
-  }
-
-  export type TermSessionWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    name_year?: TermSessionNameYearCompoundUniqueInput
-    AND?: TermSessionWhereInput | TermSessionWhereInput[]
-    OR?: TermSessionWhereInput[]
-    NOT?: TermSessionWhereInput | TermSessionWhereInput[]
-    name?: StringFilter<"TermSession"> | string
-    year?: IntFilter<"TermSession"> | number
-    startDate?: DateTimeFilter<"TermSession"> | Date | string
-    endDate?: DateTimeFilter<"TermSession"> | Date | string
-    openingDate?: DateTimeFilter<"TermSession"> | Date | string
-    isActive?: BoolFilter<"TermSession"> | boolean
-    status?: EnumTermStatusFilter<"TermSession"> | $Enums.TermStatus
-    createdAt?: DateTimeFilter<"TermSession"> | Date | string
-    updatedAt?: DateTimeFilter<"TermSession"> | Date | string
-    attendances?: TermAttendanceListRelationFilter
-  }, "id" | "name_year">
-
-  export type TermSessionOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    year?: SortOrder
-    startDate?: SortOrder
-    endDate?: SortOrder
-    openingDate?: SortOrder
-    isActive?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TermSessionCountOrderByAggregateInput
-    _avg?: TermSessionAvgOrderByAggregateInput
-    _max?: TermSessionMaxOrderByAggregateInput
-    _min?: TermSessionMinOrderByAggregateInput
-    _sum?: TermSessionSumOrderByAggregateInput
-  }
-
-  export type TermSessionScalarWhereWithAggregatesInput = {
-    AND?: TermSessionScalarWhereWithAggregatesInput | TermSessionScalarWhereWithAggregatesInput[]
-    OR?: TermSessionScalarWhereWithAggregatesInput[]
-    NOT?: TermSessionScalarWhereWithAggregatesInput | TermSessionScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"TermSession"> | number
-    name?: StringWithAggregatesFilter<"TermSession"> | string
-    year?: IntWithAggregatesFilter<"TermSession"> | number
-    startDate?: DateTimeWithAggregatesFilter<"TermSession"> | Date | string
-    endDate?: DateTimeWithAggregatesFilter<"TermSession"> | Date | string
-    openingDate?: DateTimeWithAggregatesFilter<"TermSession"> | Date | string
-    isActive?: BoolWithAggregatesFilter<"TermSession"> | boolean
-    status?: EnumTermStatusWithAggregatesFilter<"TermSession"> | $Enums.TermStatus
-    createdAt?: DateTimeWithAggregatesFilter<"TermSession"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"TermSession"> | Date | string
-  }
-
-  export type TermAttendanceWhereInput = {
-    AND?: TermAttendanceWhereInput | TermAttendanceWhereInput[]
-    OR?: TermAttendanceWhereInput[]
-    NOT?: TermAttendanceWhereInput | TermAttendanceWhereInput[]
-    id?: IntFilter<"TermAttendance"> | number
-    termId?: IntFilter<"TermAttendance"> | number
-    studentId?: IntFilter<"TermAttendance"> | number
-    status?: EnumAttendanceStatusFilter<"TermAttendance"> | $Enums.AttendanceStatus
-    arrivalTime?: DateTimeNullableFilter<"TermAttendance"> | Date | string | null
-    recordedById?: IntNullableFilter<"TermAttendance"> | number | null
-    createdAt?: DateTimeFilter<"TermAttendance"> | Date | string
-    updatedAt?: DateTimeFilter<"TermAttendance"> | Date | string
-    recordedBy?: XOR<StaffNullableScalarRelationFilter, StaffWhereInput> | null
-    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
-    term?: XOR<TermSessionScalarRelationFilter, TermSessionWhereInput>
-  }
-
-  export type TermAttendanceOrderByWithRelationInput = {
-    id?: SortOrder
-    termId?: SortOrder
-    studentId?: SortOrder
-    status?: SortOrder
-    arrivalTime?: SortOrderInput | SortOrder
-    recordedById?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    recordedBy?: StaffOrderByWithRelationInput
-    student?: StudentOrderByWithRelationInput
-    term?: TermSessionOrderByWithRelationInput
-  }
-
-  export type TermAttendanceWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    termId_studentId?: TermAttendanceTermIdStudentIdCompoundUniqueInput
-    AND?: TermAttendanceWhereInput | TermAttendanceWhereInput[]
-    OR?: TermAttendanceWhereInput[]
-    NOT?: TermAttendanceWhereInput | TermAttendanceWhereInput[]
-    termId?: IntFilter<"TermAttendance"> | number
-    studentId?: IntFilter<"TermAttendance"> | number
-    status?: EnumAttendanceStatusFilter<"TermAttendance"> | $Enums.AttendanceStatus
-    arrivalTime?: DateTimeNullableFilter<"TermAttendance"> | Date | string | null
-    recordedById?: IntNullableFilter<"TermAttendance"> | number | null
-    createdAt?: DateTimeFilter<"TermAttendance"> | Date | string
-    updatedAt?: DateTimeFilter<"TermAttendance"> | Date | string
-    recordedBy?: XOR<StaffNullableScalarRelationFilter, StaffWhereInput> | null
-    student?: XOR<StudentScalarRelationFilter, StudentWhereInput>
-    term?: XOR<TermSessionScalarRelationFilter, TermSessionWhereInput>
-  }, "id" | "termId_studentId">
-
-  export type TermAttendanceOrderByWithAggregationInput = {
-    id?: SortOrder
-    termId?: SortOrder
-    studentId?: SortOrder
-    status?: SortOrder
-    arrivalTime?: SortOrderInput | SortOrder
-    recordedById?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: TermAttendanceCountOrderByAggregateInput
-    _avg?: TermAttendanceAvgOrderByAggregateInput
-    _max?: TermAttendanceMaxOrderByAggregateInput
-    _min?: TermAttendanceMinOrderByAggregateInput
-    _sum?: TermAttendanceSumOrderByAggregateInput
-  }
-
-  export type TermAttendanceScalarWhereWithAggregatesInput = {
-    AND?: TermAttendanceScalarWhereWithAggregatesInput | TermAttendanceScalarWhereWithAggregatesInput[]
-    OR?: TermAttendanceScalarWhereWithAggregatesInput[]
-    NOT?: TermAttendanceScalarWhereWithAggregatesInput | TermAttendanceScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"TermAttendance"> | number
-    termId?: IntWithAggregatesFilter<"TermAttendance"> | number
-    studentId?: IntWithAggregatesFilter<"TermAttendance"> | number
-    status?: EnumAttendanceStatusWithAggregatesFilter<"TermAttendance"> | $Enums.AttendanceStatus
-    arrivalTime?: DateTimeNullableWithAggregatesFilter<"TermAttendance"> | Date | string | null
-    recordedById?: IntNullableWithAggregatesFilter<"TermAttendance"> | number | null
-    createdAt?: DateTimeWithAggregatesFilter<"TermAttendance"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"TermAttendance"> | Date | string
+  export type ParentNotificationScalarWhereWithAggregatesInput = {
+    AND?: ParentNotificationScalarWhereWithAggregatesInput | ParentNotificationScalarWhereWithAggregatesInput[]
+    OR?: ParentNotificationScalarWhereWithAggregatesInput[]
+    NOT?: ParentNotificationScalarWhereWithAggregatesInput | ParentNotificationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ParentNotification"> | number
+    studentId?: IntWithAggregatesFilter<"ParentNotification"> | number
+    channel?: StringWithAggregatesFilter<"ParentNotification"> | string
+    phone?: StringWithAggregatesFilter<"ParentNotification"> | string
+    message?: StringWithAggregatesFilter<"ParentNotification"> | string
+    type?: EnumParentNotificationTypeWithAggregatesFilter<"ParentNotification"> | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusWithAggregatesFilter<"ParentNotification"> | $Enums.NotificationStatus
+    sentAt?: DateTimeWithAggregatesFilter<"ParentNotification"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"ParentNotification"> | Date | string
   }
 
   export type StudentCreateInput = {
@@ -11961,8 +11905,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     records?: DisciplineRecordCreateNestedManyWithoutStudentInput
     transportAssignments?: TransportAssignmentCreateNestedManyWithoutStudentInput
-    phoneBorrows?: PhoneBorrowCreateNestedManyWithoutStudentInput
-    termAttendances?: TermAttendanceCreateNestedManyWithoutStudentInput
+    attendanceRecords?: AttendanceRecordCreateNestedManyWithoutStudentInput
+    parentNotifications?: ParentNotificationCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateInput = {
@@ -11981,8 +11925,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     records?: DisciplineRecordUncheckedCreateNestedManyWithoutStudentInput
     transportAssignments?: TransportAssignmentUncheckedCreateNestedManyWithoutStudentInput
-    phoneBorrows?: PhoneBorrowUncheckedCreateNestedManyWithoutStudentInput
-    termAttendances?: TermAttendanceUncheckedCreateNestedManyWithoutStudentInput
+    attendanceRecords?: AttendanceRecordUncheckedCreateNestedManyWithoutStudentInput
+    parentNotifications?: ParentNotificationUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUpdateInput = {
@@ -12000,8 +11944,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     records?: DisciplineRecordUpdateManyWithoutStudentNestedInput
     transportAssignments?: TransportAssignmentUpdateManyWithoutStudentNestedInput
-    phoneBorrows?: PhoneBorrowUpdateManyWithoutStudentNestedInput
-    termAttendances?: TermAttendanceUpdateManyWithoutStudentNestedInput
+    attendanceRecords?: AttendanceRecordUpdateManyWithoutStudentNestedInput
+    parentNotifications?: ParentNotificationUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateInput = {
@@ -12020,8 +11964,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     records?: DisciplineRecordUncheckedUpdateManyWithoutStudentNestedInput
     transportAssignments?: TransportAssignmentUncheckedUpdateManyWithoutStudentNestedInput
-    phoneBorrows?: PhoneBorrowUncheckedUpdateManyWithoutStudentNestedInput
-    termAttendances?: TermAttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    attendanceRecords?: AttendanceRecordUncheckedUpdateManyWithoutStudentNestedInput
+    parentNotifications?: ParentNotificationUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentCreateManyInput = {
@@ -12077,9 +12021,10 @@ export namespace Prisma {
     email: string
     password: string
     phoneNumber: string
+    role?: $Enums.StaffRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    termAttendances?: TermAttendanceCreateNestedManyWithoutRecordedByInput
   }
 
   export type StaffUncheckedCreateInput = {
@@ -12089,9 +12034,10 @@ export namespace Prisma {
     email: string
     password: string
     phoneNumber: string
+    role?: $Enums.StaffRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    termAttendances?: TermAttendanceUncheckedCreateNestedManyWithoutRecordedByInput
   }
 
   export type StaffUpdateInput = {
@@ -12100,9 +12046,10 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    role?: EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    termAttendances?: TermAttendanceUpdateManyWithoutRecordedByNestedInput
   }
 
   export type StaffUncheckedUpdateInput = {
@@ -12112,9 +12059,10 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    role?: EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    termAttendances?: TermAttendanceUncheckedUpdateManyWithoutRecordedByNestedInput
   }
 
   export type StaffCreateManyInput = {
@@ -12124,6 +12072,8 @@ export namespace Prisma {
     email: string
     password: string
     phoneNumber: string
+    role?: $Enums.StaffRole
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12134,6 +12084,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    role?: EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12145,6 +12097,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     phoneNumber?: StringFieldUpdateOperationsInput | string
+    role?: EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12155,6 +12109,8 @@ export namespace Prisma {
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
+    accompaniedBy?: string | null
+    eventTheme?: string | null
     updatedAt?: Date | string
     student: StudentCreateNestedOneWithoutRecordsInput
   }
@@ -12167,6 +12123,8 @@ export namespace Prisma {
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
+    accompaniedBy?: string | null
+    eventTheme?: string | null
     updatedAt?: Date | string
   }
 
@@ -12176,6 +12134,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accompaniedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    eventTheme?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     student?: StudentUpdateOneRequiredWithoutRecordsNestedInput
   }
@@ -12188,6 +12148,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accompaniedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    eventTheme?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -12199,6 +12161,8 @@ export namespace Prisma {
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
+    accompaniedBy?: string | null
+    eventTheme?: string | null
     updatedAt?: Date | string
   }
 
@@ -12208,6 +12172,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accompaniedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    eventTheme?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -12219,6 +12185,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accompaniedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    eventTheme?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -12337,240 +12305,234 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PhoneBorrowCreateInput = {
-    phoneModel?: string
-    borrowedAt?: Date | string
-    returnedAt?: Date | string | null
-    status?: $Enums.PhoneBorrowStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    student: StudentCreateNestedOneWithoutPhoneBorrowsInput
-  }
-
-  export type PhoneBorrowUncheckedCreateInput = {
-    id?: number
-    studentId: number
-    phoneModel?: string
-    borrowedAt?: Date | string
-    returnedAt?: Date | string | null
-    status?: $Enums.PhoneBorrowStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PhoneBorrowUpdateInput = {
-    phoneModel?: StringFieldUpdateOperationsInput | string
-    borrowedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    returnedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumPhoneBorrowStatusFieldUpdateOperationsInput | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    student?: StudentUpdateOneRequiredWithoutPhoneBorrowsNestedInput
-  }
-
-  export type PhoneBorrowUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    phoneModel?: StringFieldUpdateOperationsInput | string
-    borrowedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    returnedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumPhoneBorrowStatusFieldUpdateOperationsInput | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PhoneBorrowCreateManyInput = {
-    id?: number
-    studentId: number
-    phoneModel?: string
-    borrowedAt?: Date | string
-    returnedAt?: Date | string | null
-    status?: $Enums.PhoneBorrowStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PhoneBorrowUpdateManyMutationInput = {
-    phoneModel?: StringFieldUpdateOperationsInput | string
-    borrowedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    returnedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumPhoneBorrowStatusFieldUpdateOperationsInput | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PhoneBorrowUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    phoneModel?: StringFieldUpdateOperationsInput | string
-    borrowedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    returnedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumPhoneBorrowStatusFieldUpdateOperationsInput | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TermSessionCreateInput = {
+  export type AcademicTermCreateInput = {
     name: string
-    year: number
     startDate: Date | string
-    endDate: Date | string
-    openingDate: Date | string
+    endDate?: Date | string | null
     isActive?: boolean
-    status?: $Enums.TermStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    attendances?: TermAttendanceCreateNestedManyWithoutTermInput
+    attendanceRecords?: AttendanceRecordCreateNestedManyWithoutTermInput
   }
 
-  export type TermSessionUncheckedCreateInput = {
+  export type AcademicTermUncheckedCreateInput = {
     id?: number
     name: string
-    year: number
     startDate: Date | string
-    endDate: Date | string
-    openingDate: Date | string
+    endDate?: Date | string | null
     isActive?: boolean
-    status?: $Enums.TermStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    attendances?: TermAttendanceUncheckedCreateNestedManyWithoutTermInput
+    attendanceRecords?: AttendanceRecordUncheckedCreateNestedManyWithoutTermInput
   }
 
-  export type TermSessionUpdateInput = {
+  export type AcademicTermUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    year?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumTermStatusFieldUpdateOperationsInput | $Enums.TermStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    attendances?: TermAttendanceUpdateManyWithoutTermNestedInput
+    attendanceRecords?: AttendanceRecordUpdateManyWithoutTermNestedInput
   }
 
-  export type TermSessionUncheckedUpdateInput = {
+  export type AcademicTermUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    year?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumTermStatusFieldUpdateOperationsInput | $Enums.TermStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    attendances?: TermAttendanceUncheckedUpdateManyWithoutTermNestedInput
+    attendanceRecords?: AttendanceRecordUncheckedUpdateManyWithoutTermNestedInput
   }
 
-  export type TermSessionCreateManyInput = {
+  export type AcademicTermCreateManyInput = {
     id?: number
     name: string
-    year: number
     startDate: Date | string
-    endDate: Date | string
-    openingDate: Date | string
+    endDate?: Date | string | null
     isActive?: boolean
-    status?: $Enums.TermStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TermSessionUpdateManyMutationInput = {
+  export type AcademicTermUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    year?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumTermStatusFieldUpdateOperationsInput | $Enums.TermStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TermSessionUncheckedUpdateManyInput = {
+  export type AcademicTermUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    year?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumTermStatusFieldUpdateOperationsInput | $Enums.TermStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TermAttendanceCreateInput = {
+  export type AttendanceRecordCreateInput = {
+    date: Date | string
     status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
+    note?: string | null
+    markedByStaffId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    recordedBy?: StaffCreateNestedOneWithoutTermAttendancesInput
-    student: StudentCreateNestedOneWithoutTermAttendancesInput
-    term: TermSessionCreateNestedOneWithoutAttendancesInput
+    student: StudentCreateNestedOneWithoutAttendanceRecordsInput
+    term: AcademicTermCreateNestedOneWithoutAttendanceRecordsInput
   }
 
-  export type TermAttendanceUncheckedCreateInput = {
+  export type AttendanceRecordUncheckedCreateInput = {
     id?: number
+    studentId: number
     termId: number
-    studentId: number
+    date: Date | string
     status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
-    recordedById?: number | null
+    note?: string | null
+    markedByStaffId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TermAttendanceUpdateInput = {
+  export type AttendanceRecordUpdateInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    markedByStaffId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recordedBy?: StaffUpdateOneWithoutTermAttendancesNestedInput
-    student?: StudentUpdateOneRequiredWithoutTermAttendancesNestedInput
-    term?: TermSessionUpdateOneRequiredWithoutAttendancesNestedInput
+    student?: StudentUpdateOneRequiredWithoutAttendanceRecordsNestedInput
+    term?: AcademicTermUpdateOneRequiredWithoutAttendanceRecordsNestedInput
   }
 
-  export type TermAttendanceUncheckedUpdateInput = {
+  export type AttendanceRecordUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    termId?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
+    termId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recordedById?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    markedByStaffId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TermAttendanceCreateManyInput = {
+  export type AttendanceRecordCreateManyInput = {
     id?: number
-    termId: number
     studentId: number
+    termId: number
+    date: Date | string
     status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
-    recordedById?: number | null
+    note?: string | null
+    markedByStaffId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TermAttendanceUpdateManyMutationInput = {
+  export type AttendanceRecordUpdateManyMutationInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    markedByStaffId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TermAttendanceUncheckedUpdateManyInput = {
+  export type AttendanceRecordUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    termId?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
+    termId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recordedById?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    markedByStaffId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ParentNotificationCreateInput = {
+    channel?: string
+    phone: string
+    message: string
+    type: $Enums.ParentNotificationType
+    status?: $Enums.NotificationStatus
+    sentAt?: Date | string
+    createdAt?: Date | string
+    student: StudentCreateNestedOneWithoutParentNotificationsInput
+  }
+
+  export type ParentNotificationUncheckedCreateInput = {
+    id?: number
+    studentId: number
+    channel?: string
+    phone: string
+    message: string
+    type: $Enums.ParentNotificationType
+    status?: $Enums.NotificationStatus
+    sentAt?: Date | string
+    createdAt?: Date | string
+  }
+
+  export type ParentNotificationUpdateInput = {
+    channel?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: EnumParentNotificationTypeFieldUpdateOperationsInput | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    student?: StudentUpdateOneRequiredWithoutParentNotificationsNestedInput
+  }
+
+  export type ParentNotificationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    channel?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: EnumParentNotificationTypeFieldUpdateOperationsInput | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ParentNotificationCreateManyInput = {
+    id?: number
+    studentId: number
+    channel?: string
+    phone: string
+    message: string
+    type: $Enums.ParentNotificationType
+    status?: $Enums.NotificationStatus
+    sentAt?: Date | string
+    createdAt?: Date | string
+  }
+
+  export type ParentNotificationUpdateManyMutationInput = {
+    channel?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: EnumParentNotificationTypeFieldUpdateOperationsInput | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ParentNotificationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    studentId?: IntFieldUpdateOperationsInput | number
+    channel?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: EnumParentNotificationTypeFieldUpdateOperationsInput | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -12644,16 +12606,16 @@ export namespace Prisma {
     none?: TransportAssignmentWhereInput
   }
 
-  export type PhoneBorrowListRelationFilter = {
-    every?: PhoneBorrowWhereInput
-    some?: PhoneBorrowWhereInput
-    none?: PhoneBorrowWhereInput
+  export type AttendanceRecordListRelationFilter = {
+    every?: AttendanceRecordWhereInput
+    some?: AttendanceRecordWhereInput
+    none?: AttendanceRecordWhereInput
   }
 
-  export type TermAttendanceListRelationFilter = {
-    every?: TermAttendanceWhereInput
-    some?: TermAttendanceWhereInput
-    none?: TermAttendanceWhereInput
+  export type ParentNotificationListRelationFilter = {
+    every?: ParentNotificationWhereInput
+    some?: ParentNotificationWhereInput
+    none?: ParentNotificationWhereInput
   }
 
   export type SortOrderInput = {
@@ -12669,11 +12631,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type PhoneBorrowOrderByRelationAggregateInput = {
+  export type AttendanceRecordOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type TermAttendanceOrderByRelationAggregateInput = {
+  export type ParentNotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12809,6 +12771,18 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type EnumStaffRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.StaffRole | EnumStaffRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.StaffRole[] | ListEnumStaffRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StaffRole[] | ListEnumStaffRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumStaffRoleFilter<$PrismaModel> | $Enums.StaffRole
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type StaffCountOrderByAggregateInput = {
     id?: SortOrder
     firstName?: SortOrder
@@ -12816,6 +12790,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phoneNumber?: SortOrder
+    role?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12831,6 +12807,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phoneNumber?: SortOrder
+    role?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12842,12 +12820,32 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     phoneNumber?: SortOrder
+    role?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type StaffSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type EnumStaffRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.StaffRole | EnumStaffRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.StaffRole[] | ListEnumStaffRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StaffRole[] | ListEnumStaffRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumStaffRoleWithAggregatesFilter<$PrismaModel> | $Enums.StaffRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStaffRoleFilter<$PrismaModel>
+    _max?: NestedEnumStaffRoleFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -12874,6 +12872,8 @@ export namespace Prisma {
     status?: SortOrder
     outDate?: SortOrder
     returnDate?: SortOrder
+    accompaniedBy?: SortOrder
+    eventTheme?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -12890,6 +12890,8 @@ export namespace Prisma {
     status?: SortOrder
     outDate?: SortOrder
     returnDate?: SortOrder
+    accompaniedBy?: SortOrder
+    eventTheme?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -12901,6 +12903,8 @@ export namespace Prisma {
     status?: SortOrder
     outDate?: SortOrder
     returnDate?: SortOrder
+    accompaniedBy?: SortOrder
+    eventTheme?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -13050,148 +13054,42 @@ export namespace Prisma {
     _max?: NestedEnumTransportStatusFilter<$PrismaModel>
   }
 
-  export type EnumPhoneBorrowStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.PhoneBorrowStatus | EnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.PhoneBorrowStatus[] | ListEnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.PhoneBorrowStatus[] | ListEnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumPhoneBorrowStatusFilter<$PrismaModel> | $Enums.PhoneBorrowStatus
-  }
-
-  export type PhoneBorrowCountOrderByAggregateInput = {
-    id?: SortOrder
-    studentId?: SortOrder
-    phoneModel?: SortOrder
-    borrowedAt?: SortOrder
-    returnedAt?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PhoneBorrowAvgOrderByAggregateInput = {
-    id?: SortOrder
-    studentId?: SortOrder
-  }
-
-  export type PhoneBorrowMaxOrderByAggregateInput = {
-    id?: SortOrder
-    studentId?: SortOrder
-    phoneModel?: SortOrder
-    borrowedAt?: SortOrder
-    returnedAt?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PhoneBorrowMinOrderByAggregateInput = {
-    id?: SortOrder
-    studentId?: SortOrder
-    phoneModel?: SortOrder
-    borrowedAt?: SortOrder
-    returnedAt?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type PhoneBorrowSumOrderByAggregateInput = {
-    id?: SortOrder
-    studentId?: SortOrder
-  }
-
-  export type EnumPhoneBorrowStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.PhoneBorrowStatus | EnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.PhoneBorrowStatus[] | ListEnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.PhoneBorrowStatus[] | ListEnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumPhoneBorrowStatusWithAggregatesFilter<$PrismaModel> | $Enums.PhoneBorrowStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPhoneBorrowStatusFilter<$PrismaModel>
-    _max?: NestedEnumPhoneBorrowStatusFilter<$PrismaModel>
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type EnumTermStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.TermStatus | EnumTermStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TermStatus[] | ListEnumTermStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TermStatus[] | ListEnumTermStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTermStatusFilter<$PrismaModel> | $Enums.TermStatus
-  }
-
-  export type TermSessionNameYearCompoundUniqueInput = {
-    name: string
-    year: number
-  }
-
-  export type TermSessionCountOrderByAggregateInput = {
+  export type AcademicTermCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    year?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
-    openingDate?: SortOrder
     isActive?: SortOrder
-    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TermSessionAvgOrderByAggregateInput = {
+  export type AcademicTermAvgOrderByAggregateInput = {
     id?: SortOrder
-    year?: SortOrder
   }
 
-  export type TermSessionMaxOrderByAggregateInput = {
+  export type AcademicTermMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    year?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
-    openingDate?: SortOrder
     isActive?: SortOrder
-    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TermSessionMinOrderByAggregateInput = {
+  export type AcademicTermMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    year?: SortOrder
     startDate?: SortOrder
     endDate?: SortOrder
-    openingDate?: SortOrder
     isActive?: SortOrder
-    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TermSessionSumOrderByAggregateInput = {
+  export type AcademicTermSumOrderByAggregateInput = {
     id?: SortOrder
-    year?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type EnumTermStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TermStatus | EnumTermStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TermStatus[] | ListEnumTermStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TermStatus[] | ListEnumTermStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTermStatusWithAggregatesFilter<$PrismaModel> | $Enums.TermStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTermStatusFilter<$PrismaModel>
-    _max?: NestedEnumTermStatusFilter<$PrismaModel>
   }
 
   export type EnumAttendanceStatusFilter<$PrismaModel = never> = {
@@ -13212,66 +13110,65 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type StaffNullableScalarRelationFilter = {
-    is?: StaffWhereInput | null
-    isNot?: StaffWhereInput | null
+  export type AcademicTermScalarRelationFilter = {
+    is?: AcademicTermWhereInput
+    isNot?: AcademicTermWhereInput
   }
 
-  export type TermSessionScalarRelationFilter = {
-    is?: TermSessionWhereInput
-    isNot?: TermSessionWhereInput
-  }
-
-  export type TermAttendanceTermIdStudentIdCompoundUniqueInput = {
-    termId: number
+  export type AttendanceRecordStudentIdTermIdDateCompoundUniqueInput = {
     studentId: number
+    termId: number
+    date: Date | string
   }
 
-  export type TermAttendanceCountOrderByAggregateInput = {
+  export type AttendanceRecordCountOrderByAggregateInput = {
     id?: SortOrder
-    termId?: SortOrder
     studentId?: SortOrder
+    termId?: SortOrder
+    date?: SortOrder
     status?: SortOrder
-    arrivalTime?: SortOrder
-    recordedById?: SortOrder
+    note?: SortOrder
+    markedByStaffId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TermAttendanceAvgOrderByAggregateInput = {
+  export type AttendanceRecordAvgOrderByAggregateInput = {
     id?: SortOrder
-    termId?: SortOrder
     studentId?: SortOrder
-    recordedById?: SortOrder
+    termId?: SortOrder
+    markedByStaffId?: SortOrder
   }
 
-  export type TermAttendanceMaxOrderByAggregateInput = {
+  export type AttendanceRecordMaxOrderByAggregateInput = {
     id?: SortOrder
-    termId?: SortOrder
     studentId?: SortOrder
+    termId?: SortOrder
+    date?: SortOrder
     status?: SortOrder
-    arrivalTime?: SortOrder
-    recordedById?: SortOrder
+    note?: SortOrder
+    markedByStaffId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TermAttendanceMinOrderByAggregateInput = {
+  export type AttendanceRecordMinOrderByAggregateInput = {
     id?: SortOrder
-    termId?: SortOrder
     studentId?: SortOrder
+    termId?: SortOrder
+    date?: SortOrder
     status?: SortOrder
-    arrivalTime?: SortOrder
-    recordedById?: SortOrder
+    note?: SortOrder
+    markedByStaffId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type TermAttendanceSumOrderByAggregateInput = {
+  export type AttendanceRecordSumOrderByAggregateInput = {
     id?: SortOrder
-    termId?: SortOrder
     studentId?: SortOrder
-    recordedById?: SortOrder
+    termId?: SortOrder
+    markedByStaffId?: SortOrder
   }
 
   export type EnumAttendanceStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -13300,6 +13197,86 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type EnumParentNotificationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ParentNotificationType | EnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ParentNotificationType[] | ListEnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ParentNotificationType[] | ListEnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumParentNotificationTypeFilter<$PrismaModel> | $Enums.ParentNotificationType
+  }
+
+  export type EnumNotificationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationStatus | EnumNotificationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationStatus[] | ListEnumNotificationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationStatus[] | ListEnumNotificationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationStatusFilter<$PrismaModel> | $Enums.NotificationStatus
+  }
+
+  export type ParentNotificationCountOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    channel?: SortOrder
+    phone?: SortOrder
+    message?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    sentAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ParentNotificationAvgOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+  }
+
+  export type ParentNotificationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    channel?: SortOrder
+    phone?: SortOrder
+    message?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    sentAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ParentNotificationMinOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+    channel?: SortOrder
+    phone?: SortOrder
+    message?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    sentAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ParentNotificationSumOrderByAggregateInput = {
+    id?: SortOrder
+    studentId?: SortOrder
+  }
+
+  export type EnumParentNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ParentNotificationType | EnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ParentNotificationType[] | ListEnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ParentNotificationType[] | ListEnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumParentNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.ParentNotificationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumParentNotificationTypeFilter<$PrismaModel>
+    _max?: NestedEnumParentNotificationTypeFilter<$PrismaModel>
+  }
+
+  export type EnumNotificationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationStatus | EnumNotificationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationStatus[] | ListEnumNotificationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationStatus[] | ListEnumNotificationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationStatusWithAggregatesFilter<$PrismaModel> | $Enums.NotificationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationStatusFilter<$PrismaModel>
+    _max?: NestedEnumNotificationStatusFilter<$PrismaModel>
+  }
+
   export type DisciplineRecordCreateNestedManyWithoutStudentInput = {
     create?: XOR<DisciplineRecordCreateWithoutStudentInput, DisciplineRecordUncheckedCreateWithoutStudentInput> | DisciplineRecordCreateWithoutStudentInput[] | DisciplineRecordUncheckedCreateWithoutStudentInput[]
     connectOrCreate?: DisciplineRecordCreateOrConnectWithoutStudentInput | DisciplineRecordCreateOrConnectWithoutStudentInput[]
@@ -13314,18 +13291,18 @@ export namespace Prisma {
     connect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
   }
 
-  export type PhoneBorrowCreateNestedManyWithoutStudentInput = {
-    create?: XOR<PhoneBorrowCreateWithoutStudentInput, PhoneBorrowUncheckedCreateWithoutStudentInput> | PhoneBorrowCreateWithoutStudentInput[] | PhoneBorrowUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: PhoneBorrowCreateOrConnectWithoutStudentInput | PhoneBorrowCreateOrConnectWithoutStudentInput[]
-    createMany?: PhoneBorrowCreateManyStudentInputEnvelope
-    connect?: PhoneBorrowWhereUniqueInput | PhoneBorrowWhereUniqueInput[]
+  export type AttendanceRecordCreateNestedManyWithoutStudentInput = {
+    create?: XOR<AttendanceRecordCreateWithoutStudentInput, AttendanceRecordUncheckedCreateWithoutStudentInput> | AttendanceRecordCreateWithoutStudentInput[] | AttendanceRecordUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutStudentInput | AttendanceRecordCreateOrConnectWithoutStudentInput[]
+    createMany?: AttendanceRecordCreateManyStudentInputEnvelope
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
   }
 
-  export type TermAttendanceCreateNestedManyWithoutStudentInput = {
-    create?: XOR<TermAttendanceCreateWithoutStudentInput, TermAttendanceUncheckedCreateWithoutStudentInput> | TermAttendanceCreateWithoutStudentInput[] | TermAttendanceUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutStudentInput | TermAttendanceCreateOrConnectWithoutStudentInput[]
-    createMany?: TermAttendanceCreateManyStudentInputEnvelope
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
+  export type ParentNotificationCreateNestedManyWithoutStudentInput = {
+    create?: XOR<ParentNotificationCreateWithoutStudentInput, ParentNotificationUncheckedCreateWithoutStudentInput> | ParentNotificationCreateWithoutStudentInput[] | ParentNotificationUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: ParentNotificationCreateOrConnectWithoutStudentInput | ParentNotificationCreateOrConnectWithoutStudentInput[]
+    createMany?: ParentNotificationCreateManyStudentInputEnvelope
+    connect?: ParentNotificationWhereUniqueInput | ParentNotificationWhereUniqueInput[]
   }
 
   export type DisciplineRecordUncheckedCreateNestedManyWithoutStudentInput = {
@@ -13342,18 +13319,18 @@ export namespace Prisma {
     connect?: TransportAssignmentWhereUniqueInput | TransportAssignmentWhereUniqueInput[]
   }
 
-  export type PhoneBorrowUncheckedCreateNestedManyWithoutStudentInput = {
-    create?: XOR<PhoneBorrowCreateWithoutStudentInput, PhoneBorrowUncheckedCreateWithoutStudentInput> | PhoneBorrowCreateWithoutStudentInput[] | PhoneBorrowUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: PhoneBorrowCreateOrConnectWithoutStudentInput | PhoneBorrowCreateOrConnectWithoutStudentInput[]
-    createMany?: PhoneBorrowCreateManyStudentInputEnvelope
-    connect?: PhoneBorrowWhereUniqueInput | PhoneBorrowWhereUniqueInput[]
+  export type AttendanceRecordUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<AttendanceRecordCreateWithoutStudentInput, AttendanceRecordUncheckedCreateWithoutStudentInput> | AttendanceRecordCreateWithoutStudentInput[] | AttendanceRecordUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutStudentInput | AttendanceRecordCreateOrConnectWithoutStudentInput[]
+    createMany?: AttendanceRecordCreateManyStudentInputEnvelope
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
   }
 
-  export type TermAttendanceUncheckedCreateNestedManyWithoutStudentInput = {
-    create?: XOR<TermAttendanceCreateWithoutStudentInput, TermAttendanceUncheckedCreateWithoutStudentInput> | TermAttendanceCreateWithoutStudentInput[] | TermAttendanceUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutStudentInput | TermAttendanceCreateOrConnectWithoutStudentInput[]
-    createMany?: TermAttendanceCreateManyStudentInputEnvelope
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
+  export type ParentNotificationUncheckedCreateNestedManyWithoutStudentInput = {
+    create?: XOR<ParentNotificationCreateWithoutStudentInput, ParentNotificationUncheckedCreateWithoutStudentInput> | ParentNotificationCreateWithoutStudentInput[] | ParentNotificationUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: ParentNotificationCreateOrConnectWithoutStudentInput | ParentNotificationCreateOrConnectWithoutStudentInput[]
+    createMany?: ParentNotificationCreateManyStudentInputEnvelope
+    connect?: ParentNotificationWhereUniqueInput | ParentNotificationWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -13400,32 +13377,32 @@ export namespace Prisma {
     deleteMany?: TransportAssignmentScalarWhereInput | TransportAssignmentScalarWhereInput[]
   }
 
-  export type PhoneBorrowUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<PhoneBorrowCreateWithoutStudentInput, PhoneBorrowUncheckedCreateWithoutStudentInput> | PhoneBorrowCreateWithoutStudentInput[] | PhoneBorrowUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: PhoneBorrowCreateOrConnectWithoutStudentInput | PhoneBorrowCreateOrConnectWithoutStudentInput[]
-    upsert?: PhoneBorrowUpsertWithWhereUniqueWithoutStudentInput | PhoneBorrowUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: PhoneBorrowCreateManyStudentInputEnvelope
-    set?: PhoneBorrowWhereUniqueInput | PhoneBorrowWhereUniqueInput[]
-    disconnect?: PhoneBorrowWhereUniqueInput | PhoneBorrowWhereUniqueInput[]
-    delete?: PhoneBorrowWhereUniqueInput | PhoneBorrowWhereUniqueInput[]
-    connect?: PhoneBorrowWhereUniqueInput | PhoneBorrowWhereUniqueInput[]
-    update?: PhoneBorrowUpdateWithWhereUniqueWithoutStudentInput | PhoneBorrowUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: PhoneBorrowUpdateManyWithWhereWithoutStudentInput | PhoneBorrowUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: PhoneBorrowScalarWhereInput | PhoneBorrowScalarWhereInput[]
+  export type AttendanceRecordUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<AttendanceRecordCreateWithoutStudentInput, AttendanceRecordUncheckedCreateWithoutStudentInput> | AttendanceRecordCreateWithoutStudentInput[] | AttendanceRecordUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutStudentInput | AttendanceRecordCreateOrConnectWithoutStudentInput[]
+    upsert?: AttendanceRecordUpsertWithWhereUniqueWithoutStudentInput | AttendanceRecordUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: AttendanceRecordCreateManyStudentInputEnvelope
+    set?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    disconnect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    delete?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    update?: AttendanceRecordUpdateWithWhereUniqueWithoutStudentInput | AttendanceRecordUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: AttendanceRecordUpdateManyWithWhereWithoutStudentInput | AttendanceRecordUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
   }
 
-  export type TermAttendanceUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<TermAttendanceCreateWithoutStudentInput, TermAttendanceUncheckedCreateWithoutStudentInput> | TermAttendanceCreateWithoutStudentInput[] | TermAttendanceUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutStudentInput | TermAttendanceCreateOrConnectWithoutStudentInput[]
-    upsert?: TermAttendanceUpsertWithWhereUniqueWithoutStudentInput | TermAttendanceUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: TermAttendanceCreateManyStudentInputEnvelope
-    set?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    disconnect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    delete?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    update?: TermAttendanceUpdateWithWhereUniqueWithoutStudentInput | TermAttendanceUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: TermAttendanceUpdateManyWithWhereWithoutStudentInput | TermAttendanceUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: TermAttendanceScalarWhereInput | TermAttendanceScalarWhereInput[]
+  export type ParentNotificationUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<ParentNotificationCreateWithoutStudentInput, ParentNotificationUncheckedCreateWithoutStudentInput> | ParentNotificationCreateWithoutStudentInput[] | ParentNotificationUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: ParentNotificationCreateOrConnectWithoutStudentInput | ParentNotificationCreateOrConnectWithoutStudentInput[]
+    upsert?: ParentNotificationUpsertWithWhereUniqueWithoutStudentInput | ParentNotificationUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: ParentNotificationCreateManyStudentInputEnvelope
+    set?: ParentNotificationWhereUniqueInput | ParentNotificationWhereUniqueInput[]
+    disconnect?: ParentNotificationWhereUniqueInput | ParentNotificationWhereUniqueInput[]
+    delete?: ParentNotificationWhereUniqueInput | ParentNotificationWhereUniqueInput[]
+    connect?: ParentNotificationWhereUniqueInput | ParentNotificationWhereUniqueInput[]
+    update?: ParentNotificationUpdateWithWhereUniqueWithoutStudentInput | ParentNotificationUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: ParentNotificationUpdateManyWithWhereWithoutStudentInput | ParentNotificationUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: ParentNotificationScalarWhereInput | ParentNotificationScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -13464,74 +13441,40 @@ export namespace Prisma {
     deleteMany?: TransportAssignmentScalarWhereInput | TransportAssignmentScalarWhereInput[]
   }
 
-  export type PhoneBorrowUncheckedUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<PhoneBorrowCreateWithoutStudentInput, PhoneBorrowUncheckedCreateWithoutStudentInput> | PhoneBorrowCreateWithoutStudentInput[] | PhoneBorrowUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: PhoneBorrowCreateOrConnectWithoutStudentInput | PhoneBorrowCreateOrConnectWithoutStudentInput[]
-    upsert?: PhoneBorrowUpsertWithWhereUniqueWithoutStudentInput | PhoneBorrowUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: PhoneBorrowCreateManyStudentInputEnvelope
-    set?: PhoneBorrowWhereUniqueInput | PhoneBorrowWhereUniqueInput[]
-    disconnect?: PhoneBorrowWhereUniqueInput | PhoneBorrowWhereUniqueInput[]
-    delete?: PhoneBorrowWhereUniqueInput | PhoneBorrowWhereUniqueInput[]
-    connect?: PhoneBorrowWhereUniqueInput | PhoneBorrowWhereUniqueInput[]
-    update?: PhoneBorrowUpdateWithWhereUniqueWithoutStudentInput | PhoneBorrowUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: PhoneBorrowUpdateManyWithWhereWithoutStudentInput | PhoneBorrowUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: PhoneBorrowScalarWhereInput | PhoneBorrowScalarWhereInput[]
+  export type AttendanceRecordUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<AttendanceRecordCreateWithoutStudentInput, AttendanceRecordUncheckedCreateWithoutStudentInput> | AttendanceRecordCreateWithoutStudentInput[] | AttendanceRecordUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutStudentInput | AttendanceRecordCreateOrConnectWithoutStudentInput[]
+    upsert?: AttendanceRecordUpsertWithWhereUniqueWithoutStudentInput | AttendanceRecordUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: AttendanceRecordCreateManyStudentInputEnvelope
+    set?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    disconnect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    delete?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    update?: AttendanceRecordUpdateWithWhereUniqueWithoutStudentInput | AttendanceRecordUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: AttendanceRecordUpdateManyWithWhereWithoutStudentInput | AttendanceRecordUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
   }
 
-  export type TermAttendanceUncheckedUpdateManyWithoutStudentNestedInput = {
-    create?: XOR<TermAttendanceCreateWithoutStudentInput, TermAttendanceUncheckedCreateWithoutStudentInput> | TermAttendanceCreateWithoutStudentInput[] | TermAttendanceUncheckedCreateWithoutStudentInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutStudentInput | TermAttendanceCreateOrConnectWithoutStudentInput[]
-    upsert?: TermAttendanceUpsertWithWhereUniqueWithoutStudentInput | TermAttendanceUpsertWithWhereUniqueWithoutStudentInput[]
-    createMany?: TermAttendanceCreateManyStudentInputEnvelope
-    set?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    disconnect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    delete?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    update?: TermAttendanceUpdateWithWhereUniqueWithoutStudentInput | TermAttendanceUpdateWithWhereUniqueWithoutStudentInput[]
-    updateMany?: TermAttendanceUpdateManyWithWhereWithoutStudentInput | TermAttendanceUpdateManyWithWhereWithoutStudentInput[]
-    deleteMany?: TermAttendanceScalarWhereInput | TermAttendanceScalarWhereInput[]
+  export type ParentNotificationUncheckedUpdateManyWithoutStudentNestedInput = {
+    create?: XOR<ParentNotificationCreateWithoutStudentInput, ParentNotificationUncheckedCreateWithoutStudentInput> | ParentNotificationCreateWithoutStudentInput[] | ParentNotificationUncheckedCreateWithoutStudentInput[]
+    connectOrCreate?: ParentNotificationCreateOrConnectWithoutStudentInput | ParentNotificationCreateOrConnectWithoutStudentInput[]
+    upsert?: ParentNotificationUpsertWithWhereUniqueWithoutStudentInput | ParentNotificationUpsertWithWhereUniqueWithoutStudentInput[]
+    createMany?: ParentNotificationCreateManyStudentInputEnvelope
+    set?: ParentNotificationWhereUniqueInput | ParentNotificationWhereUniqueInput[]
+    disconnect?: ParentNotificationWhereUniqueInput | ParentNotificationWhereUniqueInput[]
+    delete?: ParentNotificationWhereUniqueInput | ParentNotificationWhereUniqueInput[]
+    connect?: ParentNotificationWhereUniqueInput | ParentNotificationWhereUniqueInput[]
+    update?: ParentNotificationUpdateWithWhereUniqueWithoutStudentInput | ParentNotificationUpdateWithWhereUniqueWithoutStudentInput[]
+    updateMany?: ParentNotificationUpdateManyWithWhereWithoutStudentInput | ParentNotificationUpdateManyWithWhereWithoutStudentInput[]
+    deleteMany?: ParentNotificationScalarWhereInput | ParentNotificationScalarWhereInput[]
   }
 
-  export type TermAttendanceCreateNestedManyWithoutRecordedByInput = {
-    create?: XOR<TermAttendanceCreateWithoutRecordedByInput, TermAttendanceUncheckedCreateWithoutRecordedByInput> | TermAttendanceCreateWithoutRecordedByInput[] | TermAttendanceUncheckedCreateWithoutRecordedByInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutRecordedByInput | TermAttendanceCreateOrConnectWithoutRecordedByInput[]
-    createMany?: TermAttendanceCreateManyRecordedByInputEnvelope
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
+  export type EnumStaffRoleFieldUpdateOperationsInput = {
+    set?: $Enums.StaffRole
   }
 
-  export type TermAttendanceUncheckedCreateNestedManyWithoutRecordedByInput = {
-    create?: XOR<TermAttendanceCreateWithoutRecordedByInput, TermAttendanceUncheckedCreateWithoutRecordedByInput> | TermAttendanceCreateWithoutRecordedByInput[] | TermAttendanceUncheckedCreateWithoutRecordedByInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutRecordedByInput | TermAttendanceCreateOrConnectWithoutRecordedByInput[]
-    createMany?: TermAttendanceCreateManyRecordedByInputEnvelope
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-  }
-
-  export type TermAttendanceUpdateManyWithoutRecordedByNestedInput = {
-    create?: XOR<TermAttendanceCreateWithoutRecordedByInput, TermAttendanceUncheckedCreateWithoutRecordedByInput> | TermAttendanceCreateWithoutRecordedByInput[] | TermAttendanceUncheckedCreateWithoutRecordedByInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutRecordedByInput | TermAttendanceCreateOrConnectWithoutRecordedByInput[]
-    upsert?: TermAttendanceUpsertWithWhereUniqueWithoutRecordedByInput | TermAttendanceUpsertWithWhereUniqueWithoutRecordedByInput[]
-    createMany?: TermAttendanceCreateManyRecordedByInputEnvelope
-    set?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    disconnect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    delete?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    update?: TermAttendanceUpdateWithWhereUniqueWithoutRecordedByInput | TermAttendanceUpdateWithWhereUniqueWithoutRecordedByInput[]
-    updateMany?: TermAttendanceUpdateManyWithWhereWithoutRecordedByInput | TermAttendanceUpdateManyWithWhereWithoutRecordedByInput[]
-    deleteMany?: TermAttendanceScalarWhereInput | TermAttendanceScalarWhereInput[]
-  }
-
-  export type TermAttendanceUncheckedUpdateManyWithoutRecordedByNestedInput = {
-    create?: XOR<TermAttendanceCreateWithoutRecordedByInput, TermAttendanceUncheckedCreateWithoutRecordedByInput> | TermAttendanceCreateWithoutRecordedByInput[] | TermAttendanceUncheckedCreateWithoutRecordedByInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutRecordedByInput | TermAttendanceCreateOrConnectWithoutRecordedByInput[]
-    upsert?: TermAttendanceUpsertWithWhereUniqueWithoutRecordedByInput | TermAttendanceUpsertWithWhereUniqueWithoutRecordedByInput[]
-    createMany?: TermAttendanceCreateManyRecordedByInputEnvelope
-    set?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    disconnect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    delete?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    update?: TermAttendanceUpdateWithWhereUniqueWithoutRecordedByInput | TermAttendanceUpdateWithWhereUniqueWithoutRecordedByInput[]
-    updateMany?: TermAttendanceUpdateManyWithWhereWithoutRecordedByInput | TermAttendanceUpdateManyWithWhereWithoutRecordedByInput[]
-    deleteMany?: TermAttendanceScalarWhereInput | TermAttendanceScalarWhereInput[]
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type StudentCreateNestedOneWithoutRecordsInput = {
@@ -13634,120 +13577,62 @@ export namespace Prisma {
     update?: XOR<XOR<TransportUpdateToOneWithWhereWithoutAssignmentsInput, TransportUpdateWithoutAssignmentsInput>, TransportUncheckedUpdateWithoutAssignmentsInput>
   }
 
-  export type StudentCreateNestedOneWithoutPhoneBorrowsInput = {
-    create?: XOR<StudentCreateWithoutPhoneBorrowsInput, StudentUncheckedCreateWithoutPhoneBorrowsInput>
-    connectOrCreate?: StudentCreateOrConnectWithoutPhoneBorrowsInput
+  export type AttendanceRecordCreateNestedManyWithoutTermInput = {
+    create?: XOR<AttendanceRecordCreateWithoutTermInput, AttendanceRecordUncheckedCreateWithoutTermInput> | AttendanceRecordCreateWithoutTermInput[] | AttendanceRecordUncheckedCreateWithoutTermInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTermInput | AttendanceRecordCreateOrConnectWithoutTermInput[]
+    createMany?: AttendanceRecordCreateManyTermInputEnvelope
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+  }
+
+  export type AttendanceRecordUncheckedCreateNestedManyWithoutTermInput = {
+    create?: XOR<AttendanceRecordCreateWithoutTermInput, AttendanceRecordUncheckedCreateWithoutTermInput> | AttendanceRecordCreateWithoutTermInput[] | AttendanceRecordUncheckedCreateWithoutTermInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTermInput | AttendanceRecordCreateOrConnectWithoutTermInput[]
+    createMany?: AttendanceRecordCreateManyTermInputEnvelope
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+  }
+
+  export type AttendanceRecordUpdateManyWithoutTermNestedInput = {
+    create?: XOR<AttendanceRecordCreateWithoutTermInput, AttendanceRecordUncheckedCreateWithoutTermInput> | AttendanceRecordCreateWithoutTermInput[] | AttendanceRecordUncheckedCreateWithoutTermInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTermInput | AttendanceRecordCreateOrConnectWithoutTermInput[]
+    upsert?: AttendanceRecordUpsertWithWhereUniqueWithoutTermInput | AttendanceRecordUpsertWithWhereUniqueWithoutTermInput[]
+    createMany?: AttendanceRecordCreateManyTermInputEnvelope
+    set?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    disconnect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    delete?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    update?: AttendanceRecordUpdateWithWhereUniqueWithoutTermInput | AttendanceRecordUpdateWithWhereUniqueWithoutTermInput[]
+    updateMany?: AttendanceRecordUpdateManyWithWhereWithoutTermInput | AttendanceRecordUpdateManyWithWhereWithoutTermInput[]
+    deleteMany?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
+  }
+
+  export type AttendanceRecordUncheckedUpdateManyWithoutTermNestedInput = {
+    create?: XOR<AttendanceRecordCreateWithoutTermInput, AttendanceRecordUncheckedCreateWithoutTermInput> | AttendanceRecordCreateWithoutTermInput[] | AttendanceRecordUncheckedCreateWithoutTermInput[]
+    connectOrCreate?: AttendanceRecordCreateOrConnectWithoutTermInput | AttendanceRecordCreateOrConnectWithoutTermInput[]
+    upsert?: AttendanceRecordUpsertWithWhereUniqueWithoutTermInput | AttendanceRecordUpsertWithWhereUniqueWithoutTermInput[]
+    createMany?: AttendanceRecordCreateManyTermInputEnvelope
+    set?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    disconnect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    delete?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    connect?: AttendanceRecordWhereUniqueInput | AttendanceRecordWhereUniqueInput[]
+    update?: AttendanceRecordUpdateWithWhereUniqueWithoutTermInput | AttendanceRecordUpdateWithWhereUniqueWithoutTermInput[]
+    updateMany?: AttendanceRecordUpdateManyWithWhereWithoutTermInput | AttendanceRecordUpdateManyWithWhereWithoutTermInput[]
+    deleteMany?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
+  }
+
+  export type StudentCreateNestedOneWithoutAttendanceRecordsInput = {
+    create?: XOR<StudentCreateWithoutAttendanceRecordsInput, StudentUncheckedCreateWithoutAttendanceRecordsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutAttendanceRecordsInput
     connect?: StudentWhereUniqueInput
   }
 
-  export type EnumPhoneBorrowStatusFieldUpdateOperationsInput = {
-    set?: $Enums.PhoneBorrowStatus
-  }
-
-  export type StudentUpdateOneRequiredWithoutPhoneBorrowsNestedInput = {
-    create?: XOR<StudentCreateWithoutPhoneBorrowsInput, StudentUncheckedCreateWithoutPhoneBorrowsInput>
-    connectOrCreate?: StudentCreateOrConnectWithoutPhoneBorrowsInput
-    upsert?: StudentUpsertWithoutPhoneBorrowsInput
-    connect?: StudentWhereUniqueInput
-    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutPhoneBorrowsInput, StudentUpdateWithoutPhoneBorrowsInput>, StudentUncheckedUpdateWithoutPhoneBorrowsInput>
-  }
-
-  export type TermAttendanceCreateNestedManyWithoutTermInput = {
-    create?: XOR<TermAttendanceCreateWithoutTermInput, TermAttendanceUncheckedCreateWithoutTermInput> | TermAttendanceCreateWithoutTermInput[] | TermAttendanceUncheckedCreateWithoutTermInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutTermInput | TermAttendanceCreateOrConnectWithoutTermInput[]
-    createMany?: TermAttendanceCreateManyTermInputEnvelope
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-  }
-
-  export type TermAttendanceUncheckedCreateNestedManyWithoutTermInput = {
-    create?: XOR<TermAttendanceCreateWithoutTermInput, TermAttendanceUncheckedCreateWithoutTermInput> | TermAttendanceCreateWithoutTermInput[] | TermAttendanceUncheckedCreateWithoutTermInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutTermInput | TermAttendanceCreateOrConnectWithoutTermInput[]
-    createMany?: TermAttendanceCreateManyTermInputEnvelope
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
-  export type EnumTermStatusFieldUpdateOperationsInput = {
-    set?: $Enums.TermStatus
-  }
-
-  export type TermAttendanceUpdateManyWithoutTermNestedInput = {
-    create?: XOR<TermAttendanceCreateWithoutTermInput, TermAttendanceUncheckedCreateWithoutTermInput> | TermAttendanceCreateWithoutTermInput[] | TermAttendanceUncheckedCreateWithoutTermInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutTermInput | TermAttendanceCreateOrConnectWithoutTermInput[]
-    upsert?: TermAttendanceUpsertWithWhereUniqueWithoutTermInput | TermAttendanceUpsertWithWhereUniqueWithoutTermInput[]
-    createMany?: TermAttendanceCreateManyTermInputEnvelope
-    set?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    disconnect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    delete?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    update?: TermAttendanceUpdateWithWhereUniqueWithoutTermInput | TermAttendanceUpdateWithWhereUniqueWithoutTermInput[]
-    updateMany?: TermAttendanceUpdateManyWithWhereWithoutTermInput | TermAttendanceUpdateManyWithWhereWithoutTermInput[]
-    deleteMany?: TermAttendanceScalarWhereInput | TermAttendanceScalarWhereInput[]
-  }
-
-  export type TermAttendanceUncheckedUpdateManyWithoutTermNestedInput = {
-    create?: XOR<TermAttendanceCreateWithoutTermInput, TermAttendanceUncheckedCreateWithoutTermInput> | TermAttendanceCreateWithoutTermInput[] | TermAttendanceUncheckedCreateWithoutTermInput[]
-    connectOrCreate?: TermAttendanceCreateOrConnectWithoutTermInput | TermAttendanceCreateOrConnectWithoutTermInput[]
-    upsert?: TermAttendanceUpsertWithWhereUniqueWithoutTermInput | TermAttendanceUpsertWithWhereUniqueWithoutTermInput[]
-    createMany?: TermAttendanceCreateManyTermInputEnvelope
-    set?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    disconnect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    delete?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    connect?: TermAttendanceWhereUniqueInput | TermAttendanceWhereUniqueInput[]
-    update?: TermAttendanceUpdateWithWhereUniqueWithoutTermInput | TermAttendanceUpdateWithWhereUniqueWithoutTermInput[]
-    updateMany?: TermAttendanceUpdateManyWithWhereWithoutTermInput | TermAttendanceUpdateManyWithWhereWithoutTermInput[]
-    deleteMany?: TermAttendanceScalarWhereInput | TermAttendanceScalarWhereInput[]
-  }
-
-  export type StaffCreateNestedOneWithoutTermAttendancesInput = {
-    create?: XOR<StaffCreateWithoutTermAttendancesInput, StaffUncheckedCreateWithoutTermAttendancesInput>
-    connectOrCreate?: StaffCreateOrConnectWithoutTermAttendancesInput
-    connect?: StaffWhereUniqueInput
-  }
-
-  export type StudentCreateNestedOneWithoutTermAttendancesInput = {
-    create?: XOR<StudentCreateWithoutTermAttendancesInput, StudentUncheckedCreateWithoutTermAttendancesInput>
-    connectOrCreate?: StudentCreateOrConnectWithoutTermAttendancesInput
-    connect?: StudentWhereUniqueInput
-  }
-
-  export type TermSessionCreateNestedOneWithoutAttendancesInput = {
-    create?: XOR<TermSessionCreateWithoutAttendancesInput, TermSessionUncheckedCreateWithoutAttendancesInput>
-    connectOrCreate?: TermSessionCreateOrConnectWithoutAttendancesInput
-    connect?: TermSessionWhereUniqueInput
+  export type AcademicTermCreateNestedOneWithoutAttendanceRecordsInput = {
+    create?: XOR<AcademicTermCreateWithoutAttendanceRecordsInput, AcademicTermUncheckedCreateWithoutAttendanceRecordsInput>
+    connectOrCreate?: AcademicTermCreateOrConnectWithoutAttendanceRecordsInput
+    connect?: AcademicTermWhereUniqueInput
   }
 
   export type EnumAttendanceStatusFieldUpdateOperationsInput = {
     set?: $Enums.AttendanceStatus
-  }
-
-  export type StaffUpdateOneWithoutTermAttendancesNestedInput = {
-    create?: XOR<StaffCreateWithoutTermAttendancesInput, StaffUncheckedCreateWithoutTermAttendancesInput>
-    connectOrCreate?: StaffCreateOrConnectWithoutTermAttendancesInput
-    upsert?: StaffUpsertWithoutTermAttendancesInput
-    disconnect?: StaffWhereInput | boolean
-    delete?: StaffWhereInput | boolean
-    connect?: StaffWhereUniqueInput
-    update?: XOR<XOR<StaffUpdateToOneWithWhereWithoutTermAttendancesInput, StaffUpdateWithoutTermAttendancesInput>, StaffUncheckedUpdateWithoutTermAttendancesInput>
-  }
-
-  export type StudentUpdateOneRequiredWithoutTermAttendancesNestedInput = {
-    create?: XOR<StudentCreateWithoutTermAttendancesInput, StudentUncheckedCreateWithoutTermAttendancesInput>
-    connectOrCreate?: StudentCreateOrConnectWithoutTermAttendancesInput
-    upsert?: StudentUpsertWithoutTermAttendancesInput
-    connect?: StudentWhereUniqueInput
-    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutTermAttendancesInput, StudentUpdateWithoutTermAttendancesInput>, StudentUncheckedUpdateWithoutTermAttendancesInput>
-  }
-
-  export type TermSessionUpdateOneRequiredWithoutAttendancesNestedInput = {
-    create?: XOR<TermSessionCreateWithoutAttendancesInput, TermSessionUncheckedCreateWithoutAttendancesInput>
-    connectOrCreate?: TermSessionCreateOrConnectWithoutAttendancesInput
-    upsert?: TermSessionUpsertWithoutAttendancesInput
-    connect?: TermSessionWhereUniqueInput
-    update?: XOR<XOR<TermSessionUpdateToOneWithWhereWithoutAttendancesInput, TermSessionUpdateWithoutAttendancesInput>, TermSessionUncheckedUpdateWithoutAttendancesInput>
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -13756,6 +13641,44 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type StudentUpdateOneRequiredWithoutAttendanceRecordsNestedInput = {
+    create?: XOR<StudentCreateWithoutAttendanceRecordsInput, StudentUncheckedCreateWithoutAttendanceRecordsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutAttendanceRecordsInput
+    upsert?: StudentUpsertWithoutAttendanceRecordsInput
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutAttendanceRecordsInput, StudentUpdateWithoutAttendanceRecordsInput>, StudentUncheckedUpdateWithoutAttendanceRecordsInput>
+  }
+
+  export type AcademicTermUpdateOneRequiredWithoutAttendanceRecordsNestedInput = {
+    create?: XOR<AcademicTermCreateWithoutAttendanceRecordsInput, AcademicTermUncheckedCreateWithoutAttendanceRecordsInput>
+    connectOrCreate?: AcademicTermCreateOrConnectWithoutAttendanceRecordsInput
+    upsert?: AcademicTermUpsertWithoutAttendanceRecordsInput
+    connect?: AcademicTermWhereUniqueInput
+    update?: XOR<XOR<AcademicTermUpdateToOneWithWhereWithoutAttendanceRecordsInput, AcademicTermUpdateWithoutAttendanceRecordsInput>, AcademicTermUncheckedUpdateWithoutAttendanceRecordsInput>
+  }
+
+  export type StudentCreateNestedOneWithoutParentNotificationsInput = {
+    create?: XOR<StudentCreateWithoutParentNotificationsInput, StudentUncheckedCreateWithoutParentNotificationsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutParentNotificationsInput
+    connect?: StudentWhereUniqueInput
+  }
+
+  export type EnumParentNotificationTypeFieldUpdateOperationsInput = {
+    set?: $Enums.ParentNotificationType
+  }
+
+  export type EnumNotificationStatusFieldUpdateOperationsInput = {
+    set?: $Enums.NotificationStatus
+  }
+
+  export type StudentUpdateOneRequiredWithoutParentNotificationsNestedInput = {
+    create?: XOR<StudentCreateWithoutParentNotificationsInput, StudentUncheckedCreateWithoutParentNotificationsInput>
+    connectOrCreate?: StudentCreateOrConnectWithoutParentNotificationsInput
+    upsert?: StudentUpsertWithoutParentNotificationsInput
+    connect?: StudentWhereUniqueInput
+    update?: XOR<XOR<StudentUpdateToOneWithWhereWithoutParentNotificationsInput, StudentUpdateWithoutParentNotificationsInput>, StudentUncheckedUpdateWithoutParentNotificationsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -13911,6 +13834,36 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumStaffRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.StaffRole | EnumStaffRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.StaffRole[] | ListEnumStaffRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StaffRole[] | ListEnumStaffRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumStaffRoleFilter<$PrismaModel> | $Enums.StaffRole
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumStaffRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.StaffRole | EnumStaffRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.StaffRole[] | ListEnumStaffRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.StaffRole[] | ListEnumStaffRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumStaffRoleWithAggregatesFilter<$PrismaModel> | $Enums.StaffRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumStaffRoleFilter<$PrismaModel>
+    _max?: NestedEnumStaffRoleFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -13969,53 +13922,6 @@ export namespace Prisma {
     _max?: NestedEnumTransportStatusFilter<$PrismaModel>
   }
 
-  export type NestedEnumPhoneBorrowStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.PhoneBorrowStatus | EnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.PhoneBorrowStatus[] | ListEnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.PhoneBorrowStatus[] | ListEnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumPhoneBorrowStatusFilter<$PrismaModel> | $Enums.PhoneBorrowStatus
-  }
-
-  export type NestedEnumPhoneBorrowStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.PhoneBorrowStatus | EnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.PhoneBorrowStatus[] | ListEnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.PhoneBorrowStatus[] | ListEnumPhoneBorrowStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumPhoneBorrowStatusWithAggregatesFilter<$PrismaModel> | $Enums.PhoneBorrowStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPhoneBorrowStatusFilter<$PrismaModel>
-    _max?: NestedEnumPhoneBorrowStatusFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedEnumTermStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.TermStatus | EnumTermStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TermStatus[] | ListEnumTermStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TermStatus[] | ListEnumTermStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTermStatusFilter<$PrismaModel> | $Enums.TermStatus
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type NestedEnumTermStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TermStatus | EnumTermStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.TermStatus[] | ListEnumTermStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TermStatus[] | ListEnumTermStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumTermStatusWithAggregatesFilter<$PrismaModel> | $Enums.TermStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTermStatusFilter<$PrismaModel>
-    _max?: NestedEnumTermStatusFilter<$PrismaModel>
-  }
-
   export type NestedEnumAttendanceStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.AttendanceStatus | EnumAttendanceStatusFieldRefInput<$PrismaModel>
     in?: $Enums.AttendanceStatus[] | ListEnumAttendanceStatusFieldRefInput<$PrismaModel>
@@ -14060,12 +13966,48 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumParentNotificationTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.ParentNotificationType | EnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ParentNotificationType[] | ListEnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ParentNotificationType[] | ListEnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumParentNotificationTypeFilter<$PrismaModel> | $Enums.ParentNotificationType
+  }
+
+  export type NestedEnumNotificationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationStatus | EnumNotificationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationStatus[] | ListEnumNotificationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationStatus[] | ListEnumNotificationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationStatusFilter<$PrismaModel> | $Enums.NotificationStatus
+  }
+
+  export type NestedEnumParentNotificationTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ParentNotificationType | EnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.ParentNotificationType[] | ListEnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ParentNotificationType[] | ListEnumParentNotificationTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumParentNotificationTypeWithAggregatesFilter<$PrismaModel> | $Enums.ParentNotificationType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumParentNotificationTypeFilter<$PrismaModel>
+    _max?: NestedEnumParentNotificationTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumNotificationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationStatus | EnumNotificationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationStatus[] | ListEnumNotificationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationStatus[] | ListEnumNotificationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationStatusWithAggregatesFilter<$PrismaModel> | $Enums.NotificationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationStatusFilter<$PrismaModel>
+    _max?: NestedEnumNotificationStatusFilter<$PrismaModel>
+  }
+
   export type DisciplineRecordCreateWithoutStudentInput = {
     reason: string
     location?: string | null
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
+    accompaniedBy?: string | null
+    eventTheme?: string | null
     updatedAt?: Date | string
   }
 
@@ -14076,6 +14018,8 @@ export namespace Prisma {
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
+    accompaniedBy?: string | null
+    eventTheme?: string | null
     updatedAt?: Date | string
   }
 
@@ -14114,61 +14058,65 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type PhoneBorrowCreateWithoutStudentInput = {
-    phoneModel?: string
-    borrowedAt?: Date | string
-    returnedAt?: Date | string | null
-    status?: $Enums.PhoneBorrowStatus
+  export type AttendanceRecordCreateWithoutStudentInput = {
+    date: Date | string
+    status?: $Enums.AttendanceStatus
+    note?: string | null
+    markedByStaffId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    term: AcademicTermCreateNestedOneWithoutAttendanceRecordsInput
   }
 
-  export type PhoneBorrowUncheckedCreateWithoutStudentInput = {
+  export type AttendanceRecordUncheckedCreateWithoutStudentInput = {
     id?: number
-    phoneModel?: string
-    borrowedAt?: Date | string
-    returnedAt?: Date | string | null
-    status?: $Enums.PhoneBorrowStatus
+    termId: number
+    date: Date | string
+    status?: $Enums.AttendanceStatus
+    note?: string | null
+    markedByStaffId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type PhoneBorrowCreateOrConnectWithoutStudentInput = {
-    where: PhoneBorrowWhereUniqueInput
-    create: XOR<PhoneBorrowCreateWithoutStudentInput, PhoneBorrowUncheckedCreateWithoutStudentInput>
+  export type AttendanceRecordCreateOrConnectWithoutStudentInput = {
+    where: AttendanceRecordWhereUniqueInput
+    create: XOR<AttendanceRecordCreateWithoutStudentInput, AttendanceRecordUncheckedCreateWithoutStudentInput>
   }
 
-  export type PhoneBorrowCreateManyStudentInputEnvelope = {
-    data: PhoneBorrowCreateManyStudentInput | PhoneBorrowCreateManyStudentInput[]
+  export type AttendanceRecordCreateManyStudentInputEnvelope = {
+    data: AttendanceRecordCreateManyStudentInput | AttendanceRecordCreateManyStudentInput[]
     skipDuplicates?: boolean
   }
 
-  export type TermAttendanceCreateWithoutStudentInput = {
-    status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
+  export type ParentNotificationCreateWithoutStudentInput = {
+    channel?: string
+    phone: string
+    message: string
+    type: $Enums.ParentNotificationType
+    status?: $Enums.NotificationStatus
+    sentAt?: Date | string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    recordedBy?: StaffCreateNestedOneWithoutTermAttendancesInput
-    term: TermSessionCreateNestedOneWithoutAttendancesInput
   }
 
-  export type TermAttendanceUncheckedCreateWithoutStudentInput = {
+  export type ParentNotificationUncheckedCreateWithoutStudentInput = {
     id?: number
-    termId: number
-    status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
-    recordedById?: number | null
+    channel?: string
+    phone: string
+    message: string
+    type: $Enums.ParentNotificationType
+    status?: $Enums.NotificationStatus
+    sentAt?: Date | string
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
-  export type TermAttendanceCreateOrConnectWithoutStudentInput = {
-    where: TermAttendanceWhereUniqueInput
-    create: XOR<TermAttendanceCreateWithoutStudentInput, TermAttendanceUncheckedCreateWithoutStudentInput>
+  export type ParentNotificationCreateOrConnectWithoutStudentInput = {
+    where: ParentNotificationWhereUniqueInput
+    create: XOR<ParentNotificationCreateWithoutStudentInput, ParentNotificationUncheckedCreateWithoutStudentInput>
   }
 
-  export type TermAttendanceCreateManyStudentInputEnvelope = {
-    data: TermAttendanceCreateManyStudentInput | TermAttendanceCreateManyStudentInput[]
+  export type ParentNotificationCreateManyStudentInputEnvelope = {
+    data: ParentNotificationCreateManyStudentInput | ParentNotificationCreateManyStudentInput[]
     skipDuplicates?: boolean
   }
 
@@ -14199,6 +14147,8 @@ export namespace Prisma {
     status?: StringFilter<"DisciplineRecord"> | string
     outDate?: DateTimeFilter<"DisciplineRecord"> | Date | string
     returnDate?: DateTimeNullableFilter<"DisciplineRecord"> | Date | string | null
+    accompaniedBy?: StringNullableFilter<"DisciplineRecord"> | string | null
+    eventTheme?: StringNullableFilter<"DisciplineRecord"> | string | null
     updatedAt?: DateTimeFilter<"DisciplineRecord"> | Date | string
   }
 
@@ -14230,109 +14180,66 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"TransportAssignment"> | Date | string
   }
 
-  export type PhoneBorrowUpsertWithWhereUniqueWithoutStudentInput = {
-    where: PhoneBorrowWhereUniqueInput
-    update: XOR<PhoneBorrowUpdateWithoutStudentInput, PhoneBorrowUncheckedUpdateWithoutStudentInput>
-    create: XOR<PhoneBorrowCreateWithoutStudentInput, PhoneBorrowUncheckedCreateWithoutStudentInput>
+  export type AttendanceRecordUpsertWithWhereUniqueWithoutStudentInput = {
+    where: AttendanceRecordWhereUniqueInput
+    update: XOR<AttendanceRecordUpdateWithoutStudentInput, AttendanceRecordUncheckedUpdateWithoutStudentInput>
+    create: XOR<AttendanceRecordCreateWithoutStudentInput, AttendanceRecordUncheckedCreateWithoutStudentInput>
   }
 
-  export type PhoneBorrowUpdateWithWhereUniqueWithoutStudentInput = {
-    where: PhoneBorrowWhereUniqueInput
-    data: XOR<PhoneBorrowUpdateWithoutStudentInput, PhoneBorrowUncheckedUpdateWithoutStudentInput>
+  export type AttendanceRecordUpdateWithWhereUniqueWithoutStudentInput = {
+    where: AttendanceRecordWhereUniqueInput
+    data: XOR<AttendanceRecordUpdateWithoutStudentInput, AttendanceRecordUncheckedUpdateWithoutStudentInput>
   }
 
-  export type PhoneBorrowUpdateManyWithWhereWithoutStudentInput = {
-    where: PhoneBorrowScalarWhereInput
-    data: XOR<PhoneBorrowUpdateManyMutationInput, PhoneBorrowUncheckedUpdateManyWithoutStudentInput>
+  export type AttendanceRecordUpdateManyWithWhereWithoutStudentInput = {
+    where: AttendanceRecordScalarWhereInput
+    data: XOR<AttendanceRecordUpdateManyMutationInput, AttendanceRecordUncheckedUpdateManyWithoutStudentInput>
   }
 
-  export type PhoneBorrowScalarWhereInput = {
-    AND?: PhoneBorrowScalarWhereInput | PhoneBorrowScalarWhereInput[]
-    OR?: PhoneBorrowScalarWhereInput[]
-    NOT?: PhoneBorrowScalarWhereInput | PhoneBorrowScalarWhereInput[]
-    id?: IntFilter<"PhoneBorrow"> | number
-    studentId?: IntFilter<"PhoneBorrow"> | number
-    phoneModel?: StringFilter<"PhoneBorrow"> | string
-    borrowedAt?: DateTimeFilter<"PhoneBorrow"> | Date | string
-    returnedAt?: DateTimeNullableFilter<"PhoneBorrow"> | Date | string | null
-    status?: EnumPhoneBorrowStatusFilter<"PhoneBorrow"> | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeFilter<"PhoneBorrow"> | Date | string
-    updatedAt?: DateTimeFilter<"PhoneBorrow"> | Date | string
+  export type AttendanceRecordScalarWhereInput = {
+    AND?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
+    OR?: AttendanceRecordScalarWhereInput[]
+    NOT?: AttendanceRecordScalarWhereInput | AttendanceRecordScalarWhereInput[]
+    id?: IntFilter<"AttendanceRecord"> | number
+    studentId?: IntFilter<"AttendanceRecord"> | number
+    termId?: IntFilter<"AttendanceRecord"> | number
+    date?: DateTimeFilter<"AttendanceRecord"> | Date | string
+    status?: EnumAttendanceStatusFilter<"AttendanceRecord"> | $Enums.AttendanceStatus
+    note?: StringNullableFilter<"AttendanceRecord"> | string | null
+    markedByStaffId?: IntNullableFilter<"AttendanceRecord"> | number | null
+    createdAt?: DateTimeFilter<"AttendanceRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"AttendanceRecord"> | Date | string
   }
 
-  export type TermAttendanceUpsertWithWhereUniqueWithoutStudentInput = {
-    where: TermAttendanceWhereUniqueInput
-    update: XOR<TermAttendanceUpdateWithoutStudentInput, TermAttendanceUncheckedUpdateWithoutStudentInput>
-    create: XOR<TermAttendanceCreateWithoutStudentInput, TermAttendanceUncheckedCreateWithoutStudentInput>
+  export type ParentNotificationUpsertWithWhereUniqueWithoutStudentInput = {
+    where: ParentNotificationWhereUniqueInput
+    update: XOR<ParentNotificationUpdateWithoutStudentInput, ParentNotificationUncheckedUpdateWithoutStudentInput>
+    create: XOR<ParentNotificationCreateWithoutStudentInput, ParentNotificationUncheckedCreateWithoutStudentInput>
   }
 
-  export type TermAttendanceUpdateWithWhereUniqueWithoutStudentInput = {
-    where: TermAttendanceWhereUniqueInput
-    data: XOR<TermAttendanceUpdateWithoutStudentInput, TermAttendanceUncheckedUpdateWithoutStudentInput>
+  export type ParentNotificationUpdateWithWhereUniqueWithoutStudentInput = {
+    where: ParentNotificationWhereUniqueInput
+    data: XOR<ParentNotificationUpdateWithoutStudentInput, ParentNotificationUncheckedUpdateWithoutStudentInput>
   }
 
-  export type TermAttendanceUpdateManyWithWhereWithoutStudentInput = {
-    where: TermAttendanceScalarWhereInput
-    data: XOR<TermAttendanceUpdateManyMutationInput, TermAttendanceUncheckedUpdateManyWithoutStudentInput>
+  export type ParentNotificationUpdateManyWithWhereWithoutStudentInput = {
+    where: ParentNotificationScalarWhereInput
+    data: XOR<ParentNotificationUpdateManyMutationInput, ParentNotificationUncheckedUpdateManyWithoutStudentInput>
   }
 
-  export type TermAttendanceScalarWhereInput = {
-    AND?: TermAttendanceScalarWhereInput | TermAttendanceScalarWhereInput[]
-    OR?: TermAttendanceScalarWhereInput[]
-    NOT?: TermAttendanceScalarWhereInput | TermAttendanceScalarWhereInput[]
-    id?: IntFilter<"TermAttendance"> | number
-    termId?: IntFilter<"TermAttendance"> | number
-    studentId?: IntFilter<"TermAttendance"> | number
-    status?: EnumAttendanceStatusFilter<"TermAttendance"> | $Enums.AttendanceStatus
-    arrivalTime?: DateTimeNullableFilter<"TermAttendance"> | Date | string | null
-    recordedById?: IntNullableFilter<"TermAttendance"> | number | null
-    createdAt?: DateTimeFilter<"TermAttendance"> | Date | string
-    updatedAt?: DateTimeFilter<"TermAttendance"> | Date | string
-  }
-
-  export type TermAttendanceCreateWithoutRecordedByInput = {
-    status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    student: StudentCreateNestedOneWithoutTermAttendancesInput
-    term: TermSessionCreateNestedOneWithoutAttendancesInput
-  }
-
-  export type TermAttendanceUncheckedCreateWithoutRecordedByInput = {
-    id?: number
-    termId: number
-    studentId: number
-    status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TermAttendanceCreateOrConnectWithoutRecordedByInput = {
-    where: TermAttendanceWhereUniqueInput
-    create: XOR<TermAttendanceCreateWithoutRecordedByInput, TermAttendanceUncheckedCreateWithoutRecordedByInput>
-  }
-
-  export type TermAttendanceCreateManyRecordedByInputEnvelope = {
-    data: TermAttendanceCreateManyRecordedByInput | TermAttendanceCreateManyRecordedByInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type TermAttendanceUpsertWithWhereUniqueWithoutRecordedByInput = {
-    where: TermAttendanceWhereUniqueInput
-    update: XOR<TermAttendanceUpdateWithoutRecordedByInput, TermAttendanceUncheckedUpdateWithoutRecordedByInput>
-    create: XOR<TermAttendanceCreateWithoutRecordedByInput, TermAttendanceUncheckedCreateWithoutRecordedByInput>
-  }
-
-  export type TermAttendanceUpdateWithWhereUniqueWithoutRecordedByInput = {
-    where: TermAttendanceWhereUniqueInput
-    data: XOR<TermAttendanceUpdateWithoutRecordedByInput, TermAttendanceUncheckedUpdateWithoutRecordedByInput>
-  }
-
-  export type TermAttendanceUpdateManyWithWhereWithoutRecordedByInput = {
-    where: TermAttendanceScalarWhereInput
-    data: XOR<TermAttendanceUpdateManyMutationInput, TermAttendanceUncheckedUpdateManyWithoutRecordedByInput>
+  export type ParentNotificationScalarWhereInput = {
+    AND?: ParentNotificationScalarWhereInput | ParentNotificationScalarWhereInput[]
+    OR?: ParentNotificationScalarWhereInput[]
+    NOT?: ParentNotificationScalarWhereInput | ParentNotificationScalarWhereInput[]
+    id?: IntFilter<"ParentNotification"> | number
+    studentId?: IntFilter<"ParentNotification"> | number
+    channel?: StringFilter<"ParentNotification"> | string
+    phone?: StringFilter<"ParentNotification"> | string
+    message?: StringFilter<"ParentNotification"> | string
+    type?: EnumParentNotificationTypeFilter<"ParentNotification"> | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusFilter<"ParentNotification"> | $Enums.NotificationStatus
+    sentAt?: DateTimeFilter<"ParentNotification"> | Date | string
+    createdAt?: DateTimeFilter<"ParentNotification"> | Date | string
   }
 
   export type StudentCreateWithoutRecordsInput = {
@@ -14349,8 +14256,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     transportAssignments?: TransportAssignmentCreateNestedManyWithoutStudentInput
-    phoneBorrows?: PhoneBorrowCreateNestedManyWithoutStudentInput
-    termAttendances?: TermAttendanceCreateNestedManyWithoutStudentInput
+    attendanceRecords?: AttendanceRecordCreateNestedManyWithoutStudentInput
+    parentNotifications?: ParentNotificationCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutRecordsInput = {
@@ -14368,8 +14275,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     transportAssignments?: TransportAssignmentUncheckedCreateNestedManyWithoutStudentInput
-    phoneBorrows?: PhoneBorrowUncheckedCreateNestedManyWithoutStudentInput
-    termAttendances?: TermAttendanceUncheckedCreateNestedManyWithoutStudentInput
+    attendanceRecords?: AttendanceRecordUncheckedCreateNestedManyWithoutStudentInput
+    parentNotifications?: ParentNotificationUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutRecordsInput = {
@@ -14402,8 +14309,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transportAssignments?: TransportAssignmentUpdateManyWithoutStudentNestedInput
-    phoneBorrows?: PhoneBorrowUpdateManyWithoutStudentNestedInput
-    termAttendances?: TermAttendanceUpdateManyWithoutStudentNestedInput
+    attendanceRecords?: AttendanceRecordUpdateManyWithoutStudentNestedInput
+    parentNotifications?: ParentNotificationUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutRecordsInput = {
@@ -14421,8 +14328,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     transportAssignments?: TransportAssignmentUncheckedUpdateManyWithoutStudentNestedInput
-    phoneBorrows?: PhoneBorrowUncheckedUpdateManyWithoutStudentNestedInput
-    termAttendances?: TermAttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    attendanceRecords?: AttendanceRecordUncheckedUpdateManyWithoutStudentNestedInput
+    parentNotifications?: ParentNotificationUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type TransportAssignmentCreateWithoutTransportInput = {
@@ -14480,8 +14387,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     records?: DisciplineRecordCreateNestedManyWithoutStudentInput
-    phoneBorrows?: PhoneBorrowCreateNestedManyWithoutStudentInput
-    termAttendances?: TermAttendanceCreateNestedManyWithoutStudentInput
+    attendanceRecords?: AttendanceRecordCreateNestedManyWithoutStudentInput
+    parentNotifications?: ParentNotificationCreateNestedManyWithoutStudentInput
   }
 
   export type StudentUncheckedCreateWithoutTransportAssignmentsInput = {
@@ -14499,8 +14406,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     records?: DisciplineRecordUncheckedCreateNestedManyWithoutStudentInput
-    phoneBorrows?: PhoneBorrowUncheckedCreateNestedManyWithoutStudentInput
-    termAttendances?: TermAttendanceUncheckedCreateNestedManyWithoutStudentInput
+    attendanceRecords?: AttendanceRecordUncheckedCreateNestedManyWithoutStudentInput
+    parentNotifications?: ParentNotificationUncheckedCreateNestedManyWithoutStudentInput
   }
 
   export type StudentCreateOrConnectWithoutTransportAssignmentsInput = {
@@ -14553,8 +14460,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     records?: DisciplineRecordUpdateManyWithoutStudentNestedInput
-    phoneBorrows?: PhoneBorrowUpdateManyWithoutStudentNestedInput
-    termAttendances?: TermAttendanceUpdateManyWithoutStudentNestedInput
+    attendanceRecords?: AttendanceRecordUpdateManyWithoutStudentNestedInput
+    parentNotifications?: ParentNotificationUpdateManyWithoutStudentNestedInput
   }
 
   export type StudentUncheckedUpdateWithoutTransportAssignmentsInput = {
@@ -14572,8 +14479,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     records?: DisciplineRecordUncheckedUpdateManyWithoutStudentNestedInput
-    phoneBorrows?: PhoneBorrowUncheckedUpdateManyWithoutStudentNestedInput
-    termAttendances?: TermAttendanceUncheckedUpdateManyWithoutStudentNestedInput
+    attendanceRecords?: AttendanceRecordUncheckedUpdateManyWithoutStudentNestedInput
+    parentNotifications?: ParentNotificationUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type TransportUpsertWithoutAssignmentsInput = {
@@ -14602,168 +14509,54 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type StudentCreateWithoutPhoneBorrowsInput = {
-    firstName: string
-    lastName: string
-    fatherName: string
-    motherName: string
-    fatherPhoneNumber: string
-    motherPhoneNumber: string
-    year: string
-    classGroup: string
-    location?: string | null
-    status?: $Enums.Status
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    records?: DisciplineRecordCreateNestedManyWithoutStudentInput
-    transportAssignments?: TransportAssignmentCreateNestedManyWithoutStudentInput
-    termAttendances?: TermAttendanceCreateNestedManyWithoutStudentInput
-  }
-
-  export type StudentUncheckedCreateWithoutPhoneBorrowsInput = {
-    id?: number
-    firstName: string
-    lastName: string
-    fatherName: string
-    motherName: string
-    fatherPhoneNumber: string
-    motherPhoneNumber: string
-    year: string
-    classGroup: string
-    location?: string | null
-    status?: $Enums.Status
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    records?: DisciplineRecordUncheckedCreateNestedManyWithoutStudentInput
-    transportAssignments?: TransportAssignmentUncheckedCreateNestedManyWithoutStudentInput
-    termAttendances?: TermAttendanceUncheckedCreateNestedManyWithoutStudentInput
-  }
-
-  export type StudentCreateOrConnectWithoutPhoneBorrowsInput = {
-    where: StudentWhereUniqueInput
-    create: XOR<StudentCreateWithoutPhoneBorrowsInput, StudentUncheckedCreateWithoutPhoneBorrowsInput>
-  }
-
-  export type StudentUpsertWithoutPhoneBorrowsInput = {
-    update: XOR<StudentUpdateWithoutPhoneBorrowsInput, StudentUncheckedUpdateWithoutPhoneBorrowsInput>
-    create: XOR<StudentCreateWithoutPhoneBorrowsInput, StudentUncheckedCreateWithoutPhoneBorrowsInput>
-    where?: StudentWhereInput
-  }
-
-  export type StudentUpdateToOneWithWhereWithoutPhoneBorrowsInput = {
-    where?: StudentWhereInput
-    data: XOR<StudentUpdateWithoutPhoneBorrowsInput, StudentUncheckedUpdateWithoutPhoneBorrowsInput>
-  }
-
-  export type StudentUpdateWithoutPhoneBorrowsInput = {
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    fatherName?: StringFieldUpdateOperationsInput | string
-    motherName?: StringFieldUpdateOperationsInput | string
-    fatherPhoneNumber?: StringFieldUpdateOperationsInput | string
-    motherPhoneNumber?: StringFieldUpdateOperationsInput | string
-    year?: StringFieldUpdateOperationsInput | string
-    classGroup?: StringFieldUpdateOperationsInput | string
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    records?: DisciplineRecordUpdateManyWithoutStudentNestedInput
-    transportAssignments?: TransportAssignmentUpdateManyWithoutStudentNestedInput
-    termAttendances?: TermAttendanceUpdateManyWithoutStudentNestedInput
-  }
-
-  export type StudentUncheckedUpdateWithoutPhoneBorrowsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    fatherName?: StringFieldUpdateOperationsInput | string
-    motherName?: StringFieldUpdateOperationsInput | string
-    fatherPhoneNumber?: StringFieldUpdateOperationsInput | string
-    motherPhoneNumber?: StringFieldUpdateOperationsInput | string
-    year?: StringFieldUpdateOperationsInput | string
-    classGroup?: StringFieldUpdateOperationsInput | string
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    records?: DisciplineRecordUncheckedUpdateManyWithoutStudentNestedInput
-    transportAssignments?: TransportAssignmentUncheckedUpdateManyWithoutStudentNestedInput
-    termAttendances?: TermAttendanceUncheckedUpdateManyWithoutStudentNestedInput
-  }
-
-  export type TermAttendanceCreateWithoutTermInput = {
+  export type AttendanceRecordCreateWithoutTermInput = {
+    date: Date | string
     status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
+    note?: string | null
+    markedByStaffId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    recordedBy?: StaffCreateNestedOneWithoutTermAttendancesInput
-    student: StudentCreateNestedOneWithoutTermAttendancesInput
+    student: StudentCreateNestedOneWithoutAttendanceRecordsInput
   }
 
-  export type TermAttendanceUncheckedCreateWithoutTermInput = {
+  export type AttendanceRecordUncheckedCreateWithoutTermInput = {
     id?: number
     studentId: number
+    date: Date | string
     status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
-    recordedById?: number | null
+    note?: string | null
+    markedByStaffId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TermAttendanceCreateOrConnectWithoutTermInput = {
-    where: TermAttendanceWhereUniqueInput
-    create: XOR<TermAttendanceCreateWithoutTermInput, TermAttendanceUncheckedCreateWithoutTermInput>
+  export type AttendanceRecordCreateOrConnectWithoutTermInput = {
+    where: AttendanceRecordWhereUniqueInput
+    create: XOR<AttendanceRecordCreateWithoutTermInput, AttendanceRecordUncheckedCreateWithoutTermInput>
   }
 
-  export type TermAttendanceCreateManyTermInputEnvelope = {
-    data: TermAttendanceCreateManyTermInput | TermAttendanceCreateManyTermInput[]
+  export type AttendanceRecordCreateManyTermInputEnvelope = {
+    data: AttendanceRecordCreateManyTermInput | AttendanceRecordCreateManyTermInput[]
     skipDuplicates?: boolean
   }
 
-  export type TermAttendanceUpsertWithWhereUniqueWithoutTermInput = {
-    where: TermAttendanceWhereUniqueInput
-    update: XOR<TermAttendanceUpdateWithoutTermInput, TermAttendanceUncheckedUpdateWithoutTermInput>
-    create: XOR<TermAttendanceCreateWithoutTermInput, TermAttendanceUncheckedCreateWithoutTermInput>
+  export type AttendanceRecordUpsertWithWhereUniqueWithoutTermInput = {
+    where: AttendanceRecordWhereUniqueInput
+    update: XOR<AttendanceRecordUpdateWithoutTermInput, AttendanceRecordUncheckedUpdateWithoutTermInput>
+    create: XOR<AttendanceRecordCreateWithoutTermInput, AttendanceRecordUncheckedCreateWithoutTermInput>
   }
 
-  export type TermAttendanceUpdateWithWhereUniqueWithoutTermInput = {
-    where: TermAttendanceWhereUniqueInput
-    data: XOR<TermAttendanceUpdateWithoutTermInput, TermAttendanceUncheckedUpdateWithoutTermInput>
+  export type AttendanceRecordUpdateWithWhereUniqueWithoutTermInput = {
+    where: AttendanceRecordWhereUniqueInput
+    data: XOR<AttendanceRecordUpdateWithoutTermInput, AttendanceRecordUncheckedUpdateWithoutTermInput>
   }
 
-  export type TermAttendanceUpdateManyWithWhereWithoutTermInput = {
-    where: TermAttendanceScalarWhereInput
-    data: XOR<TermAttendanceUpdateManyMutationInput, TermAttendanceUncheckedUpdateManyWithoutTermInput>
+  export type AttendanceRecordUpdateManyWithWhereWithoutTermInput = {
+    where: AttendanceRecordScalarWhereInput
+    data: XOR<AttendanceRecordUpdateManyMutationInput, AttendanceRecordUncheckedUpdateManyWithoutTermInput>
   }
 
-  export type StaffCreateWithoutTermAttendancesInput = {
-    firstName: string
-    lastName: string
-    email: string
-    password: string
-    phoneNumber: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type StaffUncheckedCreateWithoutTermAttendancesInput = {
-    id?: number
-    firstName: string
-    lastName: string
-    email: string
-    password: string
-    phoneNumber: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type StaffCreateOrConnectWithoutTermAttendancesInput = {
-    where: StaffWhereUniqueInput
-    create: XOR<StaffCreateWithoutTermAttendancesInput, StaffUncheckedCreateWithoutTermAttendancesInput>
-  }
-
-  export type StudentCreateWithoutTermAttendancesInput = {
+  export type StudentCreateWithoutAttendanceRecordsInput = {
     firstName: string
     lastName: string
     fatherName: string
@@ -14778,10 +14571,10 @@ export namespace Prisma {
     updatedAt?: Date | string
     records?: DisciplineRecordCreateNestedManyWithoutStudentInput
     transportAssignments?: TransportAssignmentCreateNestedManyWithoutStudentInput
-    phoneBorrows?: PhoneBorrowCreateNestedManyWithoutStudentInput
+    parentNotifications?: ParentNotificationCreateNestedManyWithoutStudentInput
   }
 
-  export type StudentUncheckedCreateWithoutTermAttendancesInput = {
+  export type StudentUncheckedCreateWithoutAttendanceRecordsInput = {
     id?: number
     firstName: string
     lastName: string
@@ -14797,88 +14590,50 @@ export namespace Prisma {
     updatedAt?: Date | string
     records?: DisciplineRecordUncheckedCreateNestedManyWithoutStudentInput
     transportAssignments?: TransportAssignmentUncheckedCreateNestedManyWithoutStudentInput
-    phoneBorrows?: PhoneBorrowUncheckedCreateNestedManyWithoutStudentInput
+    parentNotifications?: ParentNotificationUncheckedCreateNestedManyWithoutStudentInput
   }
 
-  export type StudentCreateOrConnectWithoutTermAttendancesInput = {
+  export type StudentCreateOrConnectWithoutAttendanceRecordsInput = {
     where: StudentWhereUniqueInput
-    create: XOR<StudentCreateWithoutTermAttendancesInput, StudentUncheckedCreateWithoutTermAttendancesInput>
+    create: XOR<StudentCreateWithoutAttendanceRecordsInput, StudentUncheckedCreateWithoutAttendanceRecordsInput>
   }
 
-  export type TermSessionCreateWithoutAttendancesInput = {
+  export type AcademicTermCreateWithoutAttendanceRecordsInput = {
     name: string
-    year: number
     startDate: Date | string
-    endDate: Date | string
-    openingDate: Date | string
+    endDate?: Date | string | null
     isActive?: boolean
-    status?: $Enums.TermStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TermSessionUncheckedCreateWithoutAttendancesInput = {
+  export type AcademicTermUncheckedCreateWithoutAttendanceRecordsInput = {
     id?: number
     name: string
-    year: number
     startDate: Date | string
-    endDate: Date | string
-    openingDate: Date | string
+    endDate?: Date | string | null
     isActive?: boolean
-    status?: $Enums.TermStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TermSessionCreateOrConnectWithoutAttendancesInput = {
-    where: TermSessionWhereUniqueInput
-    create: XOR<TermSessionCreateWithoutAttendancesInput, TermSessionUncheckedCreateWithoutAttendancesInput>
+  export type AcademicTermCreateOrConnectWithoutAttendanceRecordsInput = {
+    where: AcademicTermWhereUniqueInput
+    create: XOR<AcademicTermCreateWithoutAttendanceRecordsInput, AcademicTermUncheckedCreateWithoutAttendanceRecordsInput>
   }
 
-  export type StaffUpsertWithoutTermAttendancesInput = {
-    update: XOR<StaffUpdateWithoutTermAttendancesInput, StaffUncheckedUpdateWithoutTermAttendancesInput>
-    create: XOR<StaffCreateWithoutTermAttendancesInput, StaffUncheckedCreateWithoutTermAttendancesInput>
-    where?: StaffWhereInput
-  }
-
-  export type StaffUpdateToOneWithWhereWithoutTermAttendancesInput = {
-    where?: StaffWhereInput
-    data: XOR<StaffUpdateWithoutTermAttendancesInput, StaffUncheckedUpdateWithoutTermAttendancesInput>
-  }
-
-  export type StaffUpdateWithoutTermAttendancesInput = {
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type StaffUncheckedUpdateWithoutTermAttendancesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    firstName?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type StudentUpsertWithoutTermAttendancesInput = {
-    update: XOR<StudentUpdateWithoutTermAttendancesInput, StudentUncheckedUpdateWithoutTermAttendancesInput>
-    create: XOR<StudentCreateWithoutTermAttendancesInput, StudentUncheckedCreateWithoutTermAttendancesInput>
+  export type StudentUpsertWithoutAttendanceRecordsInput = {
+    update: XOR<StudentUpdateWithoutAttendanceRecordsInput, StudentUncheckedUpdateWithoutAttendanceRecordsInput>
+    create: XOR<StudentCreateWithoutAttendanceRecordsInput, StudentUncheckedCreateWithoutAttendanceRecordsInput>
     where?: StudentWhereInput
   }
 
-  export type StudentUpdateToOneWithWhereWithoutTermAttendancesInput = {
+  export type StudentUpdateToOneWithWhereWithoutAttendanceRecordsInput = {
     where?: StudentWhereInput
-    data: XOR<StudentUpdateWithoutTermAttendancesInput, StudentUncheckedUpdateWithoutTermAttendancesInput>
+    data: XOR<StudentUpdateWithoutAttendanceRecordsInput, StudentUncheckedUpdateWithoutAttendanceRecordsInput>
   }
 
-  export type StudentUpdateWithoutTermAttendancesInput = {
+  export type StudentUpdateWithoutAttendanceRecordsInput = {
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     fatherName?: StringFieldUpdateOperationsInput | string
@@ -14893,10 +14648,10 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     records?: DisciplineRecordUpdateManyWithoutStudentNestedInput
     transportAssignments?: TransportAssignmentUpdateManyWithoutStudentNestedInput
-    phoneBorrows?: PhoneBorrowUpdateManyWithoutStudentNestedInput
+    parentNotifications?: ParentNotificationUpdateManyWithoutStudentNestedInput
   }
 
-  export type StudentUncheckedUpdateWithoutTermAttendancesInput = {
+  export type StudentUncheckedUpdateWithoutAttendanceRecordsInput = {
     id?: IntFieldUpdateOperationsInput | number
     firstName?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
@@ -14912,43 +14667,127 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     records?: DisciplineRecordUncheckedUpdateManyWithoutStudentNestedInput
     transportAssignments?: TransportAssignmentUncheckedUpdateManyWithoutStudentNestedInput
-    phoneBorrows?: PhoneBorrowUncheckedUpdateManyWithoutStudentNestedInput
+    parentNotifications?: ParentNotificationUncheckedUpdateManyWithoutStudentNestedInput
   }
 
-  export type TermSessionUpsertWithoutAttendancesInput = {
-    update: XOR<TermSessionUpdateWithoutAttendancesInput, TermSessionUncheckedUpdateWithoutAttendancesInput>
-    create: XOR<TermSessionCreateWithoutAttendancesInput, TermSessionUncheckedCreateWithoutAttendancesInput>
-    where?: TermSessionWhereInput
+  export type AcademicTermUpsertWithoutAttendanceRecordsInput = {
+    update: XOR<AcademicTermUpdateWithoutAttendanceRecordsInput, AcademicTermUncheckedUpdateWithoutAttendanceRecordsInput>
+    create: XOR<AcademicTermCreateWithoutAttendanceRecordsInput, AcademicTermUncheckedCreateWithoutAttendanceRecordsInput>
+    where?: AcademicTermWhereInput
   }
 
-  export type TermSessionUpdateToOneWithWhereWithoutAttendancesInput = {
-    where?: TermSessionWhereInput
-    data: XOR<TermSessionUpdateWithoutAttendancesInput, TermSessionUncheckedUpdateWithoutAttendancesInput>
+  export type AcademicTermUpdateToOneWithWhereWithoutAttendanceRecordsInput = {
+    where?: AcademicTermWhereInput
+    data: XOR<AcademicTermUpdateWithoutAttendanceRecordsInput, AcademicTermUncheckedUpdateWithoutAttendanceRecordsInput>
   }
 
-  export type TermSessionUpdateWithoutAttendancesInput = {
+  export type AcademicTermUpdateWithoutAttendanceRecordsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    year?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumTermStatusFieldUpdateOperationsInput | $Enums.TermStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TermSessionUncheckedUpdateWithoutAttendancesInput = {
+  export type AcademicTermUncheckedUpdateWithoutAttendanceRecordsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    year?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    openingDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    status?: EnumTermStatusFieldUpdateOperationsInput | $Enums.TermStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudentCreateWithoutParentNotificationsInput = {
+    firstName: string
+    lastName: string
+    fatherName: string
+    motherName: string
+    fatherPhoneNumber: string
+    motherPhoneNumber: string
+    year: string
+    classGroup: string
+    location?: string | null
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    records?: DisciplineRecordCreateNestedManyWithoutStudentInput
+    transportAssignments?: TransportAssignmentCreateNestedManyWithoutStudentInput
+    attendanceRecords?: AttendanceRecordCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentUncheckedCreateWithoutParentNotificationsInput = {
+    id?: number
+    firstName: string
+    lastName: string
+    fatherName: string
+    motherName: string
+    fatherPhoneNumber: string
+    motherPhoneNumber: string
+    year: string
+    classGroup: string
+    location?: string | null
+    status?: $Enums.Status
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    records?: DisciplineRecordUncheckedCreateNestedManyWithoutStudentInput
+    transportAssignments?: TransportAssignmentUncheckedCreateNestedManyWithoutStudentInput
+    attendanceRecords?: AttendanceRecordUncheckedCreateNestedManyWithoutStudentInput
+  }
+
+  export type StudentCreateOrConnectWithoutParentNotificationsInput = {
+    where: StudentWhereUniqueInput
+    create: XOR<StudentCreateWithoutParentNotificationsInput, StudentUncheckedCreateWithoutParentNotificationsInput>
+  }
+
+  export type StudentUpsertWithoutParentNotificationsInput = {
+    update: XOR<StudentUpdateWithoutParentNotificationsInput, StudentUncheckedUpdateWithoutParentNotificationsInput>
+    create: XOR<StudentCreateWithoutParentNotificationsInput, StudentUncheckedCreateWithoutParentNotificationsInput>
+    where?: StudentWhereInput
+  }
+
+  export type StudentUpdateToOneWithWhereWithoutParentNotificationsInput = {
+    where?: StudentWhereInput
+    data: XOR<StudentUpdateWithoutParentNotificationsInput, StudentUncheckedUpdateWithoutParentNotificationsInput>
+  }
+
+  export type StudentUpdateWithoutParentNotificationsInput = {
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    fatherName?: StringFieldUpdateOperationsInput | string
+    motherName?: StringFieldUpdateOperationsInput | string
+    fatherPhoneNumber?: StringFieldUpdateOperationsInput | string
+    motherPhoneNumber?: StringFieldUpdateOperationsInput | string
+    year?: StringFieldUpdateOperationsInput | string
+    classGroup?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: DisciplineRecordUpdateManyWithoutStudentNestedInput
+    transportAssignments?: TransportAssignmentUpdateManyWithoutStudentNestedInput
+    attendanceRecords?: AttendanceRecordUpdateManyWithoutStudentNestedInput
+  }
+
+  export type StudentUncheckedUpdateWithoutParentNotificationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    fatherName?: StringFieldUpdateOperationsInput | string
+    motherName?: StringFieldUpdateOperationsInput | string
+    fatherPhoneNumber?: StringFieldUpdateOperationsInput | string
+    motherPhoneNumber?: StringFieldUpdateOperationsInput | string
+    year?: StringFieldUpdateOperationsInput | string
+    classGroup?: StringFieldUpdateOperationsInput | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusFieldUpdateOperationsInput | $Enums.Status
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    records?: DisciplineRecordUncheckedUpdateManyWithoutStudentNestedInput
+    transportAssignments?: TransportAssignmentUncheckedUpdateManyWithoutStudentNestedInput
+    attendanceRecords?: AttendanceRecordUncheckedUpdateManyWithoutStudentNestedInput
   }
 
   export type DisciplineRecordCreateManyStudentInput = {
@@ -14958,6 +14797,8 @@ export namespace Prisma {
     status?: string
     outDate?: Date | string
     returnDate?: Date | string | null
+    accompaniedBy?: string | null
+    eventTheme?: string | null
     updatedAt?: Date | string
   }
 
@@ -14969,24 +14810,26 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type PhoneBorrowCreateManyStudentInput = {
+  export type AttendanceRecordCreateManyStudentInput = {
     id?: number
-    phoneModel?: string
-    borrowedAt?: Date | string
-    returnedAt?: Date | string | null
-    status?: $Enums.PhoneBorrowStatus
+    termId: number
+    date: Date | string
+    status?: $Enums.AttendanceStatus
+    note?: string | null
+    markedByStaffId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TermAttendanceCreateManyStudentInput = {
+  export type ParentNotificationCreateManyStudentInput = {
     id?: number
-    termId: number
-    status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
-    recordedById?: number | null
+    channel?: string
+    phone: string
+    message: string
+    type: $Enums.ParentNotificationType
+    status?: $Enums.NotificationStatus
+    sentAt?: Date | string
     createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type DisciplineRecordUpdateWithoutStudentInput = {
@@ -14995,6 +14838,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accompaniedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    eventTheme?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -15005,6 +14850,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accompaniedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    eventTheme?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -15015,6 +14862,8 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     outDate?: DateTimeFieldUpdateOperationsInput | Date | string
     returnDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accompaniedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    eventTheme?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -15041,101 +14890,68 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PhoneBorrowUpdateWithoutStudentInput = {
-    phoneModel?: StringFieldUpdateOperationsInput | string
-    borrowedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    returnedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumPhoneBorrowStatusFieldUpdateOperationsInput | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PhoneBorrowUncheckedUpdateWithoutStudentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    phoneModel?: StringFieldUpdateOperationsInput | string
-    borrowedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    returnedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumPhoneBorrowStatusFieldUpdateOperationsInput | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PhoneBorrowUncheckedUpdateManyWithoutStudentInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    phoneModel?: StringFieldUpdateOperationsInput | string
-    borrowedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    returnedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    status?: EnumPhoneBorrowStatusFieldUpdateOperationsInput | $Enums.PhoneBorrowStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TermAttendanceUpdateWithoutStudentInput = {
+  export type AttendanceRecordUpdateWithoutStudentInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    markedByStaffId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recordedBy?: StaffUpdateOneWithoutTermAttendancesNestedInput
-    term?: TermSessionUpdateOneRequiredWithoutAttendancesNestedInput
+    term?: AcademicTermUpdateOneRequiredWithoutAttendanceRecordsNestedInput
   }
 
-  export type TermAttendanceUncheckedUpdateWithoutStudentInput = {
+  export type AttendanceRecordUncheckedUpdateWithoutStudentInput = {
     id?: IntFieldUpdateOperationsInput | number
     termId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recordedById?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    markedByStaffId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TermAttendanceUncheckedUpdateManyWithoutStudentInput = {
+  export type AttendanceRecordUncheckedUpdateManyWithoutStudentInput = {
     id?: IntFieldUpdateOperationsInput | number
     termId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recordedById?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    markedByStaffId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TermAttendanceCreateManyRecordedByInput = {
-    id?: number
-    termId: number
-    studentId: number
-    status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type TermAttendanceUpdateWithoutRecordedByInput = {
-    status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  export type ParentNotificationUpdateWithoutStudentInput = {
+    channel?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: EnumParentNotificationTypeFieldUpdateOperationsInput | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    student?: StudentUpdateOneRequiredWithoutTermAttendancesNestedInput
-    term?: TermSessionUpdateOneRequiredWithoutAttendancesNestedInput
   }
 
-  export type TermAttendanceUncheckedUpdateWithoutRecordedByInput = {
+  export type ParentNotificationUncheckedUpdateWithoutStudentInput = {
     id?: IntFieldUpdateOperationsInput | number
-    termId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    channel?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: EnumParentNotificationTypeFieldUpdateOperationsInput | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TermAttendanceUncheckedUpdateManyWithoutRecordedByInput = {
+  export type ParentNotificationUncheckedUpdateManyWithoutStudentInput = {
     id?: IntFieldUpdateOperationsInput | number
-    termId?: IntFieldUpdateOperationsInput | number
-    studentId?: IntFieldUpdateOperationsInput | number
-    status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    channel?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: EnumParentNotificationTypeFieldUpdateOperationsInput | $Enums.ParentNotificationType
+    status?: EnumNotificationStatusFieldUpdateOperationsInput | $Enums.NotificationStatus
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TransportAssignmentCreateManyTransportInput = {
@@ -15169,41 +14985,45 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TermAttendanceCreateManyTermInput = {
+  export type AttendanceRecordCreateManyTermInput = {
     id?: number
     studentId: number
+    date: Date | string
     status?: $Enums.AttendanceStatus
-    arrivalTime?: Date | string | null
-    recordedById?: number | null
+    note?: string | null
+    markedByStaffId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type TermAttendanceUpdateWithoutTermInput = {
+  export type AttendanceRecordUpdateWithoutTermInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    markedByStaffId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recordedBy?: StaffUpdateOneWithoutTermAttendancesNestedInput
-    student?: StudentUpdateOneRequiredWithoutTermAttendancesNestedInput
+    student?: StudentUpdateOneRequiredWithoutAttendanceRecordsNestedInput
   }
 
-  export type TermAttendanceUncheckedUpdateWithoutTermInput = {
+  export type AttendanceRecordUncheckedUpdateWithoutTermInput = {
     id?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recordedById?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    markedByStaffId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type TermAttendanceUncheckedUpdateManyWithoutTermInput = {
+  export type AttendanceRecordUncheckedUpdateManyWithoutTermInput = {
     id?: IntFieldUpdateOperationsInput | number
     studentId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAttendanceStatusFieldUpdateOperationsInput | $Enums.AttendanceStatus
-    arrivalTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recordedById?: NullableIntFieldUpdateOperationsInput | number | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    markedByStaffId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

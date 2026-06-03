@@ -25,7 +25,11 @@ export async function apiFetch(endpoint: string, options: RequestInit = {}) {
             useAuthStore.getState().logout();
         }
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || `API error: ${response.status}`);
+        const msg =
+            (Array.isArray(errorData.message) ? errorData.message[0] : errorData.message) ||
+            errorData.error ||
+            `API error: ${response.status}`;
+        throw new Error(msg);
     }
 
     return response.json();

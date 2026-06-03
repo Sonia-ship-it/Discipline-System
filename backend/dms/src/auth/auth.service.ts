@@ -1,28 +1,26 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
-import { JwtService } from '@nestjs/jwt'
+import { JwtService } from '@nestjs/jwt';
 import axios from 'axios';
-
-
 
 @Injectable()
 export class AuthService {
-    constructor(
-        private prisma: PrismaService,
-        private jwtService: JwtService,
-    ) { }
+    constructor(private prisma: PrismaService, private jwtService: JwtService) { }
 
     async validateStaff(email: string, password: string) {
         const staff = await this.prisma.staff.findUnique({ where: { email } });
-        if (!staff) throw new UnauthorizedException("Invalid Credentials");
+        if (!staff) throw new UnauthorizedException('Invalid Credentials');
 
         const passwordValid = await bcrypt.compare(password, staff.password);
-        if (!passwordValid) throw new UnauthorizedException("Invalid Credentials");
+        if (!passwordValid) throw new UnauthorizedException('Invalid Credentials');
+
+        if (staff.isActive === false) {
+            throw new ForbiddenException('Your account has been deactivated. Contact the administrator.');
+        }
 
         return staff;
     }
-
 
     async login(email: string, password: string) {
         // Step 1: Try to find user in Discipline Staff table
@@ -32,7 +30,12 @@ export class AuthService {
             if (staff) {
                 const passwordValid = await bcrypt.compare(password, staff.password);
                 if (!passwordValid) {
-                    throw new UnauthorizedException("Invalid Credentials");
+                    throw new UnauthorizedException('Invalid Credentials');
+                }
+
+                // Check if account is active
+                if (staff.isActive === false) {
+                    throw new ForbiddenException('Your account has been deactivated. Contact the administrator.');
                 }
 
                 // Generate JWT token with discipline permissions based on role
@@ -55,14 +58,15 @@ export class AuthService {
                     access_token: token,
                     user: {
                         id: staff.id,
+                        firstName: staff.firstName,
+                        lastName: staff.lastName,
                         email: staff.email,
-                        name: `${staff.firstName} ${staff.lastName}`,
-                        role: staff.role
+                        role: staff.role,
                     }
                 };
             }
         } catch (error) {
-            if (error instanceof UnauthorizedException) {
+            if (error instanceof UnauthorizedException || error instanceof ForbiddenException) {
                 throw error;
             }
             // Continue to check library system if staff not found
@@ -103,7 +107,8 @@ export class AuthService {
                     user: {
                         id: response.data.userId,
                         email: email,
-                        name: response.data.name,
+                        firstName: response.data.name.split(' ')[0],
+                        lastName: response.data.name.split(' ')[1] || '',
                         role: 'LIBRARIAN'
                     }
                 };
@@ -124,7 +129,7 @@ export class AuthService {
                     discipline: ['*'], // Full discipline access
                     library: ['*']     // Full library access
                 };
-            case 'DISCIPLINE_STAFF':
+            case 'DISCIPLINE':
                 return {
                     discipline: ['*'] // Full discipline access
                 };
@@ -132,17 +137,27 @@ export class AuthService {
                 return {
                     discipline: ['health.view', 'students.view_health']
                 };
+            case 'LIBRARIAN':
+                return {
+                    library: ['*'] // Full library access
+                };
             default:
                 return {};
         }
     }
 
-    async register(staffData: any) {
-        const hashedPassword = await bcrypt.hash(staffData.password, 10);
+    async register(staffData: Record<string, unknown>) {
+        const hashedPassword = await bcrypt.hash(staffData.password as string, 10);
         const staff = await this.prisma.staff.create({
-            data: { ...staffData, password: hashedPassword }
+            data: {
+                firstName: staffData.firstName as string,
+                lastName: staffData.lastName as string,
+                email: staffData.email as string,
+                password: hashedPassword,
+                phoneNumber: staffData.phoneNumber as string,
+                role: (staffData.role as any) || 'DISCIPLINE'
+            }
         });
-
         return staff;
     }
 }

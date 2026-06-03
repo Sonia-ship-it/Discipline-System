@@ -9,10 +9,10 @@ import { AuthModule } from './auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule } from '@nestjs/config';
 import { TransportModule } from './transport/transport.module';
-import { PhoneBorrowModule } from './phone-borrow/phone-borrow.module';
-import { TermAttendanceModule } from './term-attendance/term-attendance.module';
-import { OpeningAttendanceModule } from './opening-attendance/opening-attendance.module';
-
+import { TermModule } from './term/term.module';
+import { AttendanceModule } from './attendance/attendance.module';
+import { NotificationModule } from './notification/notification.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -29,9 +29,10 @@ import { OpeningAttendanceModule } from './opening-attendance/opening-attendance
       isGlobal: true,
     }),
     TransportModule,
-    PhoneBorrowModule,
-    TermAttendanceModule,
-    OpeningAttendanceModule,
+    TermModule,
+    AttendanceModule,
+    NotificationModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

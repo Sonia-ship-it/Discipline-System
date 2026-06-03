@@ -120,6 +120,77 @@ Tokens are obtained via the `/auth/login` endpoint and are valid for **3 days**.
 
 ---
 
+## Academic Term Endpoints (Protected)
+
+### Get All Terms
+- **Endpoint:** `/terms`
+- **Method:** `GET`
+
+### Get Active Term
+- **Endpoint:** `/terms/active`
+- **Method:** `GET`
+
+### Create Term
+- **Endpoint:** `/terms`
+- **Method:** `POST`
+- **Request Body (JSON):**
+  - `name` (string): **Required**.
+  - `startDate` (string/date): **Required**.
+  - `endDate` (string/date): Optional.
+  - `isActive` (boolean): Optional.
+
+### Activate Term
+- **Endpoint:** `/terms/:id/activate`
+- **Method:** `PATCH`
+
+---
+
+## Attendance Endpoints (Protected)
+
+### List Attendance (with students)
+- **Endpoint:** `/attendance`
+- **Method:** `GET`
+- **Query Params:** `termId`, `date`, `year`, `classGroup` (optional).
+
+### Student Attendance History
+- **Endpoint:** `/attendance/student/:studentId`
+- **Method:** `GET`
+- **Query Params:** `termId` (optional).
+
+### Mark Attendance (bulk)
+- **Endpoint:** `/attendance/mark`
+- **Method:** `POST`
+- **Request Body (JSON):**
+  - `date` (string/date): **Required**.
+  - `termId` (number): Optional (uses active term).
+  - `records` (array): `{ studentId, status, note? }` — status: `PRESENT`, `ABSENT`, `LATE`, `EXCUSED`.
+
+### Term Opening (mark all present)
+- **Endpoint:** `/attendance/term-opening`
+- **Method:** `POST`
+- **Request Body (JSON):**
+  - `termId`, `date`, `year`, `classGroup` (all optional).
+
+---
+
+## Parent Notifications (Protected)
+
+### Notify Parents
+- **Endpoint:** `/notifications/parent`
+- **Method:** `POST`
+- **Request Body (JSON):**
+  - `date` (string/date): **Required**.
+  - `type` (string): **Required** — `TERM_OPENING`, `ABSENCE_ALERT`, `ATTENDANCE_SUMMARY`.
+  - `termId` (number): Optional.
+  - `studentIds` (number[]): Optional (for targeted alerts).
+
+### Notification History
+- **Endpoint:** `/notifications`
+- **Method:** `GET`
+- **Query Params:** `studentId` (optional).
+
+---
+
 ## Staff Endpoints (Protected)
 
 ### Update Staff

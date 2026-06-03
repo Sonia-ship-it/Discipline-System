@@ -7,4 +7,6 @@ export class CreateDisciplineRecordDto {
   @IsOptional() @IsString() status?: string;
   @IsOptional() @IsDateString() outDate?: string;
   @IsOptional() @IsDateString() returnDate?: string;
+  @IsOptional() @IsString() accompaniedBy?: string;
+  @IsOptional() @IsString() eventTheme?: string;
 }

@@ -15,6 +15,12 @@ export function StatusBadge({ status, className }: { status: string; className?:
     NOT_REPORTED: 'bg-amber-50 text-amber-700 border-amber-100',
     Pending: 'bg-amber-50 text-amber-700 border-amber-100',
     Resolved: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+    PRESENT: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+    ABSENT: 'bg-rose-50 text-rose-700 border-rose-100',
+    LATE: 'bg-amber-50 text-amber-700 border-amber-100',
+    EXCUSED: 'bg-sky-50 text-sky-700 border-sky-100',
+    SENT: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+    FAILED: 'bg-rose-50 text-rose-700 border-rose-100',
   };
 
   const labels: Record<string, string> = {

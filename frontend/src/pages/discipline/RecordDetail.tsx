@@ -19,6 +19,8 @@ interface RecordFull {
   outDate: string;
   returnDate: string | null;
   location: string;
+  accompaniedBy?: string | null;
+  eventTheme?: string | null;
   student: {
     id: number;
     firstName: string;
@@ -206,6 +208,26 @@ export default function RecordDetail() {
                 </div>
               ))}
             </div>
+
+            {record.reason === 'School Event' && (
+              <div className="mb-16 rounded-md border border-[#0A0E2E]/15 bg-[#0A0E2E]/5 p-8">
+                <h3 className="mb-6 text-lg font-bold text-[#0A0E2E]">School Event Details</h3>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase text-[#0A0E2E]/60">Staff accompanying student</p>
+                    <p className="mt-1 text-sm font-bold text-[#0A0E2E]">
+                      {record.accompaniedBy || 'Not specified'}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase text-[#0A0E2E]/60">Event theme</p>
+                    <p className="mt-1 text-sm font-bold text-[#0A0E2E]">
+                      {record.eventTheme || 'Not specified'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             <div className="h-px bg-[#0A0E2E]/10 w-full mb-16 shadow-sm" />
 

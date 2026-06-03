@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import {
     Dialog,
     DialogContent,
@@ -19,6 +20,7 @@ import {
 import { apiFetch } from '@/lib/api';
 import { toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
+import { Users, Star } from 'lucide-react';
 
 interface RecordBackend {
     id: number;
@@ -28,6 +30,8 @@ interface RecordBackend {
     outDate: string;
     returnDate: string | null;
     location: string;
+    accompaniedBy?: string | null;
+    eventTheme?: string | null;
     student?: {
         firstName: string;
         lastName: string;
@@ -42,12 +46,20 @@ interface RecordModalProps {
 }
 
 export function RecordModal({ isOpen, onClose, onSuccess, record }: RecordModalProps) {
+    const { data: staffList = [] } = useQuery<{ id: number; firstName: string; lastName: string }[]>({
+        queryKey: ['staff'],
+        queryFn: () => apiFetch('/staff'),
+        enabled: isOpen,
+        staleTime: 1000 * 60 * 10,
+    });
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         reason: '',
         status: '',
         outDate: '',
         location: '',
+        accompaniedBy: '',
+        eventTheme: '',
     });
 
     useEffect(() => {
@@ -57,6 +69,8 @@ export function RecordModal({ isOpen, onClose, onSuccess, record }: RecordModalP
                 status: record.status || '',
                 outDate: record.outDate ? new Date(record.outDate).toISOString().slice(0, 16) : '',
                 location: record.location || '',
+                accompaniedBy: record.accompaniedBy || '',
+                eventTheme: record.eventTheme || '',
             });
         }
     }, [record, isOpen]);
@@ -73,6 +87,8 @@ export function RecordModal({ isOpen, onClose, onSuccess, record }: RecordModalP
                     ...formData,
                     outDate: formData.outDate ? new Date(formData.outDate).toISOString() : null,
                     returnDate: formData.status === 'RETURNED' ? new Date().toISOString() : null,
+                    accompaniedBy: formData.reason === 'School Event' ? (formData.accompaniedBy || null) : null,
+                    eventTheme: formData.reason === 'School Event' ? (formData.eventTheme || null) : null,
                 }),
             });
 
@@ -164,6 +180,57 @@ export function RecordModal({ isOpen, onClose, onSuccess, record }: RecordModalP
                             />
                         </div>
                     </div>
+
+                    {formData.reason === 'School Event' && (
+                        <>
+                            <div className="space-y-2">
+                                <Label className="text-xs font-bold uppercase text-[#0A0E2E]/60">Staff Member Going With Him/Her</Label>
+                                <Select
+                                    value={formData.accompaniedBy || '__custom__'}
+                                    onValueChange={(v) =>
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            accompaniedBy: v === '__custom__' ? '' : v,
+                                        }))
+                                    }
+                                >
+                                    <SelectTrigger className="border-[#0A0E2E]/10">
+                                        <SelectValue placeholder="Select staff member" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="__custom__">Type custom name below</SelectItem>
+                                        {staffList.map((s) => {
+                                            const name = `${s.firstName} ${s.lastName}`;
+                                            return (
+                                                <SelectItem key={s.id} value={name}>
+                                                    {name}
+                                                </SelectItem>
+                                            );
+                                        })}
+                                    </SelectContent>
+                                </Select>
+                                <Input
+                                    placeholder="Or enter staff name"
+                                    value={formData.accompaniedBy}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, accompaniedBy: e.target.value }))}
+                                    className="border-[#0A0E2E]/10"
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label className="text-xs font-bold uppercase text-[#0A0E2E]/60">Theme of the Event</Label>
+                                <div className="relative">
+                                    <Star className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0A0E2E]/40" />
+                                    <Input
+                                        placeholder="e.g. Science Fair, Sports Day, etc."
+                                        value={formData.eventTheme}
+                                        onChange={(e) => setFormData(prev => ({ ...prev, eventTheme: e.target.value }))}
+                                        className="border-[#0A0E2E]/10 pl-9"
+                                    />
+                                </div>
+                            </div>
+                        </>
+                    )}
 
                     <DialogFooter className="pt-4">
                         <Button

@@ -4,7 +4,7 @@ import { AppHeader } from '@/components/layout/AppHeader';
 import { StatusBadge } from '@/components/RCA/Badges';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Shield, Clock, FileText, CheckCircle2, AlertCircle, ArrowLeft, Send, MapPin, User } from 'lucide-react';
+import { Shield, Clock, FileText, ArrowLeft, Send, MapPin, User, Users, Star } from 'lucide-react';
 import { toast } from 'sonner';
 import { apiFetch } from '@/lib/api';
 import {
@@ -29,7 +29,6 @@ export default function CreateRecord() {
   const [fetching, setFetching] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  const studentRef = useRef<HTMLSelectElement>(null);
   const outDateRef = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState({
@@ -38,6 +37,8 @@ export default function CreateRecord() {
     outDate: '',
     location: '',
     description: '',
+    accompaniedBy: '',
+    eventTheme: '',
   });
 
   useEffect(() => {
@@ -67,7 +68,11 @@ export default function CreateRecord() {
           reason: form.reason,
           outDate: form.outDate ? new Date(form.outDate).toISOString() : new Date().toISOString(),
           status: 'OUT',
-          location: form.location
+          location: form.location,
+          ...(form.reason === 'School Event' && {
+            accompaniedBy: form.accompaniedBy || undefined,
+            eventTheme: form.eventTheme || undefined,
+          }),
         }),
       });
 
@@ -88,6 +93,7 @@ export default function CreateRecord() {
   };
 
   const selectedStudent = students.find(s => s.id === parseInt(form.studentId));
+  const isSchoolEvent = form.reason === 'School Event';
 
   return (
     <div className="min-h-screen bg-white text-[#0A0E2E]">
@@ -116,6 +122,7 @@ export default function CreateRecord() {
               </div>
 
               <div className="space-y-6">
+                {/* Student */}
                 <div className="space-y-2">
                   <label className="text-xs font-semibold text-slate-500 px-1">Student</label>
                   <Select
@@ -139,6 +146,7 @@ export default function CreateRecord() {
                   </Select>
                 </div>
 
+                {/* Date and Time */}
                 <div className="space-y-2">
                   <label className="text-xs font-semibold text-slate-500 px-1">Date and Time of Exit</label>
                   <div className="relative">
@@ -153,6 +161,7 @@ export default function CreateRecord() {
                   </div>
                 </div>
 
+                {/* Reason */}
                 <div className="space-y-2">
                   <label className="text-xs font-semibold text-slate-500 px-1">Reason</label>
                   <Select
@@ -173,6 +182,7 @@ export default function CreateRecord() {
                   </Select>
                 </div>
 
+                {/* Location */}
                 <div className="space-y-2">
                   <label className="text-xs font-semibold text-slate-500 px-1">Location or Destination Address</label>
                   <div className="relative">
@@ -186,6 +196,43 @@ export default function CreateRecord() {
                     />
                   </div>
                 </div>
+
+                {/* School Event — conditional fields */}
+                {isSchoolEvent && (
+                  <>
+                    <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                      <label className="text-xs font-semibold text-slate-500 px-1">
+                        Staff Member Going With Him/Her
+                      </label>
+                      <div className="relative">
+                        <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0A0E2E]/50" />
+                        <input
+                          type="text"
+                          placeholder="e.g. Mr. John Doe"
+                          value={form.accompaniedBy}
+                          onChange={(e) => update('accompaniedBy', e.target.value)}
+                          className="w-full rounded-md border border-[#0A0E2E]/15 bg-white pl-11 pr-4 py-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all text-[#0A0E2E]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                      <label className="text-xs font-semibold text-slate-500 px-1">
+                        Theme of the Event
+                      </label>
+                      <div className="relative">
+                        <Star className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0A0E2E]/50" />
+                        <input
+                          type="text"
+                          placeholder="e.g. Science Fair, Sports Day, etc."
+                          value={form.eventTheme}
+                          onChange={(e) => update('eventTheme', e.target.value)}
+                          className="w-full rounded-md border border-[#0A0E2E]/15 bg-white pl-11 pr-4 py-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-[#0A0E2E]/20 transition-all text-[#0A0E2E]"
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </section>
 
@@ -204,6 +251,7 @@ export default function CreateRecord() {
             </section>
           </div>
 
+          {/* Sidebar Summary */}
           <div className="space-y-6">
             <div className="bg-[#0A0E2E] rounded-md shadow-xl p-8 space-y-6 text-white border border-[#0A0E2E]/15 relative overflow-hidden">
               <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
@@ -230,6 +278,22 @@ export default function CreateRecord() {
                       {form.location || 'Not specified'}
                     </span>
                   </div>
+                  {isSchoolEvent && (
+                    <>
+                      <div className="flex justify-between items-start">
+                        <span className="text-xs font-semibold text-white/60">Staff With:</span>
+                        <span className={cn('text-sm font-bold text-right max-w-[60%]', form.accompaniedBy ? 'text-white' : 'text-white/40 italic')}>
+                          {form.accompaniedBy || 'Not specified'}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-start">
+                        <span className="text-xs font-semibold text-white/60">Event Theme:</span>
+                        <span className={cn('text-sm font-bold text-right max-w-[60%]', form.eventTheme ? 'text-white' : 'text-white/40 italic')}>
+                          {form.eventTheme || 'Not specified'}
+                        </span>
+                      </div>
+                    </>
+                  )}
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold text-white/60">Status:</span>
                     <StatusBadge status="OUT" className="scale-90 origin-right border-white/20 bg-white/10 text-white" />

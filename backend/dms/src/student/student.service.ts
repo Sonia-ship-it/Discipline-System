@@ -16,12 +16,27 @@ export class StudentService {
   async findAll(location?: string) {
     return this.prisma.student.findMany({
       where: location ? { location } : {},
-      include: { records: true },
+      include: {
+        records: true,
+        transportAssignments: {
+          include: { transport: true },
+          orderBy: { id: 'desc' },
+        },
+      },
     });
   }
 
   async findOne(id: number) {
-    return this.prisma.student.findUnique({ where: { id }, include: { records: true } });
+    return this.prisma.student.findUnique({
+      where: { id },
+      include: {
+        records: true,
+        transportAssignments: {
+          include: { transport: true },
+          orderBy: { id: 'desc' },
+        },
+      },
+    });
   }
 
   async update(id: number, data: UpdateStudentDto) {
