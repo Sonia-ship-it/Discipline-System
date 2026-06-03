@@ -26,12 +26,11 @@ model Student {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
-  records           DisciplineRecord[]
+  records              DisciplineRecord[]
   transportAssignments TransportAssignment[]
-  attendanceRecords AttendanceRecord[]
-  parentNotifications ParentNotification[]
+  attendanceRecords    AttendanceRecord[]
+  parentNotifications  ParentNotification[]
 }
-
 
 model Staff {
   id          Int       @id @default(autoincrement())
@@ -61,16 +60,16 @@ model DisciplineRecord {
   status         String    @default("OUT")
   outDate        DateTime  @default(now())
   returnDate     DateTime?
-  accompaniedBy  String?   // Name of staff member going with the student (School Event)
-  eventTheme     String?   // Theme of the event (School Event)
+  accompaniedBy  String?
+  eventTheme     String?
   updatedAt      DateTime  @updatedAt
   student        Student   @relation(fields: [studentId], references: [id])
 }
 
 model Transport {
   id          Int       @id @default(autoincrement())
-  location    String    
-  price       Float     
+  location    String
+  price       Float
   assignments TransportAssignment[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -102,13 +101,13 @@ enum Status {
 }
 
 model AcademicTerm {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
   startDate DateTime
   endDate   DateTime?
-  isActive  Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isActive  Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   attendanceRecords AttendanceRecord[]
 }
@@ -131,15 +130,15 @@ model AttendanceRecord {
 }
 
 model ParentNotification {
-  id        Int                  @id @default(autoincrement())
+  id        Int                    @id @default(autoincrement())
   studentId Int
-  channel   String               @default("SMS")
+  channel   String                 @default("SMS")
   phone     String
   message   String
   type      ParentNotificationType
-  status    NotificationStatus   @default(SENT)
-  sentAt    DateTime             @default(now())
-  createdAt DateTime             @default(now())
+  status    NotificationStatus     @default(SENT)
+  sentAt    DateTime               @default(now())
+  createdAt DateTime               @default(now())
 
   student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 }

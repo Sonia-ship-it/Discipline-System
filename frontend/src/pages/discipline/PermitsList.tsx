@@ -10,7 +10,7 @@ import { exportToExcel, exportToPDF } from '@/lib/exportUtils';
 import { useQuery } from '@tanstack/react-query';
 import { EmptyState } from '@/components/RCA/EmptyState';
 
-export default function PermitsList() {
+export default function PermitsList({ hideHeader }: { hideHeader?: boolean }) {
   const { data: records = [], isLoading: loading } = useQuery<any[]>({
     queryKey: ['records'],
     queryFn: () => apiFetch('/records'),
@@ -64,8 +64,8 @@ export default function PermitsList() {
   });
 
   return (
-    <div className="min-h-screen bg-white text-[#0A0E2E]">
-      <AppHeader title="Leave Permits" subtitle="Authorization & Exit Passes" />
+    <div className={hideHeader ? "" : "min-h-screen bg-white text-[#0A0E2E]"}>
+      {!hideHeader && <AppHeader title="Leave Permits" subtitle="Authorization & Exit Passes" />}
       <div className="mx-auto max-w-7xl px-6 py-8 animate-in slide-in-from-bottom-4 duration-500">
         <div className="mb-8 flex flex-col justify-between gap-4 rounded-md border border-[#0A0E2E]/15 bg-white p-6 shadow-sm md:flex-row md:items-center">
           <div>

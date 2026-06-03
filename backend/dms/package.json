@@ -20,7 +20,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "migrate:opening-attendance": "ts-node src/run-opening-migration.ts",
+    "setup:opening-attendance": "ts-node src/setup-opening-attendance.ts",
+    "seed:staff": "ts-node src/seed-staff.ts",
+    "fix:terms": "ts-node src/fix-terms.ts",
+    "setup:multi-year": "ts-node src/setup-multiple-years.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.18",
@@ -30,6 +35,7 @@
     "@nestjs/mapped-types": "^2.1.1",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.1.18",
+    "@nestjs/schedule": "^6.1.3",
     "@nestjs/throttler": "^6.5.0",
     "@nestjs/typeorm": "^11.0.1",
     "@prisma/adapter-pg": "^7.6.0",

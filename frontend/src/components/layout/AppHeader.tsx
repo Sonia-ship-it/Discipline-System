@@ -1,10 +1,20 @@
+'use client';
+
 import { Search, ChevronDown, LogOut, User, Settings, Plus } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/authStore';
 
-export function AppHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+export function AppHeader({
+  title,
+  subtitle,
+  settingsHref = '/discipline/settings',
+}: {
+  title: string;
+  subtitle?: string;
+  settingsHref?: string;
+}) {
   const { user, logout } = useAuthStore();
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -46,7 +56,7 @@ export function AppHeader({ title, subtitle }: { title: string; subtitle?: strin
 
           {dropdownOpen && (
             <div className="absolute right-0 mt-3 w-48 bg-[#0A0E2E] rounded-md shadow-2xl border border-white/10 py-2 animate-fade-in text-white/90">
-              <button onClick={() => { setDropdownOpen(false); router.push('/discipline/settings'); }} className="flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-white/10 transition-colors">
+              <button onClick={() => { setDropdownOpen(false); router.push(settingsHref); }} className="flex items-center gap-3 w-full px-4 py-2.5 text-sm hover:bg-white/10 transition-colors">
                 <Settings className="h-4 w-4" /> Settings
               </button>
               <div className="h-px w-full bg-white/10 my-1" />

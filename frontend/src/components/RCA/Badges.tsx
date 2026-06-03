@@ -10,6 +10,9 @@ export function StatusBadge({ status, className }: { status: string; className?:
     IN: 'bg-indigo-50 text-indigo-700 border-indigo-100 dark:bg-indigo-900/20 dark:text-indigo-400 dark:border-indigo-800',
     OUT: 'bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800',
     RETURNED: 'bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-900/20 dark:text-emerald-400 dark:border-emerald-800',
+    BORROWED: 'bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-900/20 dark:text-amber-400 dark:border-amber-800',
+    REPORTED: 'bg-emerald-50 text-emerald-700 border-emerald-100',
+    NOT_REPORTED: 'bg-amber-50 text-amber-700 border-amber-100',
     Pending: 'bg-amber-50 text-amber-700 border-amber-100',
     Resolved: 'bg-emerald-50 text-emerald-700 border-emerald-100',
     PRESENT: 'bg-emerald-50 text-emerald-700 border-emerald-100',
@@ -20,9 +23,14 @@ export function StatusBadge({ status, className }: { status: string; className?:
     FAILED: 'bg-rose-50 text-rose-700 border-rose-100',
   };
 
+  const labels: Record<string, string> = {
+    REPORTED: 'Reported',
+    NOT_REPORTED: 'Not Yet Reported',
+  };
+
   return (
     <span className={cn('inline-flex items-center px-3 py-1 rounded-md text-[10px] font-bold border transition-all', styles[status] || 'bg-slate-50 text-slate-500 border-slate-100', className)}>
-      {status}
+      {labels[status] || status}
     </span>
   );
 }
