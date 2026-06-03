@@ -40,9 +40,16 @@ model Staff {
   email       String   @unique
   password    String
   phoneNumber String
+  role        StaffRole @default(DISCIPLINE_STAFF)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   termAttendances TermAttendance[]
+}
+
+enum StaffRole {
+  DISCIPLINE_STAFF
+  NURSE
+  ADMIN
 }
 
 model DisciplineRecord {
