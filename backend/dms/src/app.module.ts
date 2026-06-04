@@ -13,6 +13,9 @@ import { TermModule } from './term/term.module';
 import { AttendanceModule } from './attendance/attendance.module';
 import { NotificationModule } from './notification/notification.module';
 import { AdminModule } from './admin/admin.module';
+import { PhoneBorrowModule } from './phone-borrow/phone-borrow.module';
+import { OpeningAttendanceModule } from './opening-attendance/opening-attendance.module';
+import { TermAttendanceModule } from './term-attendance/term-attendance.module';
 
 @Module({
   imports: [
@@ -33,6 +36,9 @@ import { AdminModule } from './admin/admin.module';
     AttendanceModule,
     NotificationModule,
     AdminModule,
+    PhoneBorrowModule,
+    OpeningAttendanceModule,
+    TermAttendanceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

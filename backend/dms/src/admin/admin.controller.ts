@@ -9,7 +9,7 @@ import { Roles } from '../auth/roles.decorator';
 @Roles('ADMIN')
 @Controller('admin')
 export class AdminController {
-  constructor(private readonly adminService: AdminService) {}
+  constructor(private readonly adminService: AdminService) { }
 
   @Get('overview')
   getOverview() {
@@ -24,6 +24,11 @@ export class AdminController {
   @Patch('staff/:id/role')
   assignRole(@Param('id') id: string, @Body() dto: AssignRoleDto) {
     return this.adminService.assignRole(+id, dto.role);
+  }
+
+  @Patch('staff/:id/permissions')
+  updatePermissions(@Param('id') id: string, @Body() dto: { permissions: string[] }) {
+    return this.adminService.updatePermissions(+id, dto.permissions);
   }
 
   @Patch('staff/:id/active')

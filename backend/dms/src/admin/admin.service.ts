@@ -4,7 +4,7 @@ import { StaffRole } from '../generated';
 
 @Injectable()
 export class AdminService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async getAllStaff() {
     return this.prisma.staff.findMany({
@@ -15,6 +15,7 @@ export class AdminService {
         email: true,
         phoneNumber: true,
         role: true,
+        permissions: true, // Include permissions
         isActive: true,
         createdAt: true,
       },
@@ -35,6 +36,26 @@ export class AdminService {
         lastName: true,
         email: true,
         role: true,
+        permissions: true,
+        isActive: true,
+      },
+    });
+  }
+
+  async updatePermissions(staffId: number, permissions: string[]) {
+    const staff = await this.prisma.staff.findUnique({ where: { id: staffId } });
+    if (!staff) throw new NotFoundException('Staff member not found');
+
+    return this.prisma.staff.update({
+      where: { id: staffId },
+      data: { permissions },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        role: true,
+        permissions: true,
         isActive: true,
       },
     });
@@ -53,6 +74,7 @@ export class AdminService {
         lastName: true,
         email: true,
         role: true,
+        permissions: true,
         isActive: true,
       },
     });

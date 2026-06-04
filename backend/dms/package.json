@@ -24,6 +24,7 @@
     "migrate:opening-attendance": "ts-node src/run-opening-migration.ts",
     "setup:opening-attendance": "ts-node src/setup-opening-attendance.ts",
     "seed:staff": "ts-node src/seed-staff.ts",
+    "seed:admin": "ts-node src/seed-admin.ts",
     "fix:terms": "ts-node src/fix-terms.ts",
     "setup:multi-year": "ts-node src/setup-multiple-years.ts"
   },
@@ -43,6 +44,7 @@
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.105.0",
     "@types/pg": "^8.20.0",
+    "axios": "^1.17.0",
     "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
