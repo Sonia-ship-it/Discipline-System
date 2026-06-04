@@ -92,7 +92,7 @@ export class AdminService {
       this.prisma.student.count(),
       this.prisma.staff.count({ where: { isActive: true } }),
       this.prisma.disciplineRecord.count(),
-      this.prisma.academicTerm.findFirst({ where: { isActive: true } }),
+      this.prisma.termSession.findFirst({ where: { isActive: true } }),
       this.prisma.parentNotification.count(),
       this.prisma.staff.groupBy({
         by: ['role'],

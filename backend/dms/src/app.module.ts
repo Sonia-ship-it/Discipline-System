@@ -9,8 +9,6 @@ import { AuthModule } from './auth/auth.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule } from '@nestjs/config';
 import { TransportModule } from './transport/transport.module';
-import { TermModule } from './term/term.module';
-import { AttendanceModule } from './attendance/attendance.module';
 import { NotificationModule } from './notification/notification.module';
 import { AdminModule } from './admin/admin.module';
 import { PhoneBorrowModule } from './phone-borrow/phone-borrow.module';
@@ -19,21 +17,14 @@ import { TermAttendanceModule } from './term-attendance/term-attendance.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    ThrottlerModule.forRoot([{ ttl: 60, limit: 5 }]),
+    PrismaModule,
+    AuthModule,
     StudentModule,
     StaffModule,
-    PrismaModule,
     DisciplineRecordModule,
-    AuthModule,
-    ThrottlerModule.forRoot([{
-      ttl: 60,
-      limit: 5,
-    }]),
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
     TransportModule,
-    TermModule,
-    AttendanceModule,
     NotificationModule,
     AdminModule,
     PhoneBorrowModule,

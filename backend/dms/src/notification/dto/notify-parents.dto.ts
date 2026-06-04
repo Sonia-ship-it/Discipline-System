@@ -6,8 +6,9 @@ export class NotifyParentsDto {
   @IsInt()
   termId?: number;
 
+  @IsOptional()
   @IsDateString()
-  date: string;
+  date?: string;
 
   @IsEnum(ParentNotificationType)
   type: ParentNotificationType;
