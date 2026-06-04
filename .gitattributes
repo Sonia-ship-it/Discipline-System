@@ -1,0 +1,7 @@
+frontend/.env merge=ours
+frontend/src/stores/authStore.ts merge=ours
+frontend/src/components/layout/AppSidebar.tsx merge=ours
+backend/dms/src/prisma/prisma.service.ts merge=ours
+backend/dms/src/generated/** merge=ours
+backend/dms/package-lock.json merge=ours
+frontend/package-lock.json merge=ours
