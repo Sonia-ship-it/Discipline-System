@@ -15,14 +15,9 @@ interface AuthState {
   user: AuthUser | null;
   token: string | null;
   isAuthenticated: boolean;
-<<<<<<< HEAD
   hydrated: boolean;
   hydrate: () => void;
   login: (email: string, password: string) => Promise<StaffRole>;
-=======
-  login: (email: string, password: string, role?: UserRole) => Promise<{ user: any }>;
-  register: (firstName: string, lastName: string, email: string, phoneNumber: string, password: string, role: string) => Promise<void>;
->>>>>>> c1d689c033ea458577ba89d4d992c46c0b5e7516
   logout: () => void;
 }
 
@@ -41,16 +36,6 @@ const decodeJWT = (token: string) => {
   }
 };
 
-<<<<<<< HEAD
-=======
-const getStoredToken = () => {
-  if (typeof window === 'undefined') return null;
-  return localStorage.getItem('auth-token') || localStorage.getItem('access_token');
-};
-const initialToken = getStoredToken();
-const initialUser = initialToken ? decodeJWT(initialToken) : null;
-
->>>>>>> c1d689c033ea458577ba89d4d992c46c0b5e7516
 export const useAuthStore = create<AuthState>((set) => ({
   // Always start with empty state — same on server and client
   user: null,
@@ -62,49 +47,38 @@ export const useAuthStore = create<AuthState>((set) => ({
   hydrate: () => {
     if (typeof window === 'undefined') return;
     try {
-<<<<<<< HEAD
       const token = localStorage.getItem('auth-token');
       const raw = localStorage.getItem('auth-user');
+
+      if (!token || !raw) {
+        console.log('[Auth] No stored session found');
+        set({ hydrated: true });
+        return;
+      }
+
       const user: AuthUser | null = raw ? JSON.parse(raw) : null;
+
+      // Validate that user has required fields
+      if (user && (!user.role || !user.email)) {
+        console.error('[Auth] Invalid user data, missing required fields:', user);
+        localStorage.removeItem('auth-token');
+        localStorage.removeItem('auth-user');
+        localStorage.removeItem('access_token');
+        set({ hydrated: true });
+        return;
+      }
+
+      console.log('[Auth] Hydrated session for user:', user?.email, 'role:', user?.role);
+
       set({
         token,
         user,
         isAuthenticated: !!token && !!user,
         hydrated: true,
       });
-    } catch {
-      set({ hydrated: true });
-=======
-      const data = await apiFetch('/auth/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-      });
-
-      const token = data.access_token;
-      localStorage.setItem('auth-token', token);
-      localStorage.setItem('access_token', token);
-
-      const decoded = decodeJWT(token);
-      const userRole = data.user?.role || decoded?.role || 'DISCIPLINE';
-
-      set({
-        token,
-        user: decoded ? {
-          id: decoded.sub,
-          name: (decoded.firstName && decoded.lastName) ? `${decoded.firstName} ${decoded.lastName}` :
-            (decoded.given_name && decoded.family_name) ? `${decoded.given_name} ${decoded.family_name}` :
-              (decoded.name || decoded.fullName || decoded.full_name || decoded.email.split('@')[0]),
-          email: decoded.email,
-          role: userRole
-        } : null,
-        isAuthenticated: true,
-        role: role || 'discipline',
-      });
-
-      return { user: decoded ? { ...decoded, role: userRole } : null };
     } catch (error) {
-      throw error;
->>>>>>> c1d689c033ea458577ba89d4d992c46c0b5e7516
+      console.error('[Auth] Hydration error:', error);
+      set({ hydrated: true });
     }
   },
 
@@ -118,16 +92,28 @@ export const useAuthStore = create<AuthState>((set) => ({
     const serverUser = data.user;
     const decoded = decodeJWT(token);
 
+    console.log('[Auth] Login response:', { serverUser, decoded });
+
     const user: AuthUser = {
-      id: String(serverUser?.id ?? decoded?.sub),
+      id: String(serverUser?.id ?? decoded?.sub ?? decoded?.userId),
       firstName: serverUser?.firstName ?? decoded?.firstName ?? '',
       lastName: serverUser?.lastName ?? decoded?.lastName ?? '',
       email: serverUser?.email ?? decoded?.email ?? email,
       role: (serverUser?.role ?? decoded?.role ?? 'DISCIPLINE') as StaffRole,
     };
 
+    // Validate that all required fields are present
+    if (!user.id || !user.email || !user.role) {
+      console.error('[Auth] Invalid user data after login:', user);
+      throw new Error('Invalid user data received from server');
+    }
+
+    console.log('[Auth] Setting user session:', { email: user.email, role: user.role });
+
     localStorage.setItem('auth-token', token);
     localStorage.setItem('auth-user', JSON.stringify(user));
+    // Also store as access_token for cross-system compatibility
+    localStorage.setItem('access_token', token);
 
     set({ token, user, isAuthenticated: true, hydrated: true });
 
@@ -136,11 +122,8 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   logout: () => {
     localStorage.removeItem('auth-token');
-<<<<<<< HEAD
     localStorage.removeItem('auth-user');
-=======
     localStorage.removeItem('access_token');
->>>>>>> c1d689c033ea458577ba89d4d992c46c0b5e7516
     set({ user: null, token: null, isAuthenticated: false });
   },
 }));

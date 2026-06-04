@@ -38,23 +38,36 @@ async function seedStaff() {
     if (existing.rows.length > 0) {
       console.log(`✓ Staff member ${email} already exists`);
       console.log(`   ID: ${existing.rows[0].id}`);
-      console.log(`   Name: ${existing.rows[0].firstName} ${existing.rows[0].lastName}\n`);
+      console.log(`   Name: ${existing.rows[0].firstName} ${existing.rows[0].lastName}`);
+      console.log(`   Role: ${existing.rows[0].role || 'NOT SET'}`);
+
+      // If role is not set, update it to ADMIN
+      if (!existing.rows[0].role) {
+        await client.query(
+          `UPDATE "Staff" SET role = $1, "isActive" = $2 WHERE email = $3`,
+          ['ADMIN', true, email]
+        );
+        console.log(`   ✓ Updated role to ADMIN\n`);
+      } else {
+        console.log('');
+      }
     } else {
       // Hash password
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Insert new staff member
       const result = await client.query(
-        `INSERT INTO "Staff" ("firstName", "lastName", email, password, "phoneNumber", "createdAt", "updatedAt")
-         VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
-         RETURNING id, "firstName", "lastName", email`,
-        [firstName, lastName, email, hashedPassword, phoneNumber]
+        `INSERT INTO "Staff" ("firstName", "lastName", email, password, "phoneNumber", role, "isActive", "createdAt", "updatedAt")
+         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
+         RETURNING id, "firstName", "lastName", email, role`,
+        [firstName, lastName, email, hashedPassword, phoneNumber, 'ADMIN', true]
       );
 
       console.log(`✓ Created staff member:`);
       console.log(`   ID: ${result.rows[0].id}`);
       console.log(`   Name: ${result.rows[0].firstName} ${result.rows[0].lastName}`);
       console.log(`   Email: ${result.rows[0].email}`);
+      console.log(`   Role: ${result.rows[0].role}`);
       console.log(`   Password: ${password}\n`);
     }
 

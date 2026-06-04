@@ -18,10 +18,9 @@ export default function LoginPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/discipline/dashboard');
-    }
-  }, [isAuthenticated, router]);
+    // Don't auto-redirect if already authenticated
+    // Let users logout and login as different role
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,14 +28,27 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const result = await login(email, password);
+      const role = await login(email, password);
       
       // Role-based routing
-      if (result.user.role === 'LIBRARIAN') {
-        toast.success('Login successful');
-        router.push('/librarian');
+      if (role === 'ADMIN') {
+        toast.success('Welcome, Admin!');
+        router.push('/admin');
+      } else if (role === 'LIBRARIAN') {
+        toast.success('Redirecting to Library System...');
+        // Get the token from localStorage
+        const token = localStorage.getItem('auth-token') || localStorage.getItem('access_token');
+        // Redirect to external LMS with token
+        const lmsUrl = process.env.NEXT_PUBLIC_LIBRARY_FRONTEND_URL || 'https://rca-lms-frontend.vercel.app';
+        // Store token so LMS can read it, then redirect
+        if (typeof window !== 'undefined') {
+          window.location.href = `${lmsUrl}/auth/callback?token=${token}`;
+        }
+      } else if (role === 'NURSE') {
+        toast.success('Welcome, Nurse!');
+        router.push('/nurse');
       } else {
-        // Discipline staff
+        // DISCIPLINE
         toast.success('Login successful');
         router.push('/discipline/dashboard');
       }

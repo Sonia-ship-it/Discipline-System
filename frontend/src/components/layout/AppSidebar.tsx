@@ -2,13 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-<<<<<<< HEAD
-import { useRouter } from 'next/router';
-import { LayoutDashboard, Users, FileText, DoorOpen, Settings, Menu, X, UserCheck, Bus, ClipboardCheck } from 'lucide-react';
-=======
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, FileText, DoorOpen, Settings, Menu, X, UserCheck, Bus, Smartphone, CalendarCheck, CalendarCog } from 'lucide-react';
->>>>>>> c1d689c033ea458577ba89d4d992c46c0b5e7516
+import { LayoutDashboard, Users, FileText, DoorOpen, Settings, Menu, X, UserCheck, Bus, Smartphone, CalendarCheck, CalendarCog, ClipboardCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Avatar } from '@/components/RCA/Avatar';
 import { useAuthStore } from '@/stores/authStore';
@@ -45,15 +40,14 @@ export function AppSidebar() {
         queryKey: [key],
         queryFn: () => {
           if (key === 'transport-routes') return apiFetch('/transport');
-<<<<<<< HEAD
+          if (key === 'term-sessions' || key === 'opening-term-sessions') {
+            return apiFetch('/opening-attendance/term-sessions');
+          }
           if (key === 'terms') return apiFetch('/terms');
           if (key === 'attendance') {
             const today = new Date().toISOString().slice(0, 10);
             return apiFetch(`/attendance?date=${today}`);
           }
-=======
-          if (key === 'term-sessions') return apiFetch('/opening-attendance/term-sessions');
->>>>>>> c1d689c033ea458577ba89d4d992c46c0b5e7516
           return apiFetch(`/${key}`);
         },
         staleTime: 1000 * 60 * 5,
@@ -92,9 +86,11 @@ export function AppSidebar() {
 
       <div className="p-4 border-t border-white/8">
         <div className="flex items-center gap-3">
-          <Avatar name={mounted ? (user?.name || 'User') : 'User'} size="sm" />
+          <Avatar name={mounted ? (user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.email || 'User') : 'User'} size="sm" />
           <div className="hidden lg:block min-w-0">
-            <p className="text-sm font-medium text-white truncate">{mounted ? user?.name : '...'}</p>
+            <p className="text-sm font-medium text-white truncate">
+              {mounted ? (user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : user?.email) : '...'}
+            </p>
             <p className="text-xs text-white/50 truncate">{mounted ? user?.email : '...'}</p>
           </div>
         </div>

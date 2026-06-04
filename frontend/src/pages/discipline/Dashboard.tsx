@@ -63,7 +63,7 @@ export default function DisciplineDashboard() {
             <h2 className="text-3xl font-extrabold text-white">Dashboard Overview</h2>
             <p className="mt-2 flex items-center gap-2 text-[14px] font-medium text-white/70">
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              Authenticated as {user?.name || 'Administrator'} • {dateStr}
+              Authenticated as {user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : 'Administrator'} • {dateStr}
             </p>
           </div>
           <div className="flex flex-wrap gap-2 relative z-10">

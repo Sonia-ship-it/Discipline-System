@@ -144,6 +144,7 @@ exports.Prisma.StaffScalarFieldEnum = {
   password: 'password',
   phoneNumber: 'phoneNumber',
   role: 'role',
+  permissions: 'permissions',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -213,6 +214,41 @@ exports.Prisma.ParentNotificationScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.PhoneBorrowScalarFieldEnum = {
+  id: 'id',
+  studentId: 'studentId',
+  phoneModel: 'phoneModel',
+  borrowedAt: 'borrowedAt',
+  returnedAt: 'returnedAt',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TermSessionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  year: 'year',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  openingDate: 'openingDate',
+  isActive: 'isActive',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TermAttendanceScalarFieldEnum = {
+  id: 'id',
+  termId: 'termId',
+  studentId: 'studentId',
+  status: 'status',
+  arrivalTime: 'arrivalTime',
+  recordedById: 'recordedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -265,6 +301,22 @@ exports.NotificationStatus = exports.$Enums.NotificationStatus = {
   PENDING: 'PENDING'
 };
 
+exports.PhoneBorrowStatus = exports.$Enums.PhoneBorrowStatus = {
+  BORROWED: 'BORROWED',
+  RETURNED: 'RETURNED'
+};
+
+exports.TermStatus = exports.$Enums.TermStatus = {
+  UPCOMING: 'UPCOMING',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED'
+};
+
+exports.TermAttendanceStatus = exports.$Enums.TermAttendanceStatus = {
+  REPORTED: 'REPORTED',
+  NOT_REPORTED: 'NOT_REPORTED'
+};
+
 exports.Prisma.ModelName = {
   Student: 'Student',
   Staff: 'Staff',
@@ -273,7 +325,10 @@ exports.Prisma.ModelName = {
   TransportAssignment: 'TransportAssignment',
   AcademicTerm: 'AcademicTerm',
   AttendanceRecord: 'AttendanceRecord',
-  ParentNotification: 'ParentNotification'
+  ParentNotification: 'ParentNotification',
+  PhoneBorrow: 'PhoneBorrow',
+  TermSession: 'TermSession',
+  TermAttendance: 'TermAttendance'
 };
 
 /**
